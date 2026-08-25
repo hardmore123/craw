@@ -1,0 +1,404 @@
+---
+title: "安全件报备清单 × 官网证书核对工具"
+subtitle: "功能介绍与操作手册"
+author: "认证核对自动化"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    number_sections: true
+    highlight: tango
+    theme: flatly
+    df_print: kable
+  github_document:
+    toc: true
+lang: zh-CN
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, comment = "#>")
+```
+
+> 本文档同时是 R Markdown 源文件。有 R 环境时用
+> `rmarkdown::render("介绍文档.Rmd")` 生成 HTML；
+> 没有 R 时双击包里的 `渲染文档.bat`，会走 pandoc 兜底出同样的 HTML。
+
+# 这个工具解决什么问题
+
+安全件报备清单里每一行都填了某个元器件的认证信息，但**填的内容和认证机构官网上的真实信息是否一致，过去只能一条条手工去查**。一张一百多行的表，人工核一遍要小半天，而且容易看漏。
+
+这个工具把这件事自动化：
+
+1. 读你的 xlsx，**两个 sheet 都会处理**
+2. 逐行取 **I 列的证书号**
+3. 用证书号去认证机构官网查这张证书的真实信息
+4. 把官网结果与表格里的 **制造商、生产厂、型号、标准、证书状态** 五项逐项比对
+5. 结论写进 **M 列**
+
+原文件不动，结果另存为 `原名_核对结果.xlsx`。
+
+# 目前哪些机构能查
+
+跑一次 `2_网络自检.bat` 可以看到实时结果。打包时的实测情况：
+
+| 机构 | 站点 | 能否查询 | 卡在哪 |
+|:---|:---|:---|:---|
+| **TÜV Rheinland** | www.certipedia.com | **能，已验证可用** | — |
+| VDE | www.vde.com（restSearch JSON 接口） | **已跑通（需开代理/VPN）** | 直连被网关拦，走代理即通 |
+| UL Product iQ | productiq.ul.com | 不能 | 反爬 403 + 需登录账号 |
+| UL Prospector | productiq.ulprospector.com | 需开代理/VPN | 直连被网关拦 |
+| IECEE（CB 证书官方库） | certificates.iecee.org | 需开代理/VPN | 直连被网关拦 |
+| TÜV SÜD | www.tuvsud.com | 不能 | 反爬 403 |
+
+**所以现在能真查的只有 TÜV Rheinland。** 遇到 VDE / UL 的行，工具会写「网络被拦截，未能查询」，而不是瞎给结论 —— 这一点很重要，宁可留白也不能给假结论。
+
+## 两类问题，性质完全不同
+
+### 第一类：公司网络白名单拦截
+
+直连时，公司网关对 vde.com / iecee.org 做 SSL 审查但不放行上游，实测：
+
+| 尝试方式 | 实测结果 |
+|:---|:---|
+| `http://www.vde.com/...` | 302 到 `10.18.0.250/disable/disable.htm`，标题「URL过滤」 |
+| `https://www.vde.com/...` | `CERTIFICATE_VERIFY_FAILED` |
+| 关闭证书校验后重试 | TLS 握手超时（网关回自己的证书后不再往上游走）|
+| `curl.exe` / 无头 Edge | `SEC_E_UNTRUSTED_ROOT` / `ERR_TIMED_OUT` |
+
+对照：certipedia 用同一个 Python 直接验证通过，所以**不是本机信任库的问题**，是这两个域名被专门拦。
+
+**开 VPN/加速器后已跑通。** 开加速器后本机系统代理生效（`ProxyEnable=1`、`127.0.0.1:7877`），脚本走这个系统代理即可穿透网关。工具**默认自动探测系统代理**，无需额外配置：
+
+```bat
+python -m cert_verify.cli query 40052271 --agency VDE
+:: 实测返回 found，制造商 Xiamen Wanming、注册号 E809、10 条型号全取到
+```
+
+也可显式指定：`--proxy http://127.0.0.1:7877`，或设环境变量 `set CERT_PROXY=http://127.0.0.1:7877`。
+
+注意：`iGG谷歌学术助手` 是浏览器扩展代理，只有开了会挂系统代理的 VPN/加速器时脚本才借得到；纯扩展形态（不改系统代理）脚本走不了 —— 这也是之前「浏览器能开、脚本不行」的原因。
+
+长期最干净的办法还是让 IT 把这四个域名加白名单：
+
+```
+vde.com
+certificates.iecee.org
+productiq.ul.com
+productiq.ulprospector.com
+```
+
+::: {.alert}
+**建议**：清单是 UL-CB 类别，**CB 证书最权威的核对源是 IECEE 官方库**（`certificates.iecee.org`），比 UL Product iQ 更该用。报白名单时别漏了它。
+:::
+
+### 第二类：反爬 + 需登录
+
+UL Product iQ 和 TÜV SÜD 即使网络放通也还差一步：Product iQ 要免费账号，且有 Akamai 反爬，必须用 Playwright 驱动真实浏览器。
+
+而且**批量查询建议走 UL 官方 API 或数据授权，不要爬网页**；网页方式只适合几十到几百条的人工核对量级。
+
+## VDE：代码已写完并验证，只等网络放通
+
+VDE 检索页背后是一个 Solr REST 接口，**免登录、免 Cookie**：
+
+```
+GET https://www.vde.com/www8/servlet/restSearch/2289904/zertreg-certificates
+    ?wt=json
+    &fq=(detailDocType:zertreg|certificate)
+    &fq=id:zertreg|certificate#40052271
+    &start=0&rows=50
+```
+
+只需两个请求头：`Accept: application/json` 和 `Referer`（指向对应搜索页）。Cookie 里只有 GA 分析值，不影响结果。
+
+返回结构化 JSON，比爬 HTML 稳得多，一次请求出结果，也不需要浏览器。
+
+### 已验证的字段映射
+
+解析逻辑是**对着证书号 40052271 的真实响应写的**：
+
+| JSON 字段 | 映射到 | 实际值 |
+|:---|:---|:---|
+| `companyName` / `_en` / `_de` | 制造商 | `Xiamen Wanming` |
+| `typeNames`（完整型号数组） | 型号 | 10 条，含 `*` 通配 |
+| `firstTypes` | 型号兜底（截断预览串） | — |
+| `id` = `zertreg\|certificate#40052271` | 证书号 | `40052271` |
+| `registerNumber` | VDE 注册号 Reg.-Nr. | `E809` |
+| `productName_en` | 产品类别 | `Varistor` |
+| `validityLimit` | 到期日 | 本例为空 |
+| `numFound >= 1` | 证书状态 | 有效 |
+
+真实响应存在 `cert_verify\tests\fixtures\vde_40052271.json`，`9_自测.bat` 会拿它跑 20 项断言，**当前全部通过**。所以网络一通就能直接用，不需要再改解析代码。
+
+### 三个要注意的点
+
+**证书状态是推断出来的。** 服务端在 `fq` 里强制加了有效期过滤：
+
+```
+validfrom: [* TO NOW/MINUTE]
+validto:   [NOW/MINUTE TO *]
+```
+
+也就是这个接口**只返回当前有效的证书**，所以命中即「有效」。代价是查不到时分不清「证书不存在」还是「已失效」，工具会如实写「官网未查到（可能已失效或证书号有误）」，不替你猜。想区分的话可以把 `vde.py` 里的 `INCLUDE_EXPIRED` 改成 `True`（会带上 `validfrom=[* TO *]`），服务端是否允许覆盖需联网实测。
+
+**标准和生产厂接口默认不给。** 默认 `fl` 字段列表里没有这两项。代码会先试 `fl=*` 把全部字段取回来，取不到就留空并记「网站无此项」，不判不一致。网络通了先跑一次标定：
+
+```bat
+python -m cert_verify.cli probe-vde --cert-no 40052271
+```
+
+原始 JSON 会落盘，一看就知道 `fl=*` 有没有生效、有没有标准字段。若确实没有，得另找详情接口（`generatedUrl` 指向的详情页可能有）。
+
+**VDE 型号带通配符。** 官网写 `WMR05D561K *`、`WMR05D180M * bis/to` 表示同系列或范围。工具会把 `*` 编译成通配正则、把 `bis/to` 当噪音剔除，所以表格写具体型号 `WMR10D112K35` 也能和官网的 `WMR10D112K *` 对上，不会误报不一致。
+
+# 快速上手
+
+## 第一次使用：先验证工具本身
+
+不需要你的表格，两步就能确认程序可用。
+
+```bat
+:: 装依赖（只需一次，装 openpyxl）
+1_安装依赖.bat
+
+:: 真实抓取 + 比对 + 写回全流程自测
+9_自测（验证程序本身）.bat
+```
+
+自测会自己造一张样例表、真的去 Certipedia 抓数据、比对、写回，你能直接看到全流程输出。这一步过了说明程序没问题，可以放心用在真表上。
+
+## 正式核对：四步
+
+### 第 1 步：看表格列结构
+
+把你的 xlsx **拖到 `3_查看表格列结构.bat` 的图标上**（不是双击，是把文件拖上去）。
+
+输出类似：
+
+```
+文件: 电源电路部分安全件报备清单明细表_认证类别UL-CB 20230420.xlsx
+Sheet 列表: ['UL', 'CB']
+=== [UL]  156 行 × 15 列 ===
+  r1  A( 1) = '序号'
+  r1  C( 3) = '制造商'
+  r1  D( 4) = '生产厂'
+  r1  E( 5) = '型号'
+  r1  F( 6) = '标准'
+  r1  G( 7) = '认证机构'
+  r1  I( 9) = '证书号'
+  r1  J(10) = '证书状态'
+  r1  M(13) = '核对结果'
+```
+
+### 第 2 步：配列映射
+
+用记事本打开 `cert_verify\config.py`，照上一步看到的把列字母填进去：
+
+```python
+SHEET_COLUMNS = {
+    "UL": ColumnMap(
+        manufacturer = "C",     # 制造商在哪列
+        factory      = "D",     # 生产厂
+        model        = "E",     # 型号
+        standard     = "F",     # 标准
+        cert_status  = "J",     # 证书状态
+        agency       = "G",     # 认证机构（VDE/UL/TUV）列，没有就留空
+        first_data_row = 2,     # 数据从第几行开始，有几行表头就往后挪
+    ),
+    "CB": ColumnMap(
+        # 两个 sheet 列结构不同就分别写
+    ),
+}
+```
+
+`cert_no = "I"`（证书号）和 `result = "M"`（结果）是默认值，不用写。
+
+如果表里**没有**「认证机构」列，可以在命令行加 `--agency TUV` 给整张表指定默认机构；也可以不指定，工具会按证书号形态自动判断。
+
+### 第 3 步：试跑 10 条
+
+把 xlsx 拖到 `4_试跑10条.bat` 上。打开生成的 `_核对结果.xlsx`，检查两件事：
+
+- M 列有没有内容（没有说明 `first_data_row` 配错了）
+- 结论合不合理（大面积「表格未填」说明列字母配错了）
+
+### 第 4 步：全量核对
+
+确认无误后，拖到 `5_全量核对.bat` 上跑完。
+
+# 结果怎么看
+
+M 列的写法：
+
+| 输出 | 含义 |
+|:---|:---|
+| `✓ 一致：制造商、型号、标准、证书状态` | 五项里能比的都对上了 |
+| `✓ 一致：…标准(版本/年份不同: 表格=en62368-1:2014 网站=en62368-1:2020+a11)` | 标准编号一致但版本年份不同，**需你判断算不算问题** |
+| `✗ 不一致：型号不一致[表格=A24-999XXX \| 网站=A24-065N3A]` | 真的不一致，附双方原文 |
+| `✗ 不一致：证书状态不一致[表格=有效 \| 网站=Invalid Certificate]` | 证书已失效但表格还写有效 —— 最该优先处理的一类 |
+| `⚠ 官网未查到该证书号（TUV-Rheinland）` | 证书号可能填错，或该证书不在此机构库里 |
+| `✗ 网络被拦截，未能查询（VDE）` | 网络问题，不是数据问题 |
+| `（生产厂网站无此项）` | 官网没公开这一项，**不算不一致** |
+| `（型号表格未填）` | 表格该列是空的，**不算不一致** |
+
+加 `--detail-col N` 会把来源 URL 写到 N 列，点开就能人工复核。
+
+## 比对逻辑：怎么避免刷假警报
+
+抓数据不难，难在「同一个意思写法不同」。所以做了分层处理：
+
+| 字段 | 处理方式 |
+|:---|:---|
+| 制造商 / 生产厂 | 忽略 `Co.,Ltd.` `CO LTD` `GmbH` `Electronics` 这类后缀词；包含判定 + 相似度 ≥ 0.86 算一致（官网字段常带整段地址） |
+| 型号 | 先剥掉括号里的品牌备注，再按 `/ , 、 ;` 拆成集合判交集；单个再做 0.9 相似度兜底 |
+| 标准 | 抽成标准号集合，`EN IEC 62368-1` 归一为 `EN 62368-1`；完全命中算一致，只差年份/A修订算一致但注明 |
+| 证书状态 | 映射成「有效 / 失效」两态再比，中英文都认 |
+
+结论分四态：**一致 / 不一致 / 网站无此项 / 表格未填**。只有真「不一致」才标 ✗。
+
+# 已知限制
+
+这几条是硬限制，不是 bug，用之前得知道。
+
+## TÜV Rheinland 不公开「生产厂」
+
+Certipedia 上没有 Manufacturing plant 这一项。工具会记「网站无此项」而不判不一致 —— **生产厂只能靠证书 PDF 或人工核**，这点绕不过去。
+
+## 中英文混写比不了
+
+表格写「东莞」、官网写 `Dongguan, China`，字符串比对必然判不一致。这类会被标出来交人工看，别指望工具自动过。
+
+## 标准差年份不替你做决定
+
+`EN 62368-1:2014` 与 `EN IEC 62368-1:2020+A11` 判为一致并注明「版本/年份不同」。**是否算问题由你判断** —— 工具不替你拍这个板。
+
+## 跑得不快，这是故意的
+
+为了不给对方网站压力，单站请求间隔 1.2 秒 + 随机抖动。一百多条大约三分钟。抓过的页面缓存在 `cert_verify\.cache\`，重跑同一批不会再打人家的站；该目录随时可删。
+
+## 检测到防火墙拦截会立刻停止
+
+避免把整张表写满「查询失败」这种没用的结论。
+
+# 技术实现
+
+## TÜV Rheinland 抓取路径（已实测）
+
+```
+证书详情：GET https://www.certipedia.com/certificates/<数字证书号>?locale=en
+搜索兜底：GET https://www.certipedia.com/search/matching_product_certificates?locale=en&q=<证书号>
+```
+
+服务端渲染的纯 HTML，不需要浏览器、不需要登录，Python 标准库 `urllib` 就够。
+
+页面字段映射：
+
+| Certipedia 标签 | 映射到 |
+|:---|:---|
+| Certificate Holder | 制造商 |
+| Certified Product → `Model Designation:` | 型号 |
+| Fulfilled Standards | 标准 |
+| `<h2 class="certificate-status">` | 证书状态（Valid / Invalid Certificate）|
+| Certificate Number / Date of Issue / Certificate Type | 辅助信息 |
+
+## 目录结构
+
+```
+证书核对工具\
+  1_安装依赖.bat
+  2_网络自检.bat
+  3_查看表格列结构.bat
+  4_试跑10条.bat
+  5_全量核对.bat
+  9_自测（验证程序本身）.bat
+  渲染文档.bat            把本文档渲染成 HTML
+  介绍文档.Rmd            本文档源文件
+  使用说明.md
+  网络现状快照.txt
+  cert_verify\
+    cli.py               命令行入口
+    netcheck.py          网站可达性自检
+    http_client.py       HTTP：重试 / 限速 / 缓存 / 识别防火墙拦截页
+    browser_client.py    Playwright 封装（VDE/UL 用，可选依赖）
+    models.py            统一的证书字段模型
+    compare.py           归一化 + 五字段比对
+    excel_runner.py      读 xlsx → 查询 → 比对 → 写 M 列
+    config.py            列映射配置（要改的就是这个）
+    selftest.py          端到端自测
+    providers\
+      tuv_rheinland.py   Certipedia，已验证
+      vde.py             等网络放通
+      ul.py              等网络放通 + 账号
+```
+
+## 分层设计
+
+各机构网站字段名各不相同，全部映射到统一的 `CertRecord` 模型，比对层只面向 `CertRecord`，不关心数据来自哪家。所以**新增一家认证机构只需加一个 provider 文件**，比对和 Excel 读写逻辑完全不用改。
+
+# 命令行参考
+
+不想用 bat 的话，所有功能都有对应命令：
+
+```bat
+:: 网站可达性自检
+python -m cert_verify.cli netcheck
+
+:: 查单个证书号，看抓到的原始字段
+python -m cert_verify.cli query 50679826 --agency TUV
+
+:: 打印 xlsx 各 sheet 表头
+python -m cert_verify.cli inspect "清单.xlsx"
+
+:: 试跑 10 条，来源 URL 写到 N 列
+python -m cert_verify.cli run "清单.xlsx" --limit 10 --detail-col N
+
+:: 只跑指定 sheet
+python -m cert_verify.cli run "清单.xlsx" --sheet UL --sheet CB
+
+:: 全表指定默认认证机构
+python -m cert_verify.cli run "清单.xlsx" --agency TUV
+
+:: VDE 联通后标定：把接口原始 JSON 落盘
+python -m cert_verify.cli probe-vde --cert-no 40052271
+
+:: 离线兜底：解析手工保存的 VDE 接口响应
+python -m cert_verify.cli parse-file vde 保存的响应.json
+```
+
+最后一条是 VDE 网络没放通时的过渡方案：在能上网的机器上按 **F12 → Network → 过滤 `restSearch` → 右键 Copy response**，存成 json 再喂给解析器，规则和在线路径完全一致。`tests/fixtures/vde_40052271.json` 就是这么来的。
+
+# 常见问题
+
+**M 列全是空的？**
+`first_data_row` 配错了，或者 I 列没有证书号。跑 `3_查看表格列结构.bat` 确认数据从第几行开始。
+
+**结果里大面积「表格未填」？**
+列字母配错了，工具读到的是空单元格。重新核对 `config.py` 里的列映射。
+
+**同一条重复跑结果不一样？**
+不会。抓过的页面有磁盘缓存，除非删掉 `cert_verify\.cache\`。如果确实变了，说明官网数据更新了。
+
+**能不能加别的认证机构（Intertek、CQC、SGS）？**
+可以，加一个 provider 文件即可，比对和 Excel 逻辑不用动。但前提同样是那个站点在公司网络里能连上。
+
+**能打包成 exe 吗？**
+可以用 PyInstaller，但这是个命令行工具、bat 已经够用，打成 exe 反而不方便改 `config.py` 里的列映射。需要的话再说。
+
+# 下一步
+
+::: {.alert}
+**当前卡点：列映射还配不了。**
+
+`电源电路部分安全件报备清单明细表_认证类别UL-CB 20230420.xlsx` 不在本机（整个桌面都搜过）。目前只锁定了题目明确给的 I 列（证书号）和 M 列（结果），其余五个字段在哪几列还不知道。
+
+把文件放进工作目录，跑一次 `3_查看表格列结构.bat`，就能把 `config.py` 配好。两个 sheet 列结构不同的话，分别配两条。
+:::
+
+同时建议并行推进网络白名单申请 —— 那是打通 VDE / UL / IECEE 的唯一前提。
+
+```{r netcheck-live, eval=FALSE}
+# 有 R 环境时，可以直接在文档里跑一次网络自检并把结果嵌进来
+cat(system("python -m cert_verify.cli netcheck", intern = TRUE), sep = "\n")
+```

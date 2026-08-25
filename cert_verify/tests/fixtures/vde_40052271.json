@@ -1,0 +1,67 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 0,
+    "params": {
+      "echoParams": "all",
+      "indent": "true",
+      "fl": "id,productName_de,productName_en,companyName_de,companyName_en,companyNumber,registerNumber,firstTypes,typeNames,rights_taxNames,validityLimit,markNumber,informationType_taxIds",
+      "start": "0",
+      "fq": [
+        "(detailDocType:zertreg|certificate)",
+        "id:zertreg|certificate#40052271",
+        "rights_taxNames:(\"none\" OR \"anonym\")",
+        "detailDocType:zertreg|certificate",
+        "{!v=$validfrom df=validfrom}",
+        "{!v=$validto df=validto}"
+      ],
+      "rows": "50",
+      "q": "*:*",
+      "validfrom": "[* TO NOW/MINUTE]",
+      "validto": "[NOW/MINUTE TO *]",
+      "wt": "json",
+      "rid": "-54205399"
+    }
+  },
+  "response": {
+    "numFound": 1,
+    "start": 0,
+    "numFoundExact": true,
+    "docs": [
+      {
+        "rights_taxNames": ["none"],
+        "typeNames": [
+          "WMR05D180M * bis/to",
+          "WMR05D561K *",
+          "WMR07D180M * bis/to",
+          "WMR07D681K *",
+          "WMR10D112K *",
+          "WMR10D180M * bis/to",
+          "WMR14D112K *",
+          "WMR14D180M * bis/to",
+          "WMR20D112K *",
+          "WMR20D180M * bis/to"
+        ],
+        "companyNumber": "5000025",
+        "informationType_taxIds": [2289726, 2289762],
+        "id": "zertreg|certificate#40052271",
+        "registerNumber": "E809",
+        "productName_de": "Varistor",
+        "companyName_de": "Xiamen Wanming",
+        "firstTypes": "WMR07D180M * bis/to, WMR07D681K *, WMR10D180M * bis/to, WMR10D112K *, WMR20D180M *..",
+        "generatedUrl": "/tic-en/marks-and-certificates/vde-approved-products/certificate?id=40052271&type=zertreg%7Ccertificate",
+        "productName": "Varistor",
+        "companyName": "Xiamen Wanming",
+        "linkTarget": "self",
+        "certificate_symbol_link": "/resource/blob/2299152/f76ac3eda22072cf723f9cb1741a2425/vde-reg-dreieck-xxxx-blue-rgb-icon.svg"
+      }
+    ]
+  },
+  "facet_counts": {
+    "facet_fields": {
+      "informationType_taxIds": ["2289726", 1, "2289762", 1],
+      "productFacet_de": ["Varistor", 1],
+      "productFacet_en": ["Varistor", 1]
+    }
+  }
+}

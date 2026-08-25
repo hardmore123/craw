@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>证书核对 · 报备清单 × 官网</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>安全件报备清单 × 官网证书核对</h1>
+    <p class="sub">上传报备清单 → 程序自动到 VDE / UL / TÜV 官网逐条查证书，比对制造商、型号、标准等 → 导出结果。原文件不改动，另存副本，不一致的地方标红。</p>
+  </header>
+
+  <!-- 步骤 1：上传 -->
+  <section id="step-upload" class="card">
+    <h2><span class="step-no">1</span> 选择报备清单文件</h2>
+    <p class="hint">选择要核对的 Excel（.xlsx）文件，点“上传并解析”。程序会自动读出里面的工作表。</p>
+    <input type="file" id="file" accept=".xlsx" />
+    <button id="btn-upload" class="primary">上传并解析</button>
+    <span id="upload-msg" class="msg"></span>
+  </section>
+
+  <!-- 步骤 2：列映射 -->
+  <section id="step-map" class="card hidden">
+    <h2><span class="step-no">2</span> 确认要核对哪些表、每列是什么</h2>
+    <div class="tip-box">
+      <b>已自动识别每列的含义，一般无需改动。</b> 请检查：① 勾选需要核对的工作表；② 看“证书号”是否选对了列（最关键）。
+      不确定就看每张表下方的预览。
+    </div>
+    <div id="sheets"></div>
+
+    <div class="run-params">
+      <h3>运行设置</h3>
+      <div class="param-row">
+        <div class="param-main">
+          <span class="param-label">核对数量</span>
+          <div class="seg" id="limit-seg">
+            <button type="button" data-limit="10" class="on">先试跑 10 条</button>
+            <button type="button" data-limit="0">全部核对</button>
+            <label class="seg-custom">自定义 <input type="number" id="limit" value="10" min="0" /> 条<span class="hint">（0=全部）</span></label>
+          </div>
+          <p class="hint">建议先“试跑 10 条”确认没问题，再改“全部核对”。</p>
+        </div>
+      </div>
+
+      <div class="param-row">
+        <div class="param-main">
+          <span class="param-label">查询间隔</span>
+          <div class="seg" id="interval-seg">
+            <button type="button" data-interval="1" class="on">快速 1 秒</button>
+            <button type="button" data-interval="5">稳妥 5 秒</button>
+            <button type="button" data-interval="15">保守 15 秒</button>
+            <label class="seg-custom">固定间隔 <input type="number" id="query_interval" value="1" min="0" step="0.5" /> 秒</label>
+            <label class="seg-custom">＋随机抖动 0～<input type="number" id="query_jitter" value="1" min="0" step="0.5" /> 秒</label>
+          </div>
+          <p class="hint">每查一条证书之间的等待 = <b>固定间隔</b> ＋ <b>0～随机抖动</b> 的随机秒数（抖动让间隔不固定、更像真人，降低被封风险）。
+            间隔越小越快，但<b style="color:#cf222e">太小可能被官网风控/封 IP</b>；批量核对建议固定 5~15 秒。默认：固定 1 秒 ＋ 抖动 1 秒（即每条实际等 1~2 秒）。</p>
+        </div>
+      </div>
+
+      <details class="advanced">
+        <summary>高级设置（一般不用改）</summary>
+        <div class="run-params">
+          <label>指定机构（不选则自动判断）
+            <select id="default_agency">
+              <option value="">自动判断（按证书号/类别列）</option>
+              <option value="VDE">VDE</option>
+              <option value="UL">UL</option>
+              <option value="TUV">TÜV Rheinland</option>
+            </select>
+          </label>
+          <label>代理地址 <input type="text" id="proxy" placeholder="留空=直连(通常无需VPN)" size="22" title="本机测试三家官网均可直连；如需代理再填，如 http://127.0.0.1:7877" /></label>
+          <label>来源URL写入列 <input type="text" id="detail_col" value="N" size="3" title="把官网链接/错误信息写入这一列" /></label>
+          <label class="ck"><input type="checkbox" id="stop_on_blocked" checked /> 遇到网络被拦截就停止</label>
+        </div>
+      </details>
+    </div>
+
+    <div class="ul-box">
+      <span>UL 官网登录状态：<b id="ul-state">检测中…</b></span>
+      <button id="btn-ul-login">登录 UL（会弹出 Edge 浏览器）</button>
+      <span class="hint">只有核对 UL 证书时才需要登录。</span>
+    </div>
+
+    <button id="btn-run" class="primary big">▶ 开始核对</button>
+  </section>
+
+  <!-- 步骤 3：进度 -->
+  <section id="step-progress" class="card hidden">
+    <h2>3. 核对进度</h2>
+    <div class="progress-bar"><div id="bar"></div></div>
+    <p id="progress-text">准备中…</p>
+    <div class="stats" id="stats"></div>
+    <button id="btn-cancel" class="danger">取消</button>
+  </section>
+
+  <!-- 步骤 4：结果 -->
+  <section id="step-result" class="card hidden">
+    <h2><span class="step-no">4</span> 查看结果、导出表格</h2>
+    <p class="hint">点表格里任意一行可看该证书的字段明细。可导出两份 Excel（都保留原表布局）：<br>
+      <b>对比表格</b>：原始值不动，多出“核对结论”（一致 / 不一致 / 未查到）和来源链接，不一致处标红。<br>
+      <b>抓取表格</b>：把制造商 / 型号 / 标准列换成官网抓到的值，官网抓到的内容用<b style="color:#00B0F0">天蓝色</b>字标出，方便和表格原值区分。</p>
+    <div class="result-tools">
+      <label>筛选
+        <select id="filter">
+          <option value="all">全部</option>
+          <option value="mismatch">仅不一致</option>
+          <option value="problem">仅未查到 / 被拦截 / 失败</option>
+        </select>
+      </label>
+      <button id="btn-download" class="primary">下载对比表格</button>
+      <button id="btn-download-crawl">下载抓取表格</button>
+      <span id="degraded-msg" class="msg"></span>
+    </div>
+    <table id="result-table">
+      <thead>
+        <tr><th>工作表</th><th>行</th><th>证书号</th><th>机构</th><th>结论</th><th>状态</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- 行明细弹层 -->
+  <div id="detail-modal" class="modal hidden">
+    <div class="modal-body">
+      <button id="modal-close" class="modal-close">×</button>
+      <h3 id="modal-title">字段明细</h3>
+      <table id="modal-table">
+        <thead><tr><th>字段</th><th>表格值</th><th>官网值</th><th>结论</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p id="modal-url"></p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+分层网络诊断
+■ www.vde.com
+    DNS      91.105.243.113
+    TCP:443  连上 222 ms
+    TLS校验   证书不受信任(unable to get local issuer certificate)
+    TLS不校验 TimeoutError
+    经代理    成功 HTTP 200   （http://127.0.0.1:7877）
+    结论     直连被网关拦，但经代理可通 ⇒ 用 --proxy http://127.0.0.1:7877 或设 CERT_PROXY 即可抓
+
+■ certificates.iecee.org
+    DNS      3.167.227.8, 3.167.227.81, 3.167.227.32
+    TCP:443  连上 200 ms
+    TLS校验   证书不受信任(unable to get local issuer certificate)
+    TLS不校验 TimeoutError
+    经代理    成功 HTTP 200   （http://127.0.0.1:7877）
+    结论     直连被网关拦，但经代理可通 ⇒ 用 --proxy http://127.0.0.1:7877 或设 CERT_PROXY 即可抓
+
+■ productiq.ul.com
+    DNS      104.17.64.7, 104.17.63.7
+    TCP:443  连上 198 ms
+    TLS校验   OK TLSv1.3   签发者=WE1
+    结论     正常，脚本可直接抓
+
+■ 浏览器是否有自己的出口
+    系统代理  ProxyEnable=1 ProxyServer=127.0.0.1:7877 PAC=-
+    本地代理端口  [7877]
+    ⚠ 有 proxy 权限的浏览器扩展：
+        iGG谷歌学术助手  (mchibleoefileemjfghfejaggonplmmg)
+      → 这类扩展只代理浏览器内的流量。浏览器能打开、脚本打不开，通常就是这个原因。

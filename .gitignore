@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+
+# 敏感数据 / 登录态（绝不上传）
+cert_verify/.ul_profile/
+.env
+
+# 缓存 / 临时文件
+cert_verify/.cache/
+cert_verify/web/_work/
+_selftest/
+_probe_html/
+_build_log.txt
+
+# Excel 输入/输出数据文件（含个人业务数据）
+dist/input/*.xlsx
+dist/证书核对工具/
+dist/*.zip
+dist/历史版本/*/证书核对工具*.zip
+
+# 浏览器 profile（Playwright 下载的 Chromium 等）
+cert_verify/.ul_profile/
+
+# IDE
+.vscode/
+.kiro/
+
+# 系统文件
+Thumbs.db
+~$*
+*.tmp

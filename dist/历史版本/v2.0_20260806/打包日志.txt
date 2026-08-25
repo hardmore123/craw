@@ -1,0 +1,55 @@
+打包目录: C:\Users\likunyuan\Desktop\爬取项目\crawl4ai-main\dist\证书核对工具
+压缩包  : C:\Users\likunyuan\Desktop\爬取项目\crawl4ai-main\dist\证书核对工具_v2.0.zip  (128 KB)
+文件数  : 50
+
+目录内容:
+  0_看介绍文档.bat
+  1_安装依赖.bat
+  2_网络自检.bat
+  3_查看表格列结构.bat
+  4_试跑10条.bat
+  5_全量核对.bat
+  6_UL登录（首次）.bat
+  9_自测（验证程序本身）.bat
+  介绍文档.html
+  使用说明.md
+  启动网页.bat
+  开发说明.md
+  文件清单.md
+  网络现状快照.txt
+  网络诊断快照.txt
+  cert_verify\__init__.py
+  cert_verify\browser_client.py
+  cert_verify\build_package.py
+  cert_verify\cli.py
+  cert_verify\compare.py
+  cert_verify\config.py
+  cert_verify\excel_runner.py
+  cert_verify\excel_writer.py
+  cert_verify\http_client.py
+  cert_verify\models.py
+  cert_verify\netcheck.py
+  cert_verify\netdiag.py
+  cert_verify\render_doc.py
+  cert_verify\requirements.txt
+  cert_verify\selftest.py
+  cert_verify\ul_login.py
+  cert_verify\verifier.py
+  cert_verify\介绍文档.Rmd
+  cert_verify\providers\__init__.py
+  cert_verify\providers\base.py
+  cert_verify\providers\tuv_rheinland.py
+  cert_verify\providers\ul.py
+  cert_verify\providers\vde.py
+  cert_verify\tests\test_compare_fields.py
+  cert_verify\tests\test_excel_writer.py
+  cert_verify\tests\test_vde_parse.py
+  cert_verify\tests\test_web_flow.py
+  cert_verify\tests\fixtures\vde_40052271.json
+  cert_verify\web\__init__.py
+  cert_verify\web\__main__.py
+  cert_verify\web\server.py
+  cert_verify\web\tasks.py
+  cert_verify\web\static\app.js
+  cert_verify\web\static\index.html
+  cert_verify\web\static\style.css
