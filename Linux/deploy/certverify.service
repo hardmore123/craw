@@ -15,7 +15,9 @@ EnvironmentFile=-/home/hisense/pro/Gitlab/DataGather/.env
 Environment="DECRYPT_URL=http://10.18.87.51:8500/parse_file"
 Environment="DECRYPT_ENABLED=true"
 Environment="DECRYPT_TIMEOUT=60"
-ExecStart=/home/hisense/pro/Gitlab/DataGather/venv/bin/python -m cert_verify.web --host 0.0.0.0 --port 8756 --no-browser
+# 后端只监听本机；对外由 Nginx（8756，子路径 /craw）反代到此端口
+# 内部用 8757，因为 Nginx 要占用对外的 8756
+ExecStart=/home/hisense/pro/Gitlab/DataGather/venv/bin/python -m cert_verify.web --host 127.0.0.1 --port 8757 --no-browser
 Restart=on-failure
 RestartSec=3
 
