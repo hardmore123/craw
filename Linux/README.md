@@ -6,10 +6,16 @@
 
 ## 目录
 
-- `deploy/certverify.service`：systemd 网页服务定义。
+- `服务器部署清单.md`：★ 可直接照做的分步部署清单，每步带验证命令（重点规避 Nginx 权限与端口/路径坑）。
+- `deploy/certverify.service`：systemd 网页服务定义（含 HOME/LANG/解密环境变量）。
+- `deploy/nginx-certverify.conf`：Nginx 纯反向代理配置（不读文件，避开 ACL 坑）。
 - `deploy/test_ul_linux.py`：Linux Chromium/UL 验证脚本。
 - `浏览器安装包/`：Chromium 压缩包，仅在服务器缺少浏览器时使用。
-- `部署说明.md`：完整的 Linux 架构、网络、UL、解密和 systemd 说明。
+- `部署说明.md`：完整的 Linux 架构、网络、UL、解密和 systemd 说明（背景分析）。
+
+## 部署从哪开始
+
+**直接照做请看 `服务器部署清单.md`**。`部署说明.md` 是背景与可行性分析，适合先理解原理。
 
 ## 服务器实际目录
 
