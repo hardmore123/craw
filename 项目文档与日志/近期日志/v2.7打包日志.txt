@@ -1,0 +1,9 @@
+打包目录: C:\Users\likunyuan\Desktop\爬取项目\crawl4ai-main\本地Windows\交付\证书核对工具
+压缩包  : C:\Users\likunyuan\Desktop\爬取项目\crawl4ai-main\本地Windows\交付\证书核对工具_v2.7.zip  (147 KB)
+文件数  : 56
+
+整理后验证：
+  - cert_verify/decrypt.py 已包含
+  - cert_verify/web/server.py 已包含解密调用
+  - deploy/certverify.service 已包含
+  - 未包含 .ul_profile、storage_state.json、.env、业务 Excel

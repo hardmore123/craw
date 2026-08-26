@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10.1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-08-26" />
+  <title>安全件报备清单 × 官网证书核对工具 — 功能介绍与操作手册</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">body{font-family:"Microsoft YaHei","Segoe UI",Arial,sans-serif;max-width:900px;margin:2rem auto;padding:0 1.2rem;line-height:1.75;color:#24292f;}h1{border-bottom:2px solid #d0d7de;padding-bottom:.3em;}h2{border-bottom:1px solid #d8dee4;padding-bottom:.25em;margin-top:2em;}code{background:#f6f8fa;padding:.15em .35em;border-radius:4px;font-size:92%;}pre{background:#f6f8fa;padding:1em;border-radius:6px;overflow-x:auto;}pre code{background:none;padding:0;}table{border-collapse:collapse;width:100%;margin:1em 0;}th,td{border:1px solid #d0d7de;padding:.5em .7em;text-align:left;vertical-align:top;}th{background:#f6f8fa;}tr:nth-child(even){background:#fbfcfd;}blockquote{border-left:4px solid #0969da;background:#f0f6fc;margin:1em 0;padding:.6em 1em;color:#24292f;}#TOC{background:#f6f8fa;border:1px solid #d0d7de;border-radius:6px;padding:1em 1.5em;}</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">安全件报备清单 × 官网证书核对工具 —
+功能介绍与操作手册</h1>
+<p class="date">2026-08-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#这个工具解决什么问题" id="toc-这个工具解决什么问题"><span class="toc-section-number">1</span> 这个工具解决什么问题</a></li>
+<li><a href="#目前哪些机构能查" id="toc-目前哪些机构能查"><span class="toc-section-number">2</span> 目前哪些机构能查</a>
+<ul>
+<li><a href="#两类问题性质完全不同" id="toc-两类问题性质完全不同"><span class="toc-section-number">2.1</span> 两类问题，性质完全不同</a>
+<ul>
+<li><a href="#第一类公司网络白名单拦截" id="toc-第一类公司网络白名单拦截"><span class="toc-section-number">2.1.1</span>
+第一类：公司网络白名单拦截</a></li>
+<li><a href="#第二类反爬-需登录" id="toc-第二类反爬-需登录"><span class="toc-section-number">2.1.2</span> 第二类：反爬 + 需登录</a></li>
+</ul></li>
+<li><a href="#vde代码已写完并验证只等网络放通" id="toc-vde代码已写完并验证只等网络放通"><span class="toc-section-number">2.2</span>
+VDE：代码已写完并验证，只等网络放通</a>
+<ul>
+<li><a href="#已验证的字段映射" id="toc-已验证的字段映射"><span class="toc-section-number">2.2.1</span> 已验证的字段映射</a></li>
+<li><a href="#三个要注意的点" id="toc-三个要注意的点"><span class="toc-section-number">2.2.2</span> 三个要注意的点</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#快速上手" id="toc-快速上手"><span class="toc-section-number">3</span> 快速上手</a>
+<ul>
+<li><a href="#第一次使用先验证工具本身" id="toc-第一次使用先验证工具本身"><span class="toc-section-number">3.1</span>
+第一次使用：先验证工具本身</a></li>
+<li><a href="#正式核对四步" id="toc-正式核对四步"><span class="toc-section-number">3.2</span> 正式核对：四步</a>
+<ul>
+<li><a href="#第-1-步看表格列结构" id="toc-第-1-步看表格列结构"><span class="toc-section-number">3.2.1</span> 第 1 步：看表格列结构</a></li>
+<li><a href="#第-2-步配列映射" id="toc-第-2-步配列映射"><span class="toc-section-number">3.2.2</span> 第 2 步：配列映射</a></li>
+<li><a href="#第-3-步试跑-10-条" id="toc-第-3-步试跑-10-条"><span class="toc-section-number">3.2.3</span> 第 3 步：试跑 10 条</a></li>
+<li><a href="#第-4-步全量核对" id="toc-第-4-步全量核对"><span class="toc-section-number">3.2.4</span> 第 4 步：全量核对</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#结果怎么看" id="toc-结果怎么看"><span class="toc-section-number">4</span> 结果怎么看</a>
+<ul>
+<li><a href="#比对逻辑怎么避免刷假警报" id="toc-比对逻辑怎么避免刷假警报"><span class="toc-section-number">4.1</span>
+比对逻辑：怎么避免刷假警报</a></li>
+</ul></li>
+<li><a href="#已知限制" id="toc-已知限制"><span class="toc-section-number">5</span> 已知限制</a>
+<ul>
+<li><a href="#tüv-rheinland-不公开生产厂" id="toc-tüv-rheinland-不公开生产厂"><span class="toc-section-number">5.1</span> TÜV Rheinland
+不公开「生产厂」</a></li>
+<li><a href="#中英文混写比不了" id="toc-中英文混写比不了"><span class="toc-section-number">5.2</span> 中英文混写比不了</a></li>
+<li><a href="#标准差年份不替你做决定" id="toc-标准差年份不替你做决定"><span class="toc-section-number">5.3</span> 标准差年份不替你做决定</a></li>
+<li><a href="#跑得不快这是故意的" id="toc-跑得不快这是故意的"><span class="toc-section-number">5.4</span> 跑得不快，这是故意的</a></li>
+<li><a href="#检测到防火墙拦截会立刻停止" id="toc-检测到防火墙拦截会立刻停止"><span class="toc-section-number">5.5</span>
+检测到防火墙拦截会立刻停止</a></li>
+</ul></li>
+<li><a href="#技术实现" id="toc-技术实现"><span class="toc-section-number">6</span> 技术实现</a>
+<ul>
+<li><a href="#tüv-rheinland-抓取路径已实测" id="toc-tüv-rheinland-抓取路径已实测"><span class="toc-section-number">6.1</span> TÜV Rheinland
+抓取路径（已实测）</a></li>
+<li><a href="#目录结构" id="toc-目录结构"><span class="toc-section-number">6.2</span> 目录结构</a></li>
+<li><a href="#分层设计" id="toc-分层设计"><span class="toc-section-number">6.3</span> 分层设计</a></li>
+</ul></li>
+<li><a href="#命令行参考" id="toc-命令行参考"><span class="toc-section-number">7</span> 命令行参考</a></li>
+<li><a href="#常见问题" id="toc-常见问题"><span class="toc-section-number">8</span> 常见问题</a></li>
+<li><a href="#下一步" id="toc-下一步"><span class="toc-section-number">9</span> 下一步</a></li>
+</ul>
+</nav>
+<blockquote>
+<p>本文档同时是 R Markdown 源文件。有 R 环境时用
+<code>rmarkdown::render(&quot;介绍文档.Rmd&quot;)</code> 生成 HTML； 没有 R
+时双击包里的 <code>渲染文档.bat</code>，会走 pandoc 兜底出同样的
+HTML。</p>
+</blockquote>
+<h1 data-number="1" id="这个工具解决什么问题"><span class="header-section-number">1</span> 这个工具解决什么问题</h1>
+<p>安全件报备清单里每一行都填了某个元器件的认证信息，但<strong>填的内容和认证机构官网上的真实信息是否一致，过去只能一条条手工去查</strong>。一张一百多行的表，人工核一遍要小半天，而且容易看漏。</p>
+<p>这个工具把这件事自动化：</p>
+<ol type="1">
+<li>读你的 xlsx，<strong>两个 sheet 都会处理</strong></li>
+<li>逐行取 <strong>I 列的证书号</strong></li>
+<li>用证书号去认证机构官网查这张证书的真实信息</li>
+<li>把官网结果与表格里的
+<strong>制造商、生产厂、型号、标准、证书状态</strong> 五项逐项比对</li>
+<li>结论写进 <strong>M 列</strong></li>
+</ol>
+<p>原文件不动，结果另存为 <code>原名_核对结果.xlsx</code>。</p>
+<h1 data-number="2" id="目前哪些机构能查"><span class="header-section-number">2</span> 目前哪些机构能查</h1>
+<p>跑一次 <code>2_网络自检.bat</code>
+可以看到实时结果。打包时的实测情况：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">机构</th>
+<th style="text-align: left;">站点</th>
+<th style="text-align: left;">能否查询</th>
+<th style="text-align: left;">卡在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TÜV Rheinland</strong></td>
+<td style="text-align: left;">www.certipedia.com</td>
+<td style="text-align: left;"><strong>能，已验证可用</strong></td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">VDE</td>
+<td style="text-align: left;">www.vde.com（restSearch JSON 接口）</td>
+<td style="text-align: left;"><strong>已跑通（需开代理/VPN）</strong></td>
+<td style="text-align: left;">直连被网关拦，走代理即通</td>
+</tr>
+<tr>
+<td style="text-align: left;">UL Product iQ</td>
+<td style="text-align: left;">productiq.ul.com</td>
+<td style="text-align: left;">不能</td>
+<td style="text-align: left;">反爬 403 + 需登录账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">UL Prospector</td>
+<td style="text-align: left;">productiq.ulprospector.com</td>
+<td style="text-align: left;">需开代理/VPN</td>
+<td style="text-align: left;">直连被网关拦</td>
+</tr>
+<tr>
+<td style="text-align: left;">IECEE（CB 证书官方库）</td>
+<td style="text-align: left;">certificates.iecee.org</td>
+<td style="text-align: left;">需开代理/VPN</td>
+<td style="text-align: left;">直连被网关拦</td>
+</tr>
+<tr>
+<td style="text-align: left;">TÜV SÜD</td>
+<td style="text-align: left;">www.tuvsud.com</td>
+<td style="text-align: left;">不能</td>
+<td style="text-align: left;">反爬 403</td>
+</tr>
+</tbody>
+</table>
+<p><strong>所以现在能真查的只有 TÜV Rheinland。</strong> 遇到 VDE / UL
+的行，工具会写「网络被拦截，未能查询」，而不是瞎给结论 ——
+这一点很重要，宁可留白也不能给假结论。</p>
+<h2 data-number="2.1" id="两类问题性质完全不同"><span class="header-section-number">2.1</span> 两类问题，性质完全不同</h2>
+<h3 data-number="2.1.1" id="第一类公司网络白名单拦截"><span class="header-section-number">2.1.1</span>
+第一类：公司网络白名单拦截</h3>
+<p>直连时，公司网关对 vde.com / iecee.org 做 SSL
+审查但不放行上游，实测：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">尝试方式</th>
+<th style="text-align: left;">实测结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>http://www.vde.com/...</code></td>
+<td style="text-align: left;">302 到
+<code>10.18.0.250/disable/disable.htm</code>，标题「URL过滤」</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>https://www.vde.com/...</code></td>
+<td style="text-align: left;"><code>CERTIFICATE_VERIFY_FAILED</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">关闭证书校验后重试</td>
+<td style="text-align: left;">TLS
+握手超时（网关回自己的证书后不再往上游走）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>curl.exe</code> / 无头 Edge</td>
+<td style="text-align: left;"><code>SEC_E_UNTRUSTED_ROOT</code> /
+<code>ERR_TIMED_OUT</code></td>
+</tr>
+</tbody>
+</table>
+<p>对照：certipedia 用同一个 Python
+直接验证通过，所以<strong>不是本机信任库的问题</strong>，是这两个域名被专门拦。</p>
+<p><strong>开 VPN/加速器后已跑通。</strong>
+开加速器后本机系统代理生效（<code>ProxyEnable=1</code>、<code>127.0.0.1:7877</code>），脚本走这个系统代理即可穿透网关。工具<strong>默认自动探测系统代理</strong>，无需额外配置：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bat"><code class="sourceCode dosbat"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli query 40052271 -<span class="at">-agency</span> VDE</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">:: 实测返回 found，制造商 Xiamen Wanming、注册号 E809、10 条型号全取到</span></span></code></pre></div>
+<p>也可显式指定：<code>--proxy http://127.0.0.1:7877</code>，或设环境变量
+<code>set CERT_PROXY=http://127.0.0.1:7877</code>。</p>
+<p>注意：<code>iGG谷歌学术助手</code>
+是浏览器扩展代理，只有开了会挂系统代理的
+VPN/加速器时脚本才借得到；纯扩展形态（不改系统代理）脚本走不了 ——
+这也是之前「浏览器能开、脚本不行」的原因。</p>
+<p>长期最干净的办法还是让 IT 把这四个域名加白名单：</p>
+<pre><code>vde.com
+certificates.iecee.org
+productiq.ul.com
+productiq.ulprospector.com</code></pre>
+<blockquote>
+<p><strong>建议</strong>：清单是 UL-CB 类别，<strong>CB
+证书最权威的核对源是 IECEE
+官方库</strong>（<code>certificates.iecee.org</code>），比 UL Product iQ
+更该用。报白名单时别漏了它。</p>
+</blockquote>
+<h3 data-number="2.1.2" id="第二类反爬-需登录"><span class="header-section-number">2.1.2</span> 第二类：反爬 + 需登录</h3>
+<p>UL Product iQ 和 TÜV SÜD 即使网络放通也还差一步：Product iQ
+要免费账号，且有 Akamai 反爬，必须用 Playwright 驱动真实浏览器。</p>
+<p>而且<strong>批量查询建议走 UL 官方 API
+或数据授权，不要爬网页</strong>；网页方式只适合几十到几百条的人工核对量级。</p>
+<h2 data-number="2.2" id="vde代码已写完并验证只等网络放通"><span class="header-section-number">2.2</span>
+VDE：代码已写完并验证，只等网络放通</h2>
+<p>VDE 检索页背后是一个 Solr REST 接口，<strong>免登录、免
+Cookie</strong>：</p>
+<pre><code>GET https://www.vde.com/www8/servlet/restSearch/2289904/zertreg-certificates
+    ?wt=json
+    &amp;fq=(detailDocType:zertreg|certificate)
+    &amp;fq=id:zertreg|certificate#40052271
+    &amp;start=0&amp;rows=50</code></pre>
+<p>只需两个请求头：<code>Accept: application/json</code> 和
+<code>Referer</code>（指向对应搜索页）。Cookie 里只有 GA
+分析值，不影响结果。</p>
+<p>返回结构化 JSON，比爬 HTML
+稳得多，一次请求出结果，也不需要浏览器。</p>
+<h3 data-number="2.2.1" id="已验证的字段映射"><span class="header-section-number">2.2.1</span> 已验证的字段映射</h3>
+<p>解析逻辑是<strong>对着证书号 40052271 的真实响应写的</strong>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">JSON 字段</th>
+<th style="text-align: left;">映射到</th>
+<th style="text-align: left;">实际值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>companyName</code> /
+<code>_en</code> / <code>_de</code></td>
+<td style="text-align: left;">制造商</td>
+<td style="text-align: left;"><code>Xiamen Wanming</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>typeNames</code>（完整型号数组）</td>
+<td style="text-align: left;">型号</td>
+<td style="text-align: left;">10 条，含 <code>*</code> 通配</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>firstTypes</code></td>
+<td style="text-align: left;">型号兜底（截断预览串）</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>id</code> =
+<code>zertreg\|certificate#40052271</code></td>
+<td style="text-align: left;">证书号</td>
+<td style="text-align: left;"><code>40052271</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>registerNumber</code></td>
+<td style="text-align: left;">VDE 注册号 Reg.-Nr.</td>
+<td style="text-align: left;"><code>E809</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>productName_en</code></td>
+<td style="text-align: left;">产品类别</td>
+<td style="text-align: left;"><code>Varistor</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>validityLimit</code></td>
+<td style="text-align: left;">到期日</td>
+<td style="text-align: left;">本例为空</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>numFound &gt;= 1</code></td>
+<td style="text-align: left;">证书状态</td>
+<td style="text-align: left;">有效</td>
+</tr>
+</tbody>
+</table>
+<p>真实响应存在
+<code>cert_verify\tests\fixtures\vde_40052271.json</code>，<code>9_自测.bat</code>
+会拿它跑 20
+项断言，<strong>当前全部通过</strong>。所以网络一通就能直接用，不需要再改解析代码。</p>
+<h3 data-number="2.2.2" id="三个要注意的点"><span class="header-section-number">2.2.2</span> 三个要注意的点</h3>
+<p><strong>证书状态是推断出来的。</strong> 服务端在 <code>fq</code>
+里强制加了有效期过滤：</p>
+<pre><code>validfrom: [* TO NOW/MINUTE]
+validto:   [NOW/MINUTE TO *]</code></pre>
+<p>也就是这个接口<strong>只返回当前有效的证书</strong>，所以命中即「有效」。代价是查不到时分不清「证书不存在」还是「已失效」，工具会如实写「官网未查到（可能已失效或证书号有误）」，不替你猜。想区分的话可以把
+<code>vde.py</code> 里的 <code>INCLUDE_EXPIRED</code> 改成
+<code>True</code>（会带上
+<code>validfrom=[* TO *]</code>），服务端是否允许覆盖需联网实测。</p>
+<p><strong>标准和生产厂接口默认不给。</strong> 默认 <code>fl</code>
+字段列表里没有这两项。代码会先试 <code>fl=*</code>
+把全部字段取回来，取不到就留空并记「网站无此项」，不判不一致。网络通了先跑一次标定：</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bat"><code class="sourceCode dosbat"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli probe<span class="at">-vde</span> -<span class="at">-cert-no</span> 40052271</span></code></pre></div>
+<p>原始 JSON 会落盘，一看就知道 <code>fl=*</code>
+有没有生效、有没有标准字段。若确实没有，得另找详情接口（<code>generatedUrl</code>
+指向的详情页可能有）。</p>
+<p><strong>VDE 型号带通配符。</strong> 官网写
+<code>WMR05D561K *</code>、<code>WMR05D180M * bis/to</code>
+表示同系列或范围。工具会把 <code>*</code> 编译成通配正则、把
+<code>bis/to</code> 当噪音剔除，所以表格写具体型号
+<code>WMR10D112K35</code> 也能和官网的 <code>WMR10D112K *</code>
+对上，不会误报不一致。</p>
+<h1 data-number="3" id="快速上手"><span class="header-section-number">3</span> 快速上手</h1>
+<h2 data-number="3.1" id="第一次使用先验证工具本身"><span class="header-section-number">3.1</span> 第一次使用：先验证工具本身</h2>
+<p>不需要你的表格，两步就能确认程序可用。</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bat"><code class="sourceCode dosbat"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">:: 装依赖（只需一次，装 openpyxl）</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>1_安装依赖.bat</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">:: 真实抓取 + 比对 + 写回全流程自测</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>9_自测（验证程序本身）.bat</span></code></pre></div>
+<p>自测会自己造一张样例表、真的去 Certipedia
+抓数据、比对、写回，你能直接看到全流程输出。这一步过了说明程序没问题，可以放心用在真表上。</p>
+<h2 data-number="3.2" id="正式核对四步"><span class="header-section-number">3.2</span> 正式核对：四步</h2>
+<h3 data-number="3.2.1" id="第-1-步看表格列结构"><span class="header-section-number">3.2.1</span> 第 1 步：看表格列结构</h3>
+<p>把你的 xlsx <strong>拖到 <code>3_查看表格列结构.bat</code>
+的图标上</strong>（不是双击，是把文件拖上去）。</p>
+<p>输出类似：</p>
+<pre><code>文件: 电源电路部分安全件报备清单明细表_认证类别UL-CB 20230420.xlsx
+Sheet 列表: [&#39;UL&#39;, &#39;CB&#39;]
+=== [UL]  156 行 × 15 列 ===
+  r1  A( 1) = &#39;序号&#39;
+  r1  C( 3) = &#39;制造商&#39;
+  r1  D( 4) = &#39;生产厂&#39;
+  r1  E( 5) = &#39;型号&#39;
+  r1  F( 6) = &#39;标准&#39;
+  r1  G( 7) = &#39;认证机构&#39;
+  r1  I( 9) = &#39;证书号&#39;
+  r1  J(10) = &#39;证书状态&#39;
+  r1  M(13) = &#39;核对结果&#39;</code></pre>
+<h3 data-number="3.2.2" id="第-2-步配列映射"><span class="header-section-number">3.2.2</span> 第 2 步：配列映射</h3>
+<p>用记事本打开
+<code>cert_verify\config.py</code>，照上一步看到的把列字母填进去：</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>SHEET_COLUMNS <span class="op">=</span> {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;UL&quot;</span>: ColumnMap(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        manufacturer <span class="op">=</span> <span class="st">&quot;C&quot;</span>,     <span class="co"># 制造商在哪列</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        factory      <span class="op">=</span> <span class="st">&quot;D&quot;</span>,     <span class="co"># 生产厂</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        model        <span class="op">=</span> <span class="st">&quot;E&quot;</span>,     <span class="co"># 型号</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        standard     <span class="op">=</span> <span class="st">&quot;F&quot;</span>,     <span class="co"># 标准</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        cert_status  <span class="op">=</span> <span class="st">&quot;J&quot;</span>,     <span class="co"># 证书状态</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        agency       <span class="op">=</span> <span class="st">&quot;G&quot;</span>,     <span class="co"># 认证机构（VDE/UL/TUV）列，没有就留空</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        first_data_row <span class="op">=</span> <span class="dv">2</span>,     <span class="co"># 数据从第几行开始，有几行表头就往后挪</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;CB&quot;</span>: ColumnMap(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 两个 sheet 列结构不同就分别写</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><code>cert_no = &quot;I&quot;</code>（证书号）和
+<code>result = &quot;M&quot;</code>（结果）是默认值，不用写。</p>
+<p>如果表里<strong>没有</strong>「认证机构」列，可以在命令行加
+<code>--agency TUV</code>
+给整张表指定默认机构；也可以不指定，工具会按证书号形态自动判断。</p>
+<h3 data-number="3.2.3" id="第-3-步试跑-10-条"><span class="header-section-number">3.2.3</span> 第 3 步：试跑 10 条</h3>
+<p>把 xlsx 拖到 <code>4_试跑10条.bat</code> 上。打开生成的
+<code>_核对结果.xlsx</code>，检查两件事：</p>
+<ul>
+<li>M 列有没有内容（没有说明 <code>first_data_row</code> 配错了）</li>
+<li>结论合不合理（大面积「表格未填」说明列字母配错了）</li>
+</ul>
+<h3 data-number="3.2.4" id="第-4-步全量核对"><span class="header-section-number">3.2.4</span> 第 4 步：全量核对</h3>
+<p>确认无误后，拖到 <code>5_全量核对.bat</code> 上跑完。</p>
+<h1 data-number="4" id="结果怎么看"><span class="header-section-number">4</span> 结果怎么看</h1>
+<p>M 列的写法：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">输出</th>
+<th style="text-align: left;">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>✓ 一致：制造商、型号、标准、证书状态</code></td>
+<td style="text-align: left;">五项里能比的都对上了</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>✓ 一致：…标准(版本/年份不同: 表格=en62368-1:2014 网站=en62368-1:2020+a11)</code></td>
+<td style="text-align: left;">标准编号一致但版本年份不同，<strong>需你判断算不算问题</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>✗ 不一致：型号不一致[表格=A24-999XXX \| 网站=A24-065N3A]</code></td>
+<td style="text-align: left;">真的不一致，附双方原文</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>✗ 不一致：证书状态不一致[表格=有效 \| 网站=Invalid Certificate]</code></td>
+<td style="text-align: left;">证书已失效但表格还写有效 ——
+最该优先处理的一类</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>⚠ 官网未查到该证书号（TUV-Rheinland）</code></td>
+<td style="text-align: left;">证书号可能填错，或该证书不在此机构库里</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>✗ 网络被拦截，未能查询（VDE）</code></td>
+<td style="text-align: left;">网络问题，不是数据问题</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>（生产厂网站无此项）</code></td>
+<td style="text-align: left;">官网没公开这一项，<strong>不算不一致</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>（型号表格未填）</code></td>
+<td style="text-align: left;">表格该列是空的，<strong>不算不一致</strong></td>
+</tr>
+</tbody>
+</table>
+<p>加 <code>--detail-col N</code> 会把来源 URL 写到 N
+列，点开就能人工复核。</p>
+<h2 data-number="4.1" id="比对逻辑怎么避免刷假警报"><span class="header-section-number">4.1</span> 比对逻辑：怎么避免刷假警报</h2>
+<p>抓数据不难，难在「同一个意思写法不同」。所以做了分层处理：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">字段</th>
+<th style="text-align: left;">处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">制造商 / 生产厂</td>
+<td style="text-align: left;">忽略 <code>Co.,Ltd.</code>
+<code>CO LTD</code> <code>GmbH</code> <code>Electronics</code>
+这类后缀词；包含判定 + 相似度 ≥ 0.86 算一致（官网字段常带整段地址）</td>
+</tr>
+<tr>
+<td style="text-align: left;">型号</td>
+<td style="text-align: left;">先剥掉括号里的品牌备注，再按
+<code>/ , 、 ;</code> 拆成集合判交集；单个再做 0.9 相似度兜底</td>
+</tr>
+<tr>
+<td style="text-align: left;">标准</td>
+<td style="text-align: left;">抽成标准号集合，<code>EN IEC 62368-1</code>
+归一为
+<code>EN 62368-1</code>；完全命中算一致，只差年份/A修订算一致但注明</td>
+</tr>
+<tr>
+<td style="text-align: left;">证书状态</td>
+<td style="text-align: left;">映射成「有效 /
+失效」两态再比，中英文都认</td>
+</tr>
+</tbody>
+</table>
+<p>结论分四态：<strong>一致 / 不一致 / 网站无此项 /
+表格未填</strong>。只有真「不一致」才标 ✗。</p>
+<h1 data-number="5" id="已知限制"><span class="header-section-number">5</span> 已知限制</h1>
+<p>这几条是硬限制，不是 bug，用之前得知道。</p>
+<h2 data-number="5.1" id="tüv-rheinland-不公开生产厂"><span class="header-section-number">5.1</span> TÜV Rheinland
+不公开「生产厂」</h2>
+<p>Certipedia 上没有 Manufacturing plant
+这一项。工具会记「网站无此项」而不判不一致 —— <strong>生产厂只能靠证书
+PDF 或人工核</strong>，这点绕不过去。</p>
+<h2 data-number="5.2" id="中英文混写比不了"><span class="header-section-number">5.2</span> 中英文混写比不了</h2>
+<p>表格写「东莞」、官网写
+<code>Dongguan, China</code>，字符串比对必然判不一致。这类会被标出来交人工看，别指望工具自动过。</p>
+<h2 data-number="5.3" id="标准差年份不替你做决定"><span class="header-section-number">5.3</span> 标准差年份不替你做决定</h2>
+<p><code>EN 62368-1:2014</code> 与 <code>EN IEC 62368-1:2020+A11</code>
+判为一致并注明「版本/年份不同」。<strong>是否算问题由你判断</strong> ——
+工具不替你拍这个板。</p>
+<h2 data-number="5.4" id="跑得不快这是故意的"><span class="header-section-number">5.4</span> 跑得不快，这是故意的</h2>
+<p>为了不给对方网站压力，单站请求间隔 1.2 秒 +
+随机抖动。一百多条大约三分钟。抓过的页面缓存在
+<code>cert_verify\.cache\</code>，重跑同一批不会再打人家的站；该目录随时可删。</p>
+<h2 data-number="5.5" id="检测到防火墙拦截会立刻停止"><span class="header-section-number">5.5</span> 检测到防火墙拦截会立刻停止</h2>
+<p>避免把整张表写满「查询失败」这种没用的结论。</p>
+<h1 data-number="6" id="技术实现"><span class="header-section-number">6</span> 技术实现</h1>
+<h2 data-number="6.1" id="tüv-rheinland-抓取路径已实测"><span class="header-section-number">6.1</span> TÜV Rheinland
+抓取路径（已实测）</h2>
+<pre><code>证书详情：GET https://www.certipedia.com/certificates/&lt;数字证书号&gt;?locale=en
+搜索兜底：GET https://www.certipedia.com/search/matching_product_certificates?locale=en&amp;q=&lt;证书号&gt;</code></pre>
+<p>服务端渲染的纯 HTML，不需要浏览器、不需要登录，Python 标准库
+<code>urllib</code> 就够。</p>
+<p>页面字段映射：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Certipedia 标签</th>
+<th style="text-align: left;">映射到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Certificate Holder</td>
+<td style="text-align: left;">制造商</td>
+</tr>
+<tr>
+<td style="text-align: left;">Certified Product →
+<code>Model Designation:</code></td>
+<td style="text-align: left;">型号</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fulfilled Standards</td>
+<td style="text-align: left;">标准</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>&lt;h2 class=&quot;certificate-status&quot;&gt;</code></td>
+<td style="text-align: left;">证书状态（Valid / Invalid
+Certificate）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Certificate Number / Date of Issue /
+Certificate Type</td>
+<td style="text-align: left;">辅助信息</td>
+</tr>
+</tbody>
+</table>
+<h2 data-number="6.2" id="目录结构"><span class="header-section-number">6.2</span> 目录结构</h2>
+<pre><code>证书核对工具\
+  1_安装依赖.bat
+  2_网络自检.bat
+  3_查看表格列结构.bat
+  4_试跑10条.bat
+  5_全量核对.bat
+  9_自测（验证程序本身）.bat
+  渲染文档.bat            把本文档渲染成 HTML
+  介绍文档.Rmd            本文档源文件
+  使用说明.md
+  网络现状快照.txt
+  cert_verify\
+    cli.py               命令行入口
+    netcheck.py          网站可达性自检
+    http_client.py       HTTP：重试 / 限速 / 缓存 / 识别防火墙拦截页
+    browser_client.py    Playwright 封装（VDE/UL 用，可选依赖）
+    models.py            统一的证书字段模型
+    compare.py           归一化 + 五字段比对
+    excel_runner.py      读 xlsx → 查询 → 比对 → 写 M 列
+    config.py            列映射配置（要改的就是这个）
+    selftest.py          端到端自测
+    providers\
+      tuv_rheinland.py   Certipedia，已验证
+      vde.py             等网络放通
+      ul.py              等网络放通 + 账号</code></pre>
+<h2 data-number="6.3" id="分层设计"><span class="header-section-number">6.3</span> 分层设计</h2>
+<p>各机构网站字段名各不相同，全部映射到统一的 <code>CertRecord</code>
+模型，比对层只面向
+<code>CertRecord</code>，不关心数据来自哪家。所以<strong>新增一家认证机构只需加一个
+provider 文件</strong>，比对和 Excel 读写逻辑完全不用改。</p>
+<h1 data-number="7" id="命令行参考"><span class="header-section-number">7</span> 命令行参考</h1>
+<p>不想用 bat 的话，所有功能都有对应命令：</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bat"><code class="sourceCode dosbat"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">:: 网站可达性自检</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli netcheck</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">:: 查单个证书号，看抓到的原始字段</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli query 50679826 -<span class="at">-agency</span> TUV</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">:: 打印 xlsx 各 sheet 表头</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli inspect <span class="st">&quot;清单.xlsx&quot;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">:: 试跑 10 条，来源 URL 写到 N 列</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli run <span class="st">&quot;清单.xlsx&quot;</span> -<span class="at">-limit</span> 10 -<span class="at">-detail-col</span> N</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">:: 只跑指定 sheet</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli run <span class="st">&quot;清单.xlsx&quot;</span> -<span class="at">-sheet</span> UL -<span class="at">-sheet</span> CB</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">:: 全表指定默认认证机构</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli run <span class="st">&quot;清单.xlsx&quot;</span> -<span class="at">-agency</span> TUV</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">:: VDE 联通后标定：把接口原始 JSON 落盘</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli probe<span class="at">-vde</span> -<span class="at">-cert-no</span> 40052271</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">:: 离线兜底：解析手工保存的 VDE 接口响应</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>python <span class="at">-m</span> cert_verify.cli parse<span class="at">-file</span> vde 保存的响应.json</span></code></pre></div>
+<p>最后一条是 VDE 网络没放通时的过渡方案：在能上网的机器上按 <strong>F12
+→ Network → 过滤 <code>restSearch</code> → 右键 Copy
+response</strong>，存成 json
+再喂给解析器，规则和在线路径完全一致。<code>tests/fixtures/vde_40052271.json</code>
+就是这么来的。</p>
+<h1 data-number="8" id="常见问题"><span class="header-section-number">8</span> 常见问题</h1>
+<p><strong>M 列全是空的？</strong> <code>first_data_row</code>
+配错了，或者 I 列没有证书号。跑 <code>3_查看表格列结构.bat</code>
+确认数据从第几行开始。</p>
+<p><strong>结果里大面积「表格未填」？</strong>
+列字母配错了，工具读到的是空单元格。重新核对 <code>config.py</code>
+里的列映射。</p>
+<p><strong>同一条重复跑结果不一样？</strong>
+不会。抓过的页面有磁盘缓存，除非删掉
+<code>cert_verify\.cache\</code>。如果确实变了，说明官网数据更新了。</p>
+<p><strong>能不能加别的认证机构（Intertek、CQC、SGS）？</strong>
+可以，加一个 provider 文件即可，比对和 Excel
+逻辑不用动。但前提同样是那个站点在公司网络里能连上。</p>
+<p><strong>能打包成 exe 吗？</strong> 可以用
+PyInstaller，但这是个命令行工具、bat 已经够用，打成 exe 反而不方便改
+<code>config.py</code> 里的列映射。需要的话再说。</p>
+<h1 data-number="9" id="下一步"><span class="header-section-number">9</span> 下一步</h1>
+<blockquote>
+<p><strong>当前卡点：列映射还配不了。</strong></p>
+<p><code>电源电路部分安全件报备清单明细表_认证类别UL-CB 20230420.xlsx</code>
+不在本机（整个桌面都搜过）。目前只锁定了题目明确给的 I 列（证书号）和 M
+列（结果），其余五个字段在哪几列还不知道。</p>
+<p>把文件放进工作目录，跑一次 <code>3_查看表格列结构.bat</code>，就能把
+<code>config.py</code> 配好。两个 sheet 列结构不同的话，分别配两条。</p>
+</blockquote>
+<p>同时建议并行推进网络白名单申请 —— 那是打通 VDE / UL / IECEE
+的唯一前提。</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 有 R 环境时，可以直接在文档里跑一次网络自检并把结果嵌进来</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">system</span>(<span class="st">&quot;python -m cert_verify.cli netcheck&quot;</span>, <span class="at">intern =</span> <span class="cn">TRUE</span>), <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+</body>
+</html>

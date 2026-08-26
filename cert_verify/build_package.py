@@ -5,8 +5,8 @@ VDE / UL 的适配器一并带上但在说明里标明「等网络放通」。
 
     python cert_verify\\build_package.py
 产出：
-    dist/证书核对工具/            解压即用的目录
-    dist/证书核对工具_v1.0.zip    交付用压缩包
+    本地Windows/交付/证书核对工具/            解压即用的目录
+    本地Windows/交付/证书核对工具_v2.7.zip    交付用压缩包
 """
 from __future__ import annotations
 
@@ -19,14 +19,15 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 SRC = os.path.dirname(os.path.abspath(__file__))                 # ...\cert_verify
 ROOT = os.path.dirname(SRC)                                       # ...\crawl4ai-main
-DIST = os.path.join(ROOT, "dist")
+LOCAL_ROOT = os.path.join(ROOT, "本地Windows")
+DIST = os.path.join(LOCAL_ROOT, "交付")
 PKG_NAME = "证书核对工具"
 PKG = os.path.join(DIST, PKG_NAME)
-VERSION = "2.6"
+VERSION = "2.7"
 
 # 打进包里的源码文件
 CODE_FILES = [
-    "__init__.py", "cli.py", "compare.py", "config.py", "excel_runner.py",
+    "__init__.py", "cli.py", "compare.py", "config.py", "decrypt.py", "excel_runner.py",
     "excel_writer.py", "verifier.py",
     "http_client.py", "browser_client.py", "models.py", "netcheck.py", "netdiag.py",
     "selftest.py", "render_doc.py", "ul_login.py", "介绍文档.Rmd", "requirements.txt",
@@ -44,6 +45,7 @@ EXTRA_FILES = [
     ("README.md", "开发说明.md"),
     ("build_package.py", "cert_verify/build_package.py"),
     ("netdiag_report.txt", "网络诊断快照.txt"),
+    (os.path.join("..", "Linux", "deploy", "certverify.service"), "deploy/certverify.service"),
 ]
 
 # 逐文件备注 —— 生成「文件清单.md」用。键是包内文件名（不含目录）
@@ -68,9 +70,11 @@ FILE_NOTES = {
     "文件清单.md": "★ 本清单（自动生成）：每个文件干什么，一眼看全",
     "网络现状快照.txt": "打包时的 netcheck 结果：哪几家能连",
     "网络诊断快照.txt": "打包时的 netdiag 结果：不能连的卡在哪一层",
+    os.path.join("deploy", "certverify.service"): "Linux systemd 服务文件：固定 venv、工作目录、解密服务和 8756 端口",
     # 核心代码
     "cli.py": "命令行入口：netcheck / netdiag / query / inspect / run / probe-vde / parse-file",
     "config.py": "★ 列映射配置 —— 唯一需要你手改的文件",
+    "decrypt.py": "透明加密文件解密兜底：检测密文并调用内网解密服务还原 xlsx",
     "excel_runner.py": "命令行核对入口：读 xlsx → 逐行查询 → 比对 → 写 M 列（基于内核）",
     "verifier.py": "核对内核（网页/命令行共用）：惰性逐行、可取消、产出字段级结论",
     "excel_writer.py": "结果写入层：原文件副本上写结论 + 真不一致字段红字标注",
@@ -98,7 +102,7 @@ FILE_NOTES = {
     # web 前后端
     os.path.join("cert_verify", "web", "__init__.py"): "网页包标记",
     "__main__.py": "网页启动入口：python -m cert_verify.web",
-    "server.py": "本地 HTTP 服务 + JSON API（仅绑 127.0.0.1）",
+    "server.py": "本地 HTTP 服务 + JSON API（默认 127.0.0.1，可用 --host 绑定服务器地址）",
     os.path.join("cert_verify", "web", "tasks.py"): "任务管理：内存任务表 + 后台核对线程 + 进度快照",
     "index.html": "网页界面：上传 / 列映射 / 进度 / 结果",
     "app.js": "前端逻辑：上传、轮询进度、结果表、行明细、下载",
@@ -115,6 +119,7 @@ FILE_NOTES = {
 DIR_NOTES = {
     ".": "入口与文档",
     "cert_verify": "程序主体",
+    "deploy": "Linux systemd 部署文件",
     os.path.join("cert_verify", "providers"): "各认证机构的适配器，一家一个文件",
     os.path.join("cert_verify", "web"): "网页前后端：本地服务 + API + 任务管理",
     os.path.join("cert_verify", "web", "static"): "网页静态资源（HTML/JS/CSS）",

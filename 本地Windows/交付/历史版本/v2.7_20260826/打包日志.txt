@@ -1,0 +1,6 @@
+打包日期：2026-08-26
+打包目录：本地Windows/交付/证书核对工具
+压缩包：本地Windows/交付/证书核对工具_v2.7.zip
+归档包：本地Windows/交付/历史版本/v2.7_20260826/证书核对工具_v2.7_20260826.zip
+文件数：56
+验证：包含 cert_verify/decrypt.py、cert_verify/web/server.py、deploy/certverify.service

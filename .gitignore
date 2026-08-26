@@ -7,6 +7,8 @@ venv/
 # 敏感数据 / 登录态（绝不上传）
 cert_verify/.ul_profile/
 .env
+.env.*
+!.env.example
 
 # 缓存 / 临时文件
 cert_verify/.cache/
@@ -15,17 +17,14 @@ _selftest/
 _probe_html/
 _build_log.txt
 
-# Excel 输入/输出数据文件（含个人业务数据）
-dist/input/*.xlsx
-dist/证书核对工具/
-dist/*.zip
-dist/历史版本/*/证书核对工具*.zip
+# 本地 Windows 交付包可以上传；业务 Excel 和历史 zip 规则另行控制
+本地Windows/交付/input/*.xlsx
+本地Windows/交付/input/~$*
 
 # 浏览器 profile（Playwright 下载的 Chromium 等）
 cert_verify/.ul_profile/
 
-# IDE
-.vscode/
+Linux/浏览器安装包/*.zip
 .kiro/
 
 # 系统文件

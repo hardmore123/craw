@@ -1,0 +1,51 @@
+=== 1. 接口 URL 构造 ===
+  https://www.vde.com/www8/servlet/restSearch/2289904/zertreg-certificates?wt=json&fq=%28detailDocType%3Azertreg%7Ccertificate%29&fq=id%3Azertreg%7Ccertificate%2340052271&start=0&rows=50
+  [OK ] 命中 restSearch 接口
+  [OK ] id 过滤条件正确编码
+  [OK ] detailDocType 过滤存在
+  [OK ] wt=json
+  [OK ] Referer 指向搜索页
+  [OK ] Accept 为 json
+
+  HA/NA 前缀去字母（VDE 官方要求）:
+    40052271 -> 40052271
+    HA012345 -> 012345
+    NA987654 -> 987654
+    40040940-4880-0001 -> 40040940-4880-0001
+  [OK ] HA012345 归一化
+
+=== 2. 解析真实接口响应（证书号 40052271）===
+  [OK ] 查询状态
+  [OK ] 制造商
+  [OK ] 证书号
+  [OK ] 证书状态
+  [OK ] 产品类别
+  [OK ] 型号取的是完整 typeNames 而不是截断的 firstTypes
+    型号 = WMR05D180M * bis/to; WMR05D561K *; WMR07D180M * bis/to; WMR07D681K *; WMR10D112K *; WMR10D180M * bis/to; WMR14D112K *; WMR14D180M * bis/to; WMR20D112K *; WMR20D180M * bis/to
+  [OK ] 注册号进了 raw
+  [OK ] 详情页 URL 正确  https://www.vde.com/tic-en/marks-and-certificates/vde-approved-products/certificate?id=40052271&type=zertreg%7Ccertificate
+    标准 = ''（接口默认 fl 不含标准，为空属预期）
+    生产厂 = ''（同上）
+
+=== 3. 查不到时不猜原因 ===
+  [OK ] 状态为 not_found
+  [OK ] 说明里点出可能是已失效  官网未查到（该接口只返回有效期内的证书，所以也可能是证书已失效或证书号有误）
+
+=== 4. 通配型号匹配 ===
+  网站型号列表含 * 通配，编译出 10 个模式
+  [OK ] WMR10D112K     -> 一致  (表格填的是列表里的具体型号)
+  [OK ] WMR10D112K35   -> 一致  (带后缀，靠 * 通配命中)
+         通配匹配
+  [OK ] WMR05D180M     -> 一致  (带 bis/to 的也能命中)
+  [OK ] WMR99D999X     -> 不一致  (确实不在列表里)
+         表格=WMR99D999X | 网站=WMR05D180M * bis/to; WMR05D561K *; WMR07D180M * bis/to; WMR07D681K *; WMR10D112K 
+  [OK ] bis/to 被当噪音剔除
+
+=== 5. 端到端比对（模拟表格一行）===
+  结论: ✓ 一致：制造商、型号、证书状态；（生产厂网站无此项、标准网站无此项）
+  [OK ] 制造商能对上（表格带中文前缀+公司后缀）
+  [OK ] 型号判为一致
+  [OK ] 标准如实记为网站无此项
+
+============================================================
+全部通过

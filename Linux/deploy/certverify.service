@@ -1,0 +1,20 @@
+[Unit]
+Description=Cert Verify Web
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=hisense
+WorkingDirectory=/home/hisense/pro/Gitlab/DataGather
+Environment="HOME=/home/hisense"
+EnvironmentFile=-/home/hisense/pro/Gitlab/DataGather/.env
+Environment="DECRYPT_URL=http://10.18.87.51:8500/parse_file"
+Environment="DECRYPT_ENABLED=true"
+Environment="DECRYPT_TIMEOUT=60"
+ExecStart=/home/hisense/pro/Gitlab/DataGather/venv/bin/python -m cert_verify.web --host 0.0.0.0 --port 8756 --no-browser
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

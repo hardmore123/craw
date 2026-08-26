@@ -1,0 +1,11 @@
+# 必需：读写 xlsx
+openpyxl==3.1.5
+
+# 可选：抓 UL Prospector（Cloudflare 反爬 + 需登录）才装 Playwright。
+# 直接用本机 Edge，无需下载 chromium：
+#   python -m pip install playwright
+#   （首次登录：python -m cert_verify.ul_login）
+# playwright
+
+# HTTP 走标准库 urllib，不额外引依赖：
+#   TUV Certipedia 服务端渲染、VDE 是 JSON 接口，都够用。
