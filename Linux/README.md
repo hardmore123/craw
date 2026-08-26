@@ -7,6 +7,7 @@
 ## 目录
 
 - `服务器部署清单.md`：★ 可直接照做的分步部署清单，每步带验证命令（重点规避 Nginx 权限与端口/路径坑）。
+- `deploy/setup_check.sh`：一键环境准备与自检（清单第 2~5 步：拉代码/venv/依赖/路径/解密服务）。
 - `deploy/certverify.service`：systemd 网页服务定义（含 HOME/LANG/解密环境变量）。
 - `deploy/nginx-certverify.conf`：Nginx 纯反向代理配置（不读文件，避开 ACL 坑）。
 - `deploy/test_ul_linux.py`：Linux Chromium/UL 验证脚本。
