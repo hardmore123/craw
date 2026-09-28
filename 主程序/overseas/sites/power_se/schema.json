@@ -1,0 +1,27 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "selectors": [
+      "[class*='price']",
+      "[data-testid*='price']"
+    ],
+    "transform": "money",
+    "jsonld": false
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "on_no_match": "skip",
+    "verify": {
+      "require_model_in": [
+        "title",
+        "url"
+      ],
+      "min_core_len": 3
+    }
+  }
+}

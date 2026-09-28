@@ -1,0 +1,182 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/p']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[class*='product-name']",
+        "h3",
+        "h2"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[class*='price']",
+        "[data-testid*='price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "transform": "currency"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[class*='buy-button']:not([disabled])"
+      ],
+      "transform": "in_stock"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "[class*='list-price']",
+        "[class*='old-price']",
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='strike']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9-]{4,20})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "jsonld": "sku",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "yotpo",
+    "yotpo": {
+      "app_key": "Yx5PqPQGSeQzSjdlNcyjpBRu1TmbaWWvbGqKmpbp",
+      "api_endpoint": "https://api-cdn.yotpo.com/v1/widget/{app_key}/products/{sku}/reviews.json?per_page=150&page={page}",
+      "_note": "纯 HTTP 直连无需浏览器/cookie/Origin; product_id=DB product.sku",
+      "page_size": 150,
+      "max_pages": 20,
+      "max_reviews": 1000
+    },
+    "container": ".yotpo-review, [class*='yotpo']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[class*='yotpo-rating']",
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[class*='review-body']",
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[class*='yotpo-user']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[class*='yotpo-date']"
+        ],
+        "transform": "clean_text"
+      },
+      "verified": {
+        "selectors": [
+          "[class*='verified-buyer']"
+        ],
+        "transform": "bool_present"
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "control remoto",
+        "bocina",
+        "parlante"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "anchor": "h1, .productitem__price",
+  "search": {
+    "container": ".productitem, a[href*='/collections/tv/products/']",
+    "sku": {
+      "selectors": [
+        "a[href*='/collections/tv/products/']"
+      ],
+      "attr": "href"
+    },
+    "title": {
+      "selectors": [
+        ".productitem--title"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "selectors": [
+        "a[href*='/collections/tv/products/']"
+      ],
+      "attr": "href"
+    },
+    "wait_ms": 4000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        ".productitem__price .money",
+        ".price .money",
+        ".product-single__price .money"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[data-currency]",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency"
+    },
+    "list_price": {
+      "selectors": [
+        ".productitem__price--compare .money",
+        ".price--compare .money",
+        "s .money"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-availability]",
+        ".product-form__inventory"
+      ],
+      "attr": "data-availability",
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        ".productitem__price",
+        ".price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        ".product-single__title"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']",
+        "[data-shopify-brand]"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "h1",
+        "[itemprop='model']",
+        "[itemprop='mpn']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "model"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        ".product-single__title"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "meta[itemprop='sku']",
+        "[data-variant-id]"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "jsonld": "sku"
+    }
+  },
+  "reviews": {
+    "container": ".spr-review, [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          ".spr-review-rating",
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          ".spr-review-header-title",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          ".spr-review-content-body",
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          ".spr-review-header-byline",
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          ".spr-review-header-byline",
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_date"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[aria-label*='estrella']",
+        ".spr-starrating"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "[aria-label*='reseña']",
+        ".spr-summary-caption"
+      ],
+      "transform": "int"
+    }
+  },
+  "specs": [],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "adaptador",
+        "control remoto",
+        "remote",
+        "bracket",
+        "case",
+        "cover",
+        "soundbar",
+        "barra de sonido",
+        "parlante",
+        "bocina",
+        "proyector",
+        "rack",
+        "antena"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

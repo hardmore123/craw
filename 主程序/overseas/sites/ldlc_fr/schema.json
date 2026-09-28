@@ -1,0 +1,34 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "a[href*='/fiche/'], [class*='product-card'], div[data-product-id]",
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "max_candidates": 60,
+      "max_pages": 20,
+      "threshold": 10
+    }
+  },
+  "price": {
+    "selectors": [
+      "[class*='price']",
+      "[data-price]",
+      ".price",
+      "[itemprop='price']"
+    ],
+    "transform": "money",
+    "jsonld": false
+  },
+  "match": {
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "allow_core_match": true,
+      "min_core_len": 3
+    },
+    "on_no_match": "skip"
+  }
+}

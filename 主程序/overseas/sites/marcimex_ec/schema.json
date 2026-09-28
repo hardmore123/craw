@@ -1,0 +1,238 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "[class*='product'], article, a[href*='/product']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true,
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price'][class*='selling']",
+        "[class*='selling-price']",
+        ".precio-producto"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "s",
+        "del",
+        "[class*='old-price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])"
+      ],
+      "attr": "content",
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-name']",
+        "[data-testid*='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "kv": {
+        "container": "table tr, .product-specification tr, [class*='specification'] tr",
+        "key_contains": "modelo",
+        "value": "td:nth-child(2)"
+      },
+      "transform": "clean_text",
+      "jsonld": "mpn"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']",
+        "[data-sku]"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "jsonld": "sku"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "container": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[class*='titulo']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='comentario']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "[class*='date']",
+          "[class*='fecha']"
+        ],
+        "transform": "clean_text"
+      },
+      "verified": {
+        "selectors": [
+          "[class*='verified']",
+          "[class*='verificado']"
+        ],
+        "transform": "bool_present"
+      }
+    },
+    "_vtex_reviews": {
+      "endpoint": "https://www.marcimex.com/_v/private/graphql/v1?workspace=master&...&locale=es-EC&__bindingId=1659f305-a3ae-4bd3-a958-afa2b8bcc0b2",
+      "app_version": "vtex.reviews-and-ratings@3.20.1",
+      "query_mode": "persistedQuery (private 端点 base64 variables)",
+      "reviews_hash": "3489407e26e7465d5413a0c550afa41076cd82bc98b4cd1e42884ae654c30b2c",
+      "bindingId": "1659f305-a3ae-4bd3-a958-afa2b8bcc0b2",
+      "note": "全站0/94网评(全站仅8条评论且都不属于这94产品); pastReviews=false 返回全站评论流陷阱"
+    },
+    "reason": "已探测全站零评价（reviews-and-ratings@3.x total=0）。2026-09-25 rv2 再确认：5 样本 ReviewsByProductId pastReviews=true range.total=0（status=200，app 已装 hash 通），全站 94 产品无专属评价，留空不造假"
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='average-rating']"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.reviewCount"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "rack",
+        "stand",
+        "mount",
+        "bracket",
+        "control remoto",
+        "cable",
+        "adaptador",
+        "accesorio",
+        "funda",
+        "base",
+        "soporte para tv",
+        "barra de sonido",
+        "soundbar",
+        "proyector",
+        "parlante",
+        "bocina"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

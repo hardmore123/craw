@@ -1,0 +1,337 @@
+﻿区域,国家/地区,品牌/渠道,任务类型,网址,状态,问题/备注
+
+日本线,日本,Sony,Spec,https://www.sony.jp/bravia/,可抓取丨已完成,SPEC_索尼日本.xlsx（9系列38型号，104行，中文100%）；入口 lineup 页 https://www.sony.jp/bravia/lineup/ 可抓
+日本线,日本,REGZA,Spec,https://www.regza.com/tv,可抓取丨已完成,SPEC_REGZA日本.xlsx（39系列139型号，564行，中文100%）
+日本线,日本,Hisense,Spec,https://www.hisense.co.jp/tv/,可抓取丨已完成,SPEC_海信日本.xlsx（13系列44型号，101行，中文100%）；官网完整性复核无漏抓
+日本线,日本,Sharp,Spec,https://jp.sharp/aquos/,可抓取丨已完成,SPEC_夏普日本.xlsx（13系列44型号，56行，中文100%）；入口 https://www.sharp.co.jp/aquos/lineup/
+日本线,日本,Panasonic,Spec,https://panasonic.jp/viera/,可抓取丨已完成,SPEC_松下日本.xlsx（8系列25型号，52行，中文100%）；W80C/MR770 因JS渲染未纳入
+日本线,日本,TCL,Spec,https://www.tcl.com/jp/ja/tvs,可抓取丨已完成,SPEC_TCL日本.xlsx（28系列78型号，283行，中文100%）；旧系列JSON 404按设计跳过
+日本线,日本,全品牌,价格+网评,https://kakaku.com/kaden/lcd-tv,可抓取丨已完成,价格 310 条 + 网评 1935 条（已翻译+AI提炼）；另出 价格趋势_日本_kakaku_20260922.html/xlsx 与 REGZA机型AI总结
+北美线-加拿大,加拿大,Hisense,Spec,https://www.hisense-canada.com/,可抓取丨已完成,SPEC_海信加拿大.xlsx（9/22版）；官网系列状态多为 success
+北美线-加拿大,加拿大,Samsung,Spec,https://www.samsung.com/ca/,可抓取丨已完成,SPEC_三星加拿大.xlsx（9/22版）；入口 all-tvs 系列状态 success
+北美线-加拿大,加拿大,TCL,Spec,https://ca-en.tcl.com/,可抓取丨已完成,SPEC_TCL加拿大.xlsx（9/22版）；系列状态 success
+北美线-加拿大,加拿大,LG,Spec,https://www.lg.com/ca_en,可抓取丨已完成,SPEC_LG加拿大.xlsx（9/22版）；入口 lg.com/ca_en 系列状态 success（历史 failed 已在新版补齐）
+北美线-加拿大,加拿大,Sony,Spec,https://www.sony.ca/,可抓取丨已完成,SPEC_Sony_CA.xlsx；系列状态 success
+北美线-加拿大,加拿大,Philips,Spec,https://www.philips.ca/,可抓取丨已完成,SPEC_Philips_CA.xlsx（另有 data/SPEC_philips_ca_full/sample.csv）
+北美线-加拿大,加拿大,Amazon,价格+网评,https://www.amazon.ca/,可抓取丨已完成,Amazon 三站全量抓取成功；Canada 网评1678条 并入 网评汇总_加拿大.csv 6428条；价格 The Brick202/Leon's132/CT13/AMZ6
+北美线-加拿大,加拿大,Bestbuy,价格+网评,https://www.bestbuy.ca/en-ca,不可抓取丨需代理,DB: 9产品 0价格 253评价 | HTTP 403 Access Denied（305B）；反爬分类判定需住宅/移
+北美线-加拿大,加拿大,Walmart,价格+网评,https://www.walmart.ca/en,不可抓取丨需代理,无数据，待抓取 | PerimeterX `Verify Your Identity`（walmar
+北美线-加拿大,加拿大,Costco,价格+网评,https://www.costco.ca/,可抓取丨已完成,DB: 407产品 407价格 391评价
+北美线-加拿大,加拿大,Brick,价格+网评,https://www.thebrick.com/,可抓取丨已完成,价格 202 条 + 网评 3087 条；适配器 thebrick_ca 稳定
+北美线-加拿大,加拿大,Leon's,价格+网评,https://www.leons.ca/,可抓取丨已完成,价格 132 条 + 网评 1663 条；适配器 leons_ca 稳定
+北美线-加拿大,加拿大,Visions,价格+网评,https://www.visions.ca/,不可抓取丨需代理,无数据，待抓取 | HTTP 403 / Cloudflare `Just a moment...`
+北美线-加拿大,加拿大,Canadian Tire,价格+网评,https://www.canadiantire.ca/en.html,可抓取丨已完成,DB: 2730产品 2065价格 2727评价
+北美线-美国,美国,TCL,Spec,https://us.tcl.com/,可抓取丨已完成,SPEC_TCL美国.xlsx；入口 collections/tv-home-theater，系列状态 success
+北美线-美国,美国,Hisense,Spec,https://www.hisense-usa.com/,可抓取丨已完成,SPEC_hisense_us.xlsx；系列状态 success
+北美线-美国,美国,Sony,Spec,https://electronics.sony.com/,可抓取丨已完成,SPEC_索尼美国.xlsx（9/22版）；series success
+北美线-美国,美国,Samsung,Spec,https://www.samsung.com/us/,可抓取丨已完成,SPEC_三星美国.xlsx；系列状态 success
+北美线-美国,美国,LG,Spec,https://www.lg.com/us,可抓取丨已完成,SPEC_LG美国.xlsx（9/22版）；系列状态 success
+北美线-美国,美国,Best Buy,价格+网评,https://www.bestbuy.com,可抓取丨已完成,DB: 1897产品 764价格 1855评价
+北美线-美国,美国,Walmart,价格+网评,https://www.walmart.com,不可抓取丨需代理,无数据，待抓取 | PerimeterX `Robot or human?`；需住宅/移动代理；适配
+北美线-美国,美国,Costco,价格+网评,https://www.costco.com,可抓取丨适配器已修,scroll≥12 时 24 候选稳定（costco_us 已修 scroll_passes=20）；无需代理，未批量抓取
+北美线-美国,美国,Amazon,价格+网评,https://www.amazon.com,可抓取丨已完成,Amazon 三站全量抓取成功（日志 amazon_us_full_20260920）；网评 4835 条 收入 网评汇总_美国.csv；100%成功率零封禁
+北美线-墨西哥,墨西哥,TCL,Spec,https://www.tcl.com/mx/es/tvs,可抓取丨已完成,SPEC_TCL_MX_20260915.xlsx；系列状态多为 success（少数旧系列 empty 按设计跳过）
+北美线-墨西哥,墨西哥,Samsung,Spec,https://www.samsung.com/mx/tvs/all-tvs/,可抓取丨已完成,SPEC_Samsung_MX_20260915.xlsx；系列状态 success
+北美线-墨西哥,墨西哥,LG,Spec,https://www.lg.com/mx/tv-soundbars/todas-las-tvs-y-soundbars/,可抓取丨已完成,SPEC_LG_MX_20260915.xlsx；多为 success（少数 no_spec_section 空页跳过）
+北美线-墨西哥,墨西哥,Hisense,Spec,https://hisense.com.mx/televisores,可抓取丨已完成,SPEC_Hisense_MX_20260915.xlsx；多为 success（少数无规格页跳过）
+北美线-墨西哥,墨西哥,Amazon,价格+网评,https://www.amazon.com.mx/,可抓取丨已完成,Amazon MX 适配器校准成功并全量抓取；网评 671 条（网评汇总_墨西哥.csv 692条）+ 价格 153 条；搜索解析真实 /dp/ ASIN 成功
+北美线-墨西哥,墨西哥,Liverpool,价格+网评,https://www.liverpool.com.mx/tienda/home,可抓取丨已完成校准,65QD8SFM 端到端验证通过（价格/原价/库存/规格/4条评价）；Liverpool 网评 21 条已并入；未全量
+北美线-墨西哥,墨西哥,Sams,价格+网评,https://www.sams.com.mx/,不可抓取丨需代理,DB: 60产品 0价格 0评价 | PerimeterX（首页/搜索均 `Verify Your Identity`
+北美线-墨西哥,墨西哥,Palacio,价格+网评,https://www.elpalaciodehierro.com/buscar?q=tv,可抓取丨已完成校准,TCL 75Q6K 验证通过（11519.55 MXN/原价/库存/评分5.0(4条)）；无评价条目；未全量；偶发 Cloudflare 403
+北美线-墨西哥,墨西哥,Walmart,价格+网评,https://www.walmart.com.mx/search?q=TV,不可抓取丨需代理,无数据，待抓取 | PerimeterX `Verifica tu identidad`（walma
+北美线-墨西哥,墨西哥,Coppel,价格+网评,https://www.coppel.com/sd/TV,可抓取丨已完成校准,UN65M70HFXZX 单型号验证通过（13999 MXN/原价/库存/规格18条）；PDP 无评分组件；未全量
+欧洲线,英国,Samsung,Spec,https://www.samsung.com/uk/tvs/all-tvs/,可抓取丨已完成,SPEC_samsung_uk.xlsx（9/22版 9系列9型号）；连通性 200 可访问；2026-09-24 状态修正：实测 JSON-LD ItemList 48→38 TV，38 产品 38 价格已入库
+欧洲线,英国,Sony,Spec,https://www.sony.co.uk/bravia,可抓取丨部分完成,SPEC_sony_uk.xlsx（9/22版）；浏览器可达（HTTP探针403但真实抓取成功）；2026-09-24 状态修正：Playwright 过 403，仅 7 个 BRAVIA 入 7 价格，覆盖不足
+欧洲线,英国,LG,Spec,https://www.lg.com/uk/tvs-soundbars/all-tvs-soundbars/,不可抓取丨需住宅代理,DB: 105产品 3207spec_row | SPEC_lg_uk.xlsx（9/22版）；连通性 200；2026-09-2
+欧洲线,英国,TCL,Spec,https://www.tcl.com/uk/en/tvs,可抓取丨已完成,SPEC_tcl_uk.xlsx（9/22版）；连通性 200；2026-09-24 状态修正：实测 108 产品已入库；品牌官网不标价，0 价格属站点现状
+欧洲线,德国,Philips,Spec,https://www.philips.de/c-m-so/fernseher/latest,可抓取丨已完成,SPEC_philips_de.xlsx（9/22版，11系列15型号）；连通性 200；2026-09-24 状态修正：出 SPEC_philips_de xlsx（11 系列 15 型号），未入 DB
+欧洲线,英国,Currys,价格+网评,https://www.currys.co.uk/,不可抓取丨需代理,无数据，待抓取 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,英国,Argos,价格+网评,https://www.argos.co.uk/browse/technology/televisions/c:1054424/,不可抓取丨需代理,无数据，待抓取 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,英国,Amazon UK,价格+网评,https://www.amazon.co.uk/s?rh=n%3A560798%2Cn%3A560858%2Cn%3A560864&dc&qid=1788774656&rnid=560858&ref=sr_nr_n_13,可抓取丨已完成,DB: 34产品 34价格 34评价
+欧洲线,英国,AO,价格+网评,https://ao.com/,不可抓取丨需代理,无数据，待抓取 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,英国,very,价格+网评,https://www.very.co.uk/,不可抓取丨需代理,无数据，待抓取 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,英国,Richersounds,价格+网评,https://www.richersounds.com/,不可抓取丨需代理,无数据，待抓取 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,英国,JLP,价格+网评,https://www.johnlewis.com/,不可抓取丨需代理,DB: 4产品 4价格 0评价 | HTTP 超时(16s)；需Playwright或住宅代理
+欧洲线,英国,Hughes,价格+网评,https://www.hughes.co.uk/,可抓取丨已完成,DB: 89388产品 89388价格 89318评价
+欧洲线,英国,JD,价格+网评,https://www.jdwilliams.co.uk/,不可抓取丨需代理,无数据，待抓取 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,英国,markselectrical,价格+网评,https://markselectrical.co.uk/,可抓取丨已完成,DB: 271产品 271价格 271评价
+欧洲线,英国,Joybuy,价格+网评,https://www.joybuy.co.uk/,不可抓取丨需代理,无数据，待抓取 | HTTP 200但有CAPTCHA；需Playwright
+欧洲线,德国,MSD DE,价格+网评,https://www.mediamarkt.de/de/category/tv-audio-202.html,不可抓取丨需代理,DB: 12产品 24价格 0评价 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,德国,Expert,价格+网评,https://www.expert.de/shop/unsere-produkte/tv-audio,可抓取丨已完成,DB: 100产品 51价格 0评价
+欧洲线,德国,Amazon DE,价格+网评,https://www.amazon.de/-/en/b/ref=glow_cls?node=1197292,可抓取丨待重跑,HTTP 200；需输入邮编 96317 带出德国产品价格；2026-09-24 汇总：欧洲网评来源已确认＝Currys / Argos / Amazon UK / Amazon DE / Amazon FR / Amazon IT / Amazon ES / DNS / M-Video / OZON；数据模板参考 AM（列头见 网评汇总_美国_*.csv）；需在 Choose your location 输邮编 96317 带出德国产品与价格；实测邮编弹窗超时，且因出口 IP 在英国被重定向到 amazon.co.uk（HTML lang=en-gb），仅 2 产品；网评尚无成功记录；需德国出口 IP 才能正确访问
+欧洲线,法国,Darty,价格+网评,https://www.darty.com/nav/achat/hifi_video/index.html,不可抓取丨需代理,无数据，待抓取 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,法国,Boulanger,价格+网评,https://www.boulanger.com,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 按 网站汇总表.csv 补上原缺失网址
+欧洲线,法国,Amazon FR,价格+网评,https://www.amazon.fr/b?node=14059871&ref=sr_nr_n_16,可抓取丨已完成,DB: 303产品 238价格 297评价
+欧洲线,意大利,MSD IT,价格+网评,https://www.mediaworld.it/it/category/tv-4001.html,不可抓取丨需代理,DB: 12产品 12价格 5评价 | HTTP 403 Forbidden；需Playwright或住宅代理
+欧洲线,意大利,Amazon IT,价格+网评,https://www.amazon.it/-/en/s?rh=n%3A412609031%2Cn%3A435504031%2Cn%3A473352031&dc&qid=1788773600&rnid=435504031&ref=sr_nr_n_17,可抓取丨已完成,DB: 544产品 138价格 543评价
+欧洲线,意大利,unieuro,价格+网评,https://www.unieuro.it/online/,不可抓取丨需代理,DB: 1产品 0价格 0评价 | HTTP 200但有CAPTCHA；需Playwright
+欧洲线,西班牙,MSD ES,价格+网评,https://www.mediamarkt.es/es/category/televisi%C3%B3n-398.html,可抓取丨已完成,HTTP 200 JSON-LD ItemList 12产品12价格入库（??149-??499 Samsung/LG/Philips/Hisense/Xiaomi）
+欧洲线,西班牙,Amazon ES,价格+网评,https://www.amazon.es/-/en/gp/browse.html?rw_useCurrentProtocol=1&node=934359031&ref_=amb_link_kZ94xembSXKn9q-pkiIAmQ_31,可抓取丨已完成,DB: 246产品 226价格 238评价
+欧洲线,西班牙,ECI,价格+网评,https://www.elcorteingles.es/ofertas-tecnoprecios-1/electronica/tv/,不可抓取丨需代理,DB: 1产品 0价格 0评价 | HTTP 403 Forbidden；需Playwright或住宅代理
+南美线,秘鲁,Hisense,Spec,https://www.hisense.com.pe/,可抓取丨已完成,SPEC_hisense_pe_20260918/20260922.xlsx；官网正常（含UX 110英寸 MiniLED）
+南美线,秘鲁,TCL,Spec,https://www.tcl.com/pe/es,可抓取丨已完成,SPEC_tcl_pe.xlsx；连通性 200
+南美线,秘鲁,Samsung,Spec,https://www.samsung.com/pe,可抓取丨已完成,SPEC_samsung_pe.xlsx；官网 200（曾直接访问报错已解决）
+南美线,秘鲁,LG,Spec,https://www.lg.com/pe,可抓取丨已完成,SPEC_lg_pe.xlsx；连通性 200
+南美线,厄瓜多尔,Hisense,Spec,https://www.hisense.ec/,可抓取丨已完成,SPEC_hisense_ec.xlsx；连通性 200
+南美线,厄瓜多尔,TCL,Spec,https://tclecuador.com.ec/,可抓取丨已完成,SPEC_tcl_ec.xlsx；连通性 200
+南美线,厄瓜多尔,Samsung,Spec,https://www.samsung.com/latin/microsite/ecuador/,可抓取丨已完成,SPEC_samsung_ec.xlsx；连通性 200（拉丁微站）
+南美线,厄瓜多尔,LG,Spec,https://www.lgshop.com.ec/,可抓取丨已完成,SPEC_lg_ec.xlsx；连通性 200
+南美线,巴拿马,Hisense,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,巴拿马,TCL,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,巴拿马,Samsung,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,巴拿马,LG,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,危地马拉,Hisense,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,危地马拉,TCL,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,危地马拉,Samsung,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,危地马拉,LG,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,阿根廷,Hisense,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,阿根廷,TCL,Spec,https://www.tcl.com/ar/es,可抓取丨已完成,SPEC_tcl_ar.xlsx；连通性 200（TCL Argentina）
+南美线,阿根廷,Samsung,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,阿根廷,LG,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,乌拉圭,Hisense,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,乌拉圭,TCL,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,乌拉圭,Samsung,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,乌拉圭,LG,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,哥伦比亚,Hisense,Spec,https://hisense.com.co/,可抓取丨已完成,SPEC_hisense_co.xlsx；官网 200（Cloudflare 挑战页但内容可达）
+南美线,哥伦比亚,TCL,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,哥伦比亚,Samsung,Spec,https://www.samsung.com/co/,可抓取丨已完成,SPEC_samsung_co.xlsx；连通性 200
+南美线,哥伦比亚,LG,Spec,https://www.lg.com/co/,可抓取丨已完成,SPEC_lg_co.xlsx；连通性 200
+南美线,巴西,Hisense,Spec,未提供,不可抓取丨未提供URL,附件 URL 为空；hisense.com.br 搜索结果存在但未执行
+南美线,巴西,TCL,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,巴西,Samsung,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,巴西,LG,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,智利,Hisense,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,智利,TCL,Spec,https://tclstore.cl/,可抓取丨已完成,SPEC_tcl_cl.xlsx；tclstore.cl 可达（Cloudflare 200）
+南美线,智利,Samsung,Spec,https://www.samsung.com/cl/,可抓取丨已完成,SPEC_samsung_cl.xlsx；连通性 200
+南美线,智利,LG,Spec,https://www.lg.com/cl/,可抓取丨已完成,SPEC_lg_cl.xlsx；连通性 200
+南美线,玻利维亚,Hisense,Spec,https://hisense.com.bo/,可抓取丨已完成,SPEC_hisense_bo.xlsx；连通性 200
+南美线,玻利维亚,TCL,Spec,https://web.tcl.bo/,可抓取丨已完成,SPEC_tcl_bo.xlsx；连通性 200
+南美线,玻利维亚,Samsung,Spec,https://samsung.com.bo/,可抓取丨已完成,SPEC_samsung_bo.xlsx；samsung.com.bo 可达
+南美线,玻利维亚,LG,Spec,未提供,不可抓取丨未提供URL,附件中 URL 为空，无法开展
+南美线,秘鲁,Hiraoka,价格+网评,https://hiraoka.com.pe/,可抓取丨已完成,连通性 200；Hiraoka_全量_v2.csv（价格全量已出）
+南美线,秘鲁,Falabella,价格+网评,https://www.falabella.com.pe/,可抓取丨部分受限,CF 挑战（200 出页面）；适配器已建，目录部分抓取
+南美线,秘鲁,Ripley,价格+网评,https://simple.ripley.com.pe/,不可抓取丨需代理,无数据，待抓取 | HTTP 403/CF `Just a moment...`；需代理/浏览器线路
+南美线,秘鲁,Oechsle,价格+网评,https://www.oechsle.pe/,可抓取丨已完成,oechsle_pe_catalog_v2.csv（20KB）；连通性 200
+南美线,秘鲁,Tottus,价格+网评,https://www.tottus.com.pe/tottus-pe,可抓取丨部分受限,CF 挑战（200）；适配器已建，未全量
+南美线,秘鲁,La Curacao,价格+网评,https://www.lacuracao.pe/,可抓取丨已完成,DB: 37产品 37价格 0评价
+南美线,秘鲁,Efe,价格+网评,https://www.efe.com.pe/,可抓取丨已完成校准,连通性 200；efe_pe.retail.json 已建；未全量
+南美线,秘鲁,Plaza Vea,价格+网评,https://www.plazavea.com.pe/,可抓取丨已完成,plazavea_pe_catalog_v2.csv（19KB）；连通性 200
+南美线,秘鲁,Estilos,价格+网评,https://www.estilos.com.pe/,可抓取丨已完成,estilos_pe_catalog_v2.csv（10KB）；连通性 200
+南美线,秘鲁,Metro,价格+网评,https://www.metro.pe/,可抓取丨已完成,metro_pe_catalog_v2.csv（7KB）；连通性 200
+南美线,秘鲁,Mercado Libre,价格+网评,https://www.mercadolibre.com.pe/,可抓取丨已完成,DB: 1产品 0价格 0评价
+南美线,秘鲁,Carsa,价格+网评,https://www.carsa.pe/,可抓取丨已完成,carsa_pe_catalog_v2.csv（14KB）；连通性 200
+南美线,秘鲁,Sodimac,价格+网评,https://www.sodimac.com.pe/,不可抓取丨需代理,DB: 1产品 0价格 0评价 | CF 挑战（200）；外贸线路拦截
+南美线,秘鲁,Credivargas,价格+网评,https://www.credivargas.pe/,可抓取丨已完成,credivargas_pe_catalog_v2.csv（7KB）；连通性 200
+南美线,厄瓜多尔,Cresa,价格+网评,https://www.crecos.com/,可抓取丨已完成,DB: 314产品 314价格 0评价
+南美线,厄瓜多尔,Japon,价格+网评,https://www.almacenesjapon.com/,可抓取丨已完成,japon_ec_catalog_v2.csv（26KB）；连通性 200
+南美线,厄瓜多尔,Orvehogar,价格+网评,https://www.orvehogar.com/,可抓取丨已完成,orvehogar_ec_catalog_v2.csv（26KB）；连通性 200
+南美线,厄瓜多尔,Artefacta,价格+网评,https://www.artefacta.com/,可抓取丨已完成,DB: 41产品 41价格 0评价
+南美线,厄瓜多尔,Marcimex,价格+网评,https://www.marcimex.com/,可抓取丨已完成,marcimex_ec_catalog_v2.csv（11KB）；连通性 200
+南美线,厄瓜多尔,Laganga,价格+网评,https://laganga.com/,可抓取丨已完成,DB: 20产品 20价格 0评价
+南美线,厄瓜多尔,Comandato,价格+网评,https://www.comandato.com/,可抓取丨已完成,comandato_ec_catalog_v2.csv；连通性 200
+南美线,厄瓜多尔,Jaher,价格+网评,https://www.jaher.com.ec/,可抓取丨未抓取,连通性 200；未抓
+南美线,厄瓜多尔,Espana,价格+网评,https://almacenesespana.ec/,可抓取丨部分受限,HTTP 503（almacenesespana.ec）；需重试
+南美线,厄瓜多尔,Megamaxi,价格+网评,https://www.megamaxi.com/,可抓取丨部分完成,连通性 200；woo_megamaxi_tv.csv 已抓（少量）
+南美线,厄瓜多尔,Sukasa,价格+网评,https://www.sukasa.com/,可抓取丨已完成,DB: 50产品 49价格 0评价
+南美线,厄瓜多尔,Todohogar,价格+网评,https://www.todohogar.com/,可抓取丨已完成,DB: 44产品 44价格 0评价
+南美线,厄瓜多尔,Coral,价格+网评,https://coralhipermercados.com/,可抓取丨已完成,DB: 8产品 8价格 0评价
+南美线,厄瓜多尔,Ferrisariato,价格+网评,https://www.ferrisariato.com/,可抓取丨已完成,DB: 50产品 50价格 0评价
+南美线,巴拿马,PANAFOTO,价格+网评,https://panafoto.com/,可抓取丨已完成,DB: 43产品 43价格 0评价
+南美线,巴拿马,E-VISION,价格+网评,https://www.evisionstore.com/,可抓取丨已完成,DB: 49产品 49价格 24评价
+南美线,巴拿马,MULTIMAX,价格+网评,https://www.multimax.net/,可抓取丨部分完成,连通性 200；shopify_multimax_pa.csv 已抓（少量）
+南美线,巴拿马,RODELAG,价格+网评,https://rodelag.com/,可抓取丨部分完成,连通性 200；shopify_rodelag_pa.csv 已抓（3KB）
+南美线,巴拿马,RAENCO,价格+网评,https://www.raenco.com/,可抓取丨已完成,DB: 12产品 12价格 0评价
+南美线,危地马拉,MAX,价格+网评,https://www.max.com.gt/,可抓取丨已完成,DB: 59产品 54价格 0评价
+南美线,危地马拉,TECNOFACIL,价格+网评,https://www.tecnofacil.com.gt/,可抓取丨已完成,DB: 61产品 61价格 0评价
+南美线,危地马拉,Unicomer,价格+网评,https://www.lacuracaonline.com/guatemala/,可抓取丨已完成,DB: 37产品 37价格 0评价
+南美线,危地马拉,Elektra,价格+网评,https://www.elektra.com.gt/,可抓取丨已完成,elektra_gt_catalog_v2.csv（2KB）；有部分目录
+南美线,哥伦比亚,Alkosto,价格+网评,https://www.alkosto.com/tv/smart-tv/c/BI_120_ALKOS,可抓取丨已完成,DB: 1992产品 1992价格 1992评价
+南美线,哥伦比亚,Exito,价格+网评,https://www.exito.com/,可抓取丨已完成,exito_co_catalog_v2.csv（25KB）；连通 200 含 CF 挑战
+南美线,哥伦比亚,Falabella,价格+网评,https://www.falabella.com.co/falabella-co,可抓取丨部分完成,连通 200；目录部分抓取
+南美线,哥伦比亚,Jumbo,价格+网评,https://www.jumbocolombia.com/,可抓取丨已完成,jumbo_co_catalog_v2.csv（5KB）；连通 200
+南美线,哥伦比亚,Olimpica,价格+网评,https://www.olimpica.com.co/electrodomesticos-y-tecnologia/tv-audio-y-video/televisores,可抓取丨已完成,DB: 197产品 197价格 0评价
+南美线,智利,Falabella,价格+网评,https://www.falabella.com/falabella-cl,可抓取丨已完成,DB: 46产品 46价格 3870评价 | 原待验证现已完成
+南美线,智利,Paris,价格+网评,https://www.paris.cl/,可抓取丨已完成,DB: 54产品 90价格 1136评价 | 原待验证现已完成
+南美线,智利,Ripley,价格+网评,https://simple.ripley.cl/,待验证丨未验证,已收录目标站；未抓
+南美线,智利,Mercado Libre,价格+网评,https://www.mercadolibre.cl/,待验证丨未验证,已收录目标站；未抓
+南美线,智利,Walmart,价格+网评,https://www.lider.cl/inicio,可抓取丨已完成,DB: 102产品 102价格 242评价 | 原待验证现已完成
+南美线,智利,ABC,价格+网评,https://www.abc.cl/,可抓取丨已完成,DB: 1291产品 1291价格 1242评价
+南美线,智利,Hites,价格+网评,https://www.hites.com/,可抓取丨已完成,DB: 354产品 354价格 336评价
+南美线,玻利维亚,Multicenter,价格+网评,https://www.multicenter.com/,可抓取丨已完成,multicenter_bo_catalog_v2.csv（3KB）；连通 200
+南美线,玻利维亚,Dismac,价格+网评,https://www.dismac.com.bo/,可抓取丨已完成,DB: 23产品 23价格 4评价
+南美线,阿根廷,全渠道,价格+网评,未提供,不可抓取丨未提供URL,附件中渠道列为空，无法开展
+南美线,乌拉圭,全渠道,价格+网评,未提供,不可抓取丨未提供URL,附件中渠道列为空，无法开展
+南美线,巴西,全渠道,价格+网评,未提供,不可抓取丨未提供URL,附件中渠道列为空，无法开展
+欧洲线,俄罗斯,DNS,价格+网评,https://www.dns-shop.ru/,不可抓取丨需代理,无数据，待抓取 | HTTP 401 Unauthorized；需俄罗斯IP代理
+欧洲线,俄罗斯,M-Video,价格+网评,https://www.mvideo.ru/,不可抓取丨需代理,无数据，待抓取 | HTTP 403 Forbidden；需俄罗斯IP代理
+欧洲线,俄罗斯,TECHNOPARK,价格+网评,https://www.technopark.ru/televizory/,不可抓取丨需代理,无数据，待抓取 | HTTP 401 Unauthorized；需俄罗斯IP代理
+欧洲线,俄罗斯,YANDEX MARKET,价格+网评,https://market.yandex.ru/,可抓取丨未抓取,HTTP 200 纯HTTP可达；但0 TV内容需进一步探测
+欧洲线,俄罗斯,OZON,价格+网评,https://www.ozon.ru/,不可抓取丨需代理,无数据，待抓取 | HTTP 307 重定向；需俄罗斯IP代理
+欧洲线,俄罗斯,Wildberries,价格+网评,https://www.wildberries.ru/,不可抓取丨需代理,无数据，待抓取 | HTTP 498 异常状态码；需俄罗斯IP代理
+北美线-美国,美国,FCC-监控政策用,认证+评测,https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+欧洲线,德国,eBay Germany,价格+网评,https://www.ebay.de,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,西班牙,eBay Spain,价格+网评,https://www.ebay.es,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,西班牙,PcComponentes,价格+网评,https://www.pccomponentes.com,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,西班牙,Worten Spain,价格+网评,https://www.worten.es,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,西班牙,Carrefour Spain,价格+网评,https://www.carrefour.es,可抓取丨已完成,DB: 1产品 0价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,荷兰,Amazon Netherlands,价格+网评,https://www.amazon.nl,可抓取丨已完成,DB: 50产品 45价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,荷兰,Bol.com Netherlands,价格+网评,https://www.bol.com/nl,可抓取丨已完成,DB: 14产品 0价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,荷兰,Coolblue Netherlands,价格+网评,https://www.coolblue.nl,可抓取丨已完成,DB: 22产品 22价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,荷兰,MediaMarkt Netherlands,价格+网评,https://www.mediamarkt.nl,可抓取丨已完成,DB: 4产品 4价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,比利时,Amazon Belgium,价格+网评,https://www.amazon.com.be,可抓取丨已完成,DB: 50产品 48价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,比利时,Bol.com Belgium,价格+网评,https://www.bol.com/be,可抓取丨已完成,DB: 14产品 0价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,比利时,Coolblue Belgium,价格+网评,https://www.coolblue.be,可抓取丨已完成,DB: 22产品 22价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,比利时,MediaMarkt Belgium,价格+网评,https://www.mediamarkt.be,可抓取丨已完成,DB: 8产品 8价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,比利时,Vanden Borre,价格+网评,https://www.vandenborre.be,可抓取丨已完成,DB: 13产品 47价格 5评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,奥地利,MediaMarkt Austria,价格+网评,https://www.mediamarkt.at,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,奥地利,Electronic4you,价格+网评,https://www.electronic4you.at,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,奥地利,Cyberport Austria,价格+网评,https://www.cyberport.at,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,奥地利,e-tec.at,价格+网评,https://www.e-tec.at,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞士,Digitec,价格+网评,https://www.digitec.ch,可抓取丨已完成,DB: 45产品 45价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞士,Galaxus Switzerland,价格+网评,https://www.galaxus.ch,可抓取丨已完成,DB: 45产品 45价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞士,MediaMarkt Switzerland,价格+网评,https://www.mediamarkt.ch,可抓取丨已完成,DB: 50产品 50价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞士,Brack.ch,价格+网评,https://www.brack.ch,可抓取丨已完成,DB: 1产品 0价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞士,Interdiscount,价格+网评,https://www.interdiscount.ch,可抓取丨已完成,DB: 72产品 2价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞士,Fust,价格+网评,https://www.fust.ch,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,波兰,Amazon Poland,价格+网评,https://www.amazon.pl,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,波兰,Allegro,价格+网评,https://allegro.pl,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,波兰,MediaMarkt Poland,价格+网评,https://www.mediamarkt.pl,可抓取丨已完成,DB: 7产品 7价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,波兰,RTV Euro AGD,价格+网评,https://www.euro.com.pl,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,波兰,Media Expert,价格+网评,https://www.mediaexpert.pl,可抓取丨已完成,DB: 30产品 30价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,波兰,Morele.net,价格+网评,https://www.morele.net,可抓取丨已完成,DB: 50产品 53价格 14评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,捷克,Alza Czech Republic,价格+网评,https://www.alza.cz,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,捷克,Datart Czech Republic,价格+网评,https://www.datart.cz,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,捷克,CZC.cz,价格+网评,https://www.czc.cz,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,捷克,Mall.cz,价格+网评,https://www.mall.cz,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,斯洛伐克,Alza Slovakia,价格+网评,https://www.alza.sk,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,斯洛伐克,Datart Slovakia,价格+网评,https://www.datart.sk,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,斯洛伐克,NAY Extra,价格+网评,https://www.nay.sk,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,匈牙利,eMAG Hungary,价格+网评,https://www.emag.hu,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,匈牙利,Alza Hungary,价格+网评,https://www.alza.hu,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,匈牙利,MediaMarkt Hungary,价格+网评,https://www.mediamarkt.hu,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,罗马尼亚,eMAG Romania,价格+网评,https://www.emag.ro,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,罗马尼亚,Altex Romania,价格+网评,https://www.altex.ro,可抓取丨已完成,DB: 50产品 30价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,罗马尼亚,Flanco,价格+网评,https://www.flanco.ro,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,保加利亚,eMAG Bulgaria,价格+网评,https://www.emag.bg,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,保加利亚,Technopolis,价格+网评,https://www.technopolis.bg,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,保加利亚,Technomarket,价格+网评,https://www.technomarket.bg,可抓取丨已完成,DB: 23产品 23价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,克罗地亚,Sancta Domenica,价格+网评,https://www.sancta-domenica.hr,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,克罗地亚,Links,价格+网评,https://www.links.hr,可抓取丨已完成,DB: 1产品 0价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,克罗地亚,Ekupi,价格+网评,https://www.ekupi.hr,可抓取丨已完成,DB: 25产品 25价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,克罗地亚,Elipso,价格+网评,https://www.elipso.hr,可抓取丨已完成,DB: 36产品 36价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,斯洛文尼亚,Big Bang,价格+网评,https://www.bigbang.si,可抓取丨已完成,DB: 33产品 35价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,斯洛文尼亚,Mimovrste,价格+网评,https://www.mimovrste.com,可抓取丨已完成,DB: 11产品 16价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,斯洛文尼亚,Harvey Norman Slovenia,价格+网评,https://www.harveynorman.si,可抓取丨已完成,DB: 10产品 10价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,塞尔维亚,Tehnomanija,价格+网评,https://www.tehnomanija.rs,可抓取丨已完成,DB: 23产品 23价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,塞尔维亚,Gigatron,价格+网评,https://gigatron.rs,可抓取丨已完成,DB: 40产品 40价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,塞尔维亚,Ananas,价格+网评,https://ananas.rs,可抓取丨已完成,DB: 4产品 4价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,波黑,Tehnomag,价格+网评,https://tehnomag.com,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,波黑,Domod,价格+网评,https://domod.ba,可抓取丨已完成,DB: 6产品 6价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,立陶宛,Pigu.lt,价格+网评,https://pigu.lt,可抓取丨已完成,DB: 9产品 4价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,立陶宛,Topo Centras,价格+网评,https://www.topocentras.lt,可抓取丨已完成,DB: 40产品 40价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,立陶宛,Varle.lt,价格+网评,https://www.varle.lt,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,拉脱维亚,220.lv,价格+网评,https://220.lv,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,拉脱维亚,RD Electronics,价格+网评,https://www.rdveikals.lv,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,拉脱维亚,Euronics Latvia,价格+网评,https://www.euronics.lv,可抓取丨已完成,DB: 30产品 30价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,爱沙尼亚,Kaup24.ee,价格+网评,https://kaup24.ee,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,爱沙尼亚,Euronics Estonia,价格+网评,https://www.euronics.ee,可抓取丨已完成,DB: 292产品 212价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,爱沙尼亚,Klick,价格+网评,https://www.klick.ee,可抓取丨已完成,DB: 23产品 23价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞典,Amazon Sweden,价格+网评,https://www.amazon.se,可抓取丨已完成,DB: 50产品 49价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞典,Elgiganten Sweden,价格+网评,https://www.elgiganten.se,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞典,Power Sweden,价格+网评,https://www.power.se,可抓取丨已完成,DB: 36产品 36价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,瑞典,Komplett Sweden,价格+网评,https://www.komplett.se,可抓取丨已完成,DB: 32产品 32价格 3评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,挪威,Elkj?p Norway,价格+网评,https://www.elkjop.no,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,挪威,Power Norway,价格+网评,https://www.power.no,可抓取丨已完成,DB: 31产品 30价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,挪威,Komplett Norway,价格+网评,https://www.komplett.no,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,丹麦,Elgiganten Denmark,价格+网评,https://www.elgiganten.dk,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,丹麦,Power Denmark,价格+网评,https://www.power.dk,可抓取丨已完成,DB: 34产品 30价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,丹麦,Proshop Denmark,价格+网评,https://www.proshop.dk,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,芬兰,Gigantti Finland,价格+网评,https://www.gigantti.fi,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,芬兰,Power Finland,价格+网评,https://www.power.fi,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,芬兰,Verkkokauppa.com,价格+网评,https://www.verkkokauppa.com,可抓取丨已完成,DB: 18产品 18价格 4评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,葡萄牙,Worten Portugal,价格+网评,https://www.worten.pt,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,葡萄牙,Radio Popular,价格+网评,https://www.radiopopular.pt,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,葡萄牙,Fnac Portugal,价格+网评,https://www.fnac.pt,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,土耳其,Kotsovolos,价格+网评,https://www.kotsovolos.gr,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,希腊,Plaisio,价格+网评,https://www.plaisio.gr,可抓取丨已完成,DB: 12产品 12价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,希腊,Public Greece,价格+网评,https://www.public.gr,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,希腊,Skroutz,价格+网评,https://www.skroutz.gr,可抓取丨已完成,DB: 3产品 3价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,土耳其,Trendyol,价格+网评,https://www.trendyol.com,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,土耳其,Hepsiburada,价格+网评,https://www.hepsiburada.com,可抓取丨已完成,DB: 3产品 3价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,土耳其,MediaMarkt Turkey,价格+网评,https://www.mediamarkt.com.tr,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,土耳局,Teknosa,价格+网评,https://www.teknosa.com,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,土耳其,Vatan Bilgisayar,价格+网评,https://www.vatanbilgisayar.com,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,土耳其,Amazon Turkey,价格+网评,https://www.amazon.com.tr,可抓取丨已完成,DB: 50产品 47价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,俄罗斯,Eldorado,价格+网评,https://www.eldorado.ru,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,俄罗斯,Citilink,价格+网评,https://www.citilink.ru,可抓取丨已完成,DB: 5产品 5价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,乌克兰,Rozetka,价格+网评,https://rozetka.com.ua,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,乌克兰,Foxtrot,价格+网评,https://www.foxtrot.com.ua,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,乌克兰,Comfy,价格+网评,https://comfy.ua,可抓取丨已完成,DB: 4产品 0价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,乌克兰,Allo,价格+网评,https://allo.ua,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,德国,Saturn,价格+网评,https://www.saturn.de,可抓取丨已完成,DB: 12产品 24价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,德国,Otto,价格+网评,https://www.otto.de,可抓取丨已完成,DB: 68产品 68价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,德国,Cyberport,价格+网评,https://www.cyberport.de,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,德国,Alternate,价格+网评,https://www.alternate.de,可抓取丨已完成,DB: 72产品 79价格 1评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,德国,Euronics Germany,价格+网评,https://www.euronics.de,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,eBay France,价格+网评,https://www.ebay.fr,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Fnac,价格+网评,https://www.fnac.com,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Cdiscount,价格+网评,https://www.cdiscount.com,可抓取丨已完成,DB: 57产品 60价格 162评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Rue du Commerce,价格+网评,https://www.rueducommerce.fr,可抓取丨已完成,DB: 44产品 64价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,LDLC,价格+网评,https://www.ldlc.com,可抓取丨已完成,DB: 46产品 87价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,英国,eBay UK,价格+网评,https://www.ebay.co.uk,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,意大利,eBay Italy,价格+网评,https://www.ebay.it,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,意大利,Euronics Italy,价格+网评,https://www.euronics.it,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,意大利,Trony,价格+网评,https://www.trony.it,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,意大利,ePRICE,价格+网评,https://www.eprice.it,可抓取丨已完成,DB: 7产品 13价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Electro Depot,价格+网评,https://www.electrodepot.fr/,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Conforama,价格+网评,https://www.conforama.fr/,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,BUT,价格+网评,https://www.but.fr/,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Leclerc,价格+网评,https://www.e.leclerc/,可抓取丨已完成,DB: 40产品 64价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Carrefour,价格+网评,https://www.carrefour.fr/,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Auchan,价格+网评,https://www.auchan.fr/,可抓取丨已完成,DB: 50产品 129价格 0评价 | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+欧洲线,法国,Son-Video,价格+网评,https://www.son-video.com/,不可抓取丨需代理,WAF封锁或代理超时(已有adapter) | 原: 2026-09-24 由 网站汇总表.csv 补录（原表 开
+北美线-加拿大,加拿大,Bets-7-监控政策用,认证+评测,https://ised-isde.canada.ca/site/spectrum-management-telecommunications/en/devices-and-equipment/broadcasting-equipment-standards/broadcasting-equipment-technical-standards,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线-加拿大,加拿大,ICES-003-监控政策用,认证+评测,https://ised-isde.canada.ca/site/spectrum-management-telecommunications/en/devices-and-equipment/interference-causing-equipment-standards-ices/ices-003-information-technology-equipment-including-digital-apparatus,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线-加拿大,加拿大,Nrcan-监控型号用,认证+评测,https://spl-lpi.nrcan-rncan.gc.ca/en-US/product/?product=Televisions&page=1,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线-美国,美国,CEC,认证+评测,未提供,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线-加拿大,加拿大,加拿大魁北克能效要求,认证+评测,未提供,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线,美国+加拿大,ETL（或TUV),认证+评测,未提供,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线,未指定,杜比,认证+评测,https://customer.dolby.com/licensing-resources,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线-美国,美国,Energy guide,认证+评测,未提供,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线,未指定,Energy Star,认证+评测,未提供,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线,未指定,Freesync,认证+评测,未提供,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线,未指定,HDR 10+,认证+评测,https://hdr10plus.org/certified-products/,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线,未指定,潘通,认证+评测,未提供,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+北美线,未指定,蓝牙,认证+评测,未提供,未开始丨未抓取,2026-09-24 由 网站汇总表.csv 补录（原表 开发状态与进展 为空）
+欧洲线,欧洲,全品牌,价格+网评,暂未提供,不可抓取丨未提供URL,价格+网评尚未开始（未提供零售站网址）；SPEC 已就绪，待提供后启动；【不在网站汇总表内】
+南美线,玻利维亚,Multicenter,价格+网评,https://alkostoplus.com/tienda,可抓取丨已完成,DB: 481产品 481价格 0评价
+欧洲线,德国,HIFITEST.DE,媒体评测,https://www.hifitest.de,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝专业影音评测；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,德国,HIFI.DE,媒体评测,https://hifi.de,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝专业影音评测；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,德国,connect,媒体评测,https://www.connect.de,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,德国,COMPUTER BILD,媒体评测,https://www.computerbild.de,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,德国,CHIP,媒体评测,https://www.chip.de,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,德国,Stiftung Warentest,媒体评测,https://www.test.de,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝消费者组织·付费墙/会员制；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,法国,Clubic,媒体评测,https://www.clubic.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,法国,Frandroid,媒体评测,https://www.frandroid.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,法国,Les Numériques,媒体评测,https://www.lesnumeriques.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝专业评测（含榜单）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,英国,What Hi-Fi?,媒体评测,https://www.whathifi.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝专业影音评测（含榜单）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,英国,TechRadar,媒体评测,https://www.techradar.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,英国,Trusted Reviews,媒体评测,https://www.trustedreviews.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝专业评测；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,英国,Expert Reviews,媒体评测,https://www.expertreviews.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝专业评测；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,英国,Which?,媒体评测,https://www.which.co.uk,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝消费者组织·付费墙/会员制；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,英国,AVForums,媒体评测,https://www.avforums.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝影音论坛+评测；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,法国,JVTECH / Jeuxvideo.com,媒体评测,https://www.jeuxvideo.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,意大利,Everyeye,媒体评测,https://tech.everyeye.it,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,意大利,Multiplayer.it,媒体评测,https://multiplayer.it,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,意大利,Hardware Upgrade,媒体评测,https://www.hwupgrade.it,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,意大利,Techzilla,媒体评测,https://www.techzilla.it,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,葡萄牙,TechBit,媒体评测,https://techbit.pt,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,葡萄牙,PCGuia,媒体评测,https://www.pcguia.pt,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,葡萄牙,Jornal Record,媒体评测,https://www.record.pt,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝新闻站（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,葡萄牙,EXAME INFORM??TICA / Vis??o,媒体评测,https://visao.pt,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝新闻站（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,荷兰,TechFi,媒体评测,https://techfi.nl,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,荷兰,Tweakers,媒体评测,https://tweakers.net,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,荷兰,FWD,媒体评测,https://fwd.nl,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝专业影音评测；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,荷兰,Consumentenbond,媒体评测,https://www.consumentenbond.nl,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝消费者组织·付费墙/会员制；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,西班牙,AVPasion,媒体评测,https://www.avpasion.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝专业影音评测；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】
+欧洲线,西班牙,Xataka,媒体评测,https://www.xataka.com,未开始丨新增需求,2026-09-24 新增需求：编辑评测/榜单类数据源（非 UGC 网评、非电商价格），项目当前无对应 skill 分支；类别＝科技媒体（评测栏目）；待开 MEDIA 分支后启动；【不在网站汇总表内·媒体评测，先不抓取探索】

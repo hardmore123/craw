@@ -1,0 +1,212 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/p'], a[href*='/pdp/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true,
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price'][class*='selling']",
+        "[class*='selling-price']",
+        ".precio-producto"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "s",
+        "del",
+        "[class*='old-price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])"
+      ],
+      "attr": "content",
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-name']",
+        "[data-testid*='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "kv": {
+        "container": "table tr, .product-specification tr, [class*='specification'] tr",
+        "key_contains": "modelo",
+        "value": "td:nth-child(2)"
+      },
+      "transform": "clean_text",
+      "jsonld": "mpn"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']",
+        "[data-sku]"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "jsonld": "sku"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='average-rating']"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.reviewCount"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "rack",
+        "stand",
+        "mount",
+        "bracket",
+        "control remoto",
+        "cable",
+        "adaptador",
+        "accesorio",
+        "funda",
+        "base",
+        "soporte para tv",
+        "barra de sonido",
+        "soundbar",
+        "proyector",
+        "parlante",
+        "bocina"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

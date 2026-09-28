@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>海外电视数据采集台</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">HS</span>
+      <div class="titles">
+        <h1>海外电视数据采集台</h1>
+        <p id="sub">SPEC · 评价 · 价格　多地区采集与监控</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <label class="region-picker">
+        地区
+        <select id="regionSelect"></select>
+      </label>
+      <span id="health" class="health" title="后端连通状态">●</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="spec">抓取 SPEC</button>
+    <button class="tab" data-tab="review">抓取评价</button>
+    <button class="tab" data-tab="price">抓取价格</button>
+    <button class="tab" data-tab="probe">通道验证</button>
+    <button class="tab" data-tab="schedule">定时任务</button>
+    <button class="tab" data-tab="jobs">运行记录</button>
+  </nav>
+
+  <main id="main">
+    <!-- ============ SPEC ============ -->
+    <section class="panel active" id="panel-spec">
+      <div class="card">
+        <h2>抓取规格（SPEC）</h2>
+        <p class="hint">从当前地区各品牌官网抓取电视规格表，入库并可导出；入口审计与系列/型号总览单独显示，避免把成功规格误当作官网全量。</p>
+        <div class="form-row">
+          <label>品牌
+            <select id="specBrand"></select>
+          </label>
+          <label class="grow">只抓指定系列（可选，逗号分隔）
+            <input id="specSeries" placeholder="如 U8S,U7S；留空抓全部">
+          </label>
+          <button class="btn primary" id="specRun">开始抓取</button>
+          <button class="btn" id="specRefresh">全量刷新当前地区</button>
+        </div>
+        <div class="split">
+          <div class="left">
+            <div class="subhead">
+              <span>规格表预览</span>
+              <span class="toolbar">
+                <select id="specViewBrand"></select>
+                <button class="btn small" id="specLoad">加载</button>
+                <button class="btn small" data-export="spec" data-fmt="xlsx">导出 Excel</button>
+                <button class="btn small" data-export="spec" data-fmt="csv">CSV</button>
+              </span>
+            </div>
+            <div id="specTableWrap" class="table-wrap"><p class="muted">选择品牌后点「加载」查看已入库规格。</p></div>
+            <div class="model-overview-head">
+              <div class="subhead"><span>系列 / 型号总览</span>
+                <span class="toolbar"><button class="btn small" id="modelLoad">加载总览</button></span>
+              </div>
+              <div id="modelAudit" class="model-audit"><p class="muted">入口审计与型号状态将在这里显示。</p></div>
+              <div id="modelTableWrap" class="model-table-wrap"><p class="muted">选择品牌后点「加载总览」。</p></div>
+            </div>
+          </div>
+          <div class="right">
+            <div class="subhead">任务日志</div>
+            <div id="specProg" class="progress" hidden></div>
+            <pre id="specLog" class="log"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REVIEW ============ -->
+    <section class="panel" id="panel-review">
+      <div class="card">
+        <h2>抓取评价</h2>
+        <p class="hint">按型号抓取用户评价（日本=価格.com レビュー/クチコミ），入库并去重。</p>
+        <div class="form-row">
+          <label>品牌<select id="reviewBrand"></select></label>
+          <label>上市年份
+            <select id="reviewYear">
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="">全部</option>
+            </select>
+          </label>
+          <label class="grow">指定型号（可选，逗号分隔）
+            <input id="reviewModels" placeholder="如 65U8S,55U8S；留空按年份抓全部">
+          </label>
+          <label>抓取速度
+            <select id="reviewSpeed" title="控制每页等待时间：越快等待越短，个别页面完整性略降">
+              <option value="standard">标准（最稳）</option>
+              <option value="fast">快速</option>
+              <option value="turbo">极速</option>
+            </select>
+          </label>
+          <button class="btn primary" id="reviewRun">开始抓取</button>
+        </div>
+        <div class="form-row">
+          <label class="check" title="选中后翻译网评正文；不勾选则不调用翻译模型">
+            <input type="checkbox" id="reviewTranslate"> 翻译网评
+          </label>
+          <label class="check" title="选中后提炼网评中明确提到的产品优点；建议选择 xinghai-ultra">
+            <input type="checkbox" id="reviewExtractPros"> AI提炼优点
+          </label>
+          <label class="check" title="选中后提炼网评中明确提到的产品缺点；建议选择 xinghai-ultra">
+            <input type="checkbox" id="reviewExtractCons"> AI提炼缺点
+          </label>
+          <label>AI引擎
+            <select id="reviewTranslateEngine" title="NLLB/Argos仅提供翻译；优缺点提炼请选择 xinghai-ultra">
+              <option value="nllb">NLLB（本地）</option>
+              <option value="argos">Argos（本地）</option>
+              <option value="xinghai">xinghai-ultra（大模型）</option>
+            </select>
+          </label>
+          <label>讨论主题增量
+            <select id="reviewThreadInc" title="on=主题帖数未变则跳过，更快；需已入库过一次">
+              <option value="off">关闭</option>
+              <option value="on">开启</option>
+            </select>
+          </label>
+          <label class="check" title="跳过历史确认无对应商品的型号">
+            <input type="checkbox" id="reviewSkipNoItem"> 跳过已知无商品
+          </label>
+        </div>
+        <div class="split">
+          <div class="left">
+            <div class="subhead">
+              <span>评价预览</span>
+              <span class="toolbar">
+                <select id="reviewViewBrand"></select>
+                <button class="btn small" id="reviewLoad">加载</button>
+                <button class="btn small" data-export="reviews" data-fmt="xlsx">导出 Excel</button>
+                <button class="btn small" data-export="reviews" data-fmt="csv">CSV</button>
+              </span>
+            </div>
+            <div id="reviewTableWrap" class="table-wrap"><p class="muted">选择品牌后点「加载」查看已入库评价。</p></div>
+          </div>
+          <div class="right">
+            <div class="subhead">任务日志</div>
+            <div id="reviewProg" class="progress" hidden></div>
+            <pre id="reviewLog" class="log"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRICE ============ -->
+    <section class="panel" id="panel-price">
+      <div class="card">
+        <h2>抓取价格</h2>
+        <p class="hint">按型号抓取各店铺分列价格与最低价（日本=価格.com），入库为时序快照。</p>
+        <div class="form-row">
+          <label>品牌<select id="priceBrand"></select></label>
+          <label>上市年份
+            <select id="priceYear">
+              <option value="2026">2026</option>
+              <option value="">全部</option>
+            </select>
+          </label>
+          <label>型号数上限
+            <input id="priceLimit" type="number" min="0" value="0" style="width:6em">
+          </label>
+          <button class="btn primary" id="priceRun">开始抓取</button>
+        </div>
+        <details class="alias-box">
+          <summary>店铺译名对照表（导出价格表头用，只读）</summary>
+          <div id="shopAliasWrap" class="alias-wrap"><span class="muted">加载中…</span></div>
+        </details>
+        <div class="split">
+          <div class="left">
+            <div class="subhead">
+              <span>价格预览</span>
+              <span class="toolbar">
+                <select id="priceViewBrand"></select>
+                <button class="btn small" id="priceLoad">加载</button>
+                <button class="btn small" data-export="prices" data-fmt="xlsx">导出 Excel</button>
+                <button class="btn small" data-export="prices" data-fmt="csv">CSV</button>
+              </span>
+            </div>
+            <div id="priceTableWrap" class="table-wrap"><p class="muted">选择品牌后点「加载」查看已入库价格。</p></div>
+          </div>
+          <div class="right">
+            <div class="subhead">任务日志</div>
+            <div id="priceProg" class="progress" hidden></div>
+            <pre id="priceLog" class="log"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROBE ============ -->
+    <section class="panel" id="panel-probe">
+      <div class="card">
+        <h2>通道验证</h2>
+        <p class="hint">抓取前先探测目标站点是否可访问、是否被拦截。默认快速 HTTP 探测；勾选浏览器模式更接近真实抓取环境但较慢。</p>
+        <div class="form-row">
+          <label class="grow">单个 URL（可选）
+            <input id="probeUrl" placeholder="留空则探测当前地区所有目标站点，如 https://kakaku.com/kaden/lcd-tv/">
+          </label>
+          <label class="check"><input type="checkbox" id="probeBrowser"> 浏览器模式</label>
+          <button class="btn primary" id="probeRun">验证</button>
+        </div>
+        <div id="probeResult" class="table-wrap"><p class="muted">点「验证」开始探测。</p></div>
+      </div>
+    </section>
+
+    <!-- ============ SCHEDULE ============ -->
+    <section class="panel" id="panel-schedule">
+      <div class="card">
+        <h2>定时任务</h2>
+        <p class="hint">配置周期性自动抓取。到点自动入队执行（任务串行，避免被封与锁库）。</p>
+        <div class="form-row">
+          <label>任务
+            <select id="schTask">
+              <option value="price">抓价格</option>
+              <option value="review">抓评价</option>
+              <option value="spec">抓 SPEC（单品牌）</option>
+              <option value="spec_refresh">全量刷新 SPEC</option>
+              <option value="release">抓发售日</option>
+            </select>
+          </label>
+          <label>品牌<select id="schBrand"></select></label>
+          <label>触发
+            <select id="schKind">
+              <option value="weekly">每周</option>
+              <option value="interval">每隔</option>
+            </select>
+          </label>
+          <span id="schWeekly" class="inline">
+            <select id="schWeekday">
+              <option value="0">周一</option><option value="1">周二</option>
+              <option value="2">周三</option><option value="3">周四</option>
+              <option value="4">周五</option><option value="5">周六</option>
+              <option value="6" selected>周日</option>
+            </select>
+            <input id="schHour" type="number" min="0" max="23" value="3" style="width:4em"> 时
+            <input id="schMinute" type="number" min="0" max="59" value="20" style="width:4em"> 分
+          </span>
+          <span id="schInterval" class="inline" style="display:none">
+            每 <input id="schHours" type="number" min="1" value="24" style="width:5em"> 小时
+          </span>
+          <label>年份
+            <select id="schYear"><option value="2026">2026</option><option value="">全部</option></select>
+          </label>
+          <button class="btn primary" id="schAdd">新建定时</button>
+        </div>
+        <div id="schList" class="table-wrap"><p class="muted">加载中…</p></div>
+      </div>
+    </section>
+
+    <!-- ============ JOBS ============ -->
+    <section class="panel" id="panel-jobs">
+      <div class="card">
+        <h2>运行记录</h2>
+        <p class="hint">最近的采集任务与队列状态。点任务查看日志。</p>
+        <div class="form-row">
+          <span id="queueInfo" class="muted"></span>
+          <button class="btn small" id="jobsRefresh">刷新</button>
+        </div>
+        <div class="split">
+          <div class="left"><div id="jobsList" class="table-wrap"></div></div>
+          <div class="right">
+            <div class="subhead">任务日志</div>
+            <div id="jobsProg" class="progress" hidden></div>
+            <pre id="jobsLog" class="log"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

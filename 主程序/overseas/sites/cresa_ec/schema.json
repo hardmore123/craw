@@ -1,0 +1,240 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/p'], a[href*='/pdp/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true,
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price'][class*='selling']",
+        "[class*='selling-price']",
+        ".precio-producto"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "s",
+        "del",
+        "[class*='old-price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])"
+      ],
+      "attr": "content",
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-name']",
+        "[data-testid*='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "kv": {
+        "container": "table tr, .product-specification tr, [class*='specification'] tr",
+        "key_contains": "modelo",
+        "value": "td:nth-child(2)"
+      },
+      "transform": "clean_text",
+      "jsonld": "mpn"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']",
+        "[data-sku]"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "jsonld": "sku"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "container": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[class*='titulo']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='comentario']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "[class*='date']",
+          "[class*='fecha']"
+        ],
+        "transform": "clean_text"
+      },
+      "verified": {
+        "selectors": [
+          "[class*='verified']",
+          "[class*='verificado']"
+        ],
+        "transform": "bool_present"
+      }
+    },
+    "_vtex_reviews": {
+      "endpoint": "https://www.crecos.com/_v/private/graphql/v1 (reviews); /_v/public/graphql/v1 (summary)",
+      "app_version": "vtex.reviews-and-ratings@3.20.1",
+      "query_mode": "persistedQuery (直连 query 返 Unknown operation, 只暴露 persistedQuery 路由)",
+      "reviews_hash": "3489407e26e7465d5413a0c550afa41076cd82bc98b4cd1e42884ae654c30b2c",
+      "average_hash": "206747751fcb514a87ebba4fe89e8d26250e7a759bdf24a83f8055b8cdf2d06d",
+      "bindingId": "f3568845-99b7-4f1b-8db7-4e10f147f2cb",
+      "account": "crecos2",
+      "note": "全站0/156网评; pastReviews=true 查产品专属评论(pastReviews=false 是全站评论流陷阱); average=0/total=0 不写 summary"
+    },
+    "reason": "已探测全站零评价（reviews-and-ratings@3.x total=0）"
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='average-rating']"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.reviewCount"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "rack",
+        "stand",
+        "mount",
+        "bracket",
+        "control remoto",
+        "cable",
+        "adaptador",
+        "accesorio",
+        "funda",
+        "base",
+        "soporte para tv",
+        "barra de sonido",
+        "soundbar",
+        "proyector",
+        "parlante",
+        "bocina"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

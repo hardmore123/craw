@@ -1,0 +1,179 @@
+{
+  "anchor": "h1, body",
+  "search": {
+    "container": "a[href*='/product/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 8000,
+    "scroll_passes": 4,
+    "batch": {
+      "keyword_template": "{brand} {model}",
+      "max_candidates": 60,
+      "force": true,
+      "fallback_per_model": false,
+      "max_search_failures": 2,
+      "min_candidates": 5,
+      "retries": 3,
+      "resolve_models": false
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        "[class*='list-price']",
+        "[class*='old-price']",
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='strike']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])",
+        "button[class*='buy']:not([disabled])",
+        "[data-testid*='add-to-cart']:not([disabled])",
+        "[class*='in-stock']",
+        "[class*='disponible']"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[itemprop='name']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[itemprop='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[data-sku]"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "container": "[itemprop='review'], [class*='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.ratingCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[itemprop='ratingCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "specs": [
+    {
+      "type": "kvlist",
+      "container": "table.spec tr, dl.spec dd",
+      "limit": 100
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "звуковая панель",
+        "soundbar",
+        "кронштейн",
+        "projector",
+        "проектор",
+        "mount",
+        "stand",
+        "case",
+        "cover",
+        "кабель",
+        "cable"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

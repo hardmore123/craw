@@ -1,0 +1,242 @@
+{
+  "anchor": "h1, [data-testid='pdp-title']",
+  "search": {
+    "container": "[data-testid*='product'], article[class*='product'], li[class*='product']",
+    "sku": {
+      "selectors": [
+        "a[href*='/producto/']"
+      ],
+      "attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[data-testid*='title']",
+        "h3",
+        "h2",
+        "a[href*='/producto/']"
+      ]
+    },
+    "url": {
+      "selectors": [
+        "a[href*='/producto/']"
+      ],
+      "attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[data-testid*='price']",
+        "[itemprop='price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[data-testid*='price']"
+      ],
+      "transform": "currency_mx",
+      "jsonld": "offers.priceCurrency"
+    },
+    "list_price": {
+      "selectors": [
+        "[data-testid*='list-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-testid*='availability']",
+        "button[data-testid*='add-to-cart']"
+      ],
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[data-testid='pdp-title']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-testid*='brand']",
+        "[itemprop='brand']"
+      ],
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[data-testid*='sku']",
+        "[itemprop='model']",
+        "[itemprop='mpn']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "model"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        "[data-testid='pdp-title']"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "reviews": {
+    "container": "[data-testid*='review'], .pr-review, article[class*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[data-testid*='rating']",
+          ".pr-rating-stars",
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[data-testid*='review-title']",
+          ".pr-rd-review-headline",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[data-testid*='review-text']",
+          ".pr-rd-description-text",
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[data-testid*='author']",
+          ".pr-rd-author-nickname",
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[data-testid*='date']",
+          ".pr-rd-review-date",
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          "[data-testid*='helpful']",
+          ".pr-helpful-count"
+        ],
+        "transform": "int"
+      },
+      "review_url": {
+        "selectors": [
+          "a[href*='/producto/']"
+        ],
+        "attr": "href"
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "[data-testid*='review'] img, .pr-review img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "icon"
+        ],
+        "limit": 30
+      },
+      "videos": {
+        "selector": "[data-testid*='review'] video source, .pr-review video source",
+        "attr": "src",
+        "limit": 10
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[data-testid*='rating']",
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[data-testid*='review-count']",
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.reviewCount"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "[data-testid*='spec'] tr, table.specifications tr",
+      "key": "th",
+      "value": "td",
+      "limit": 120
+    },
+    {
+      "type": "kvlist",
+      "container": "[data-testid*='spec'] li",
+      "limit": 120
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "control remoto",
+        "funda",
+        "cable",
+        "adaptador",
+        "accesorio"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/uk/tvs/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 40,
+      "fallback_per_model": true
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price']:not([class*='original'])",
+        "[data-testid='price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[data-testid='currency']"
+      ],
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='original-price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-testid='add-to-cart']"
+      ],
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-testid='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "input[name='resourceModelCode']",
+        "[data-model-code]"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "input[name='resourceModelCode']",
+        "[data-model-code]"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "bazaarvoice_data",
+    "bv": {
+      "passkey": "cazuJbcLA9BlO8ZXazwY1OkDv7SjLJTLbZ6KWjQS3TolI",
+      "apiversion": "5.4",
+      "api_url": "https://api.bazaarvoice.com/data/reviews.json",
+      "filter": "Filter=ProductId:{product_id}",
+      "product_id_from": "PDP 隐藏 input resourceModelCode（如 QE42S90HAEXXU）",
+      "page_size": 100,
+      "max_pages": 20,
+      "max_reviews": 1000
+    },
+    "container": "[class*='bv-content'], [data-bv-show='inline_rating']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='bv-rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='bv-content-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='bv-content-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='bv-author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "[class*='bv-date']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[data-testid='rating'] .avg",
+        ".bv-rating"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[data-testid='review-count']",
+        ".bv-count"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.ratingCount"
+    }
+  },
+  "match": {
+    "strategy": "url_template",
+    "url_template": "https://www.samsung.com/uk/tvs/{sku}",
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "projector",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "remote"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

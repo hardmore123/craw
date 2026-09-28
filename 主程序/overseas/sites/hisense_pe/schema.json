@@ -1,0 +1,128 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "a[href*='/producto'], a[href*='/p'], a[href*='/product'], article a",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "h2",
+        "h3",
+        "h1",
+        "[class*='title']"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "max_candidates": 60,
+      "min_candidates": 5,
+      "retries": 3,
+      "max_search_failures": 2
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price']",
+        "[data-price]",
+        ".price",
+        ".product-price"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ],
+      "transform": "clean_text",
+      "jsonld": "offers.priceCurrency"
+    },
+    "in_stock": {
+      "selectors": [
+        "button[class*='cart']",
+        "button[class*='add']",
+        "[data-testid='add-to-cart']"
+      ],
+      "transform": "bool_present",
+      "jsonld": "offers.availability"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [],
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[class*='model']",
+        "[data-model]"
+      ],
+      "transform": "clean_text",
+      "jsonld": "model"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "control remoto",
+        "remote",
+        "funda",
+        "cable",
+        "adapter",
+        "accesorio",
+        "accessory",
+        "bracket",
+        "wall mount"
+      ],
+      "url_contains_any": [
+        "/accesorios/",
+        "/accessories/"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

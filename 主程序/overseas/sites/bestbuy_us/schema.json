@@ -1,0 +1,262 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "ol.sku-item-list > li.sku-item, li.sku-item, div.shop-sku-list-item",
+    "sku": {
+      "self_attr": "data-sku-id",
+      "attr": "data-sku-id",
+      "selectors": [
+        "a[data-sku-id]",
+        "[data-sku-id]"
+      ],
+      "_note": "★不要给 search.sku 配 regex 兜底：_parse_search_with_spec 里 regex/jsonld 是对整页 HTML 生效（Extractor 用整页 html 构造），会把每张卡片解析成同一个 SKU，seen 去重后只剩 1 个候选。只能走容器自身属性或容器内选择器。已知可行替代：网格 li 上的 data-sku-id / data-testid 带 SKU；div.sku-model span.sku-value 的第 2 个值也是 SKU（第 1 个是 Model）。"
+    },
+    "title": {
+      "selectors": [
+        "h4.sku-title a",
+        ".sku-title a",
+        "h4 a",
+        ".sku-title"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "attr": "href",
+      "selectors": [
+        "h4.sku-title a",
+        ".sku-title a",
+        "a[href*='.p?skuId=']",
+        "a[href*='/site/']"
+      ]
+    },
+    "url_template": "https://www.bestbuy.com/site/{sku}.p?skuId={sku}",
+    "wait_ms": 10000,
+    "scroll_passes": 20,
+    "batch": {
+      "_note": "★美国站搜索页更慢（渲染 + 滚动常需 10 秒以上）。force=true + fallback_per_model=false 是避免 405 个型号逐个搜的关键开关：一个品牌只搜一次「{brand} tv」，候选池里没有的型号直接判 no_item，不再为它发起搜索。",
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "div.priceView-hero-price span[aria-hidden='true']",
+        ".priceView-customer-price span[aria-hidden='true']",
+        "[data-testid='customer-price']"
+      ],
+      "jsonld": "offers.price",
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "transform": "currency"
+    },
+    "list_price": {
+      "_note": "★外部证据：div.pricing-price__regular-price 与 priceView-regular-price 均**无证据**（前者可能是臆造）。真正实锤的是页面文案 'Comp. Value: $749.99' / 'Save $250'。校准前先跑 diag --only price 看祖先容器，不要沿用这里的候选。",
+      "selectors": [
+        "div.priceView-regular-price",
+        "[data-testid='regular-price']"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "button.add-to-cart-button",
+        "[data-button-state='ADD_TO_CART']"
+      ],
+      "jsonld": "offers.availability",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "div.priceView-hero-price span[aria-hidden='true']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "div.sku-title h1",
+        "h1.heading-5"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "a[data-track='Brand Name']",
+        "div.brand a"
+      ],
+      "jsonld": "brand.name",
+      "transform": "brand"
+    },
+    "model": {
+      "_note": "★这是第一道也是唯一的权威型号来源（crawl_ca_retail._payload_matches_model 认 product.model_candidates）。外部实测证据：Best Buy PDP 的型号是**服务端渲染**的，HTML 里有 'Model:75Q651G' 与紧邻的 'SKU:6579448'，且型号会拼进 <title>（\"... 75Q651G - Best Buy\"）——所以闸三可行，整页 regex 兜底在 PDP 上是安全的（一页一个型号；注意搜索页整页 regex 会退化，见 search.sku 的 _note）。",
+      "selectors": [
+        "div.model span.product-data-value",
+        "[data-testid='model-number']",
+        "[data-testid='modelNumber'] .product-data-value",
+        ".product-data-value"
+      ],
+      "regex": "Model\\s*(?:Number|No\\.?|#)?\\s*[:\\-]\\s*([A-Za-z0-9][A-Za-z0-9._\\-+/]{2,39})",
+      "jsonld": "mpn",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        "[data-testid='screen-size'] .product-data-value"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "reviews": {
+    "container": "li.review-item, div.review-item-content, [data-testid='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "_note": "原 schema 无唯一评价键，先取容器自身 id；缺则 crawl_ca_retail._normalise_reviews 用内容指纹兜底。若走 BV 接口，键取评价 Id。",
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "p.visually-hidden",
+          ".c-review-average",
+          "[data-testid='review-rating']",
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "h4.review-title",
+          ".review-title"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "div.ugc-review-body p",
+          "p.pre-white-space",
+          ".review-content"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          ".ugc-author",
+          "div.user-attribute .name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "time.submission-date",
+          ".review-date",
+          "[itemprop='datePublished']"
+        ],
+        "attr": "datetime",
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          "button.feedback-positive .count",
+          ".helpful-count"
+        ],
+        "transform": "int"
+      },
+      "verified": {
+        "selectors": [
+          ".ugc-verified-purchaser",
+          "[data-testid='verified-purchase']"
+        ],
+        "transform": "bool_present"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[data-testid='customer-rating'] .ugc-c-review-average",
+        ".ugc-review-average"
+      ],
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        ".c-reviews .c-review-count",
+        "[data-testid='review-count']"
+      ],
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+  "specs": [
+    {
+      "type": "kvlist",
+      "container": ".specs-table .row, ul.specifications li, [data-testid='spec-row']",
+      "limit": 150
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3,
+      "_min_core_len_note": "★必须是 3，不能沿用 4：美国型号清单 405 条里有 32 条的主干是 3 位（Hisense U8N/U7N/U6N 等主力系列，65U8N→U8N），设 4 会让整条主干匹配被跳过，这些型号只能靠精确匹配，而 Best Buy 标题常写成 '65\" Class U8N Series'（分隔式）→ 会被大量误判 no_item。降到 3 的前提是闸三（PDP 权威型号精确相等）必须成立：候选匹配放宽只会多开一个 PDP，不会直接产出错价。另有 6 条主干仅 2 位（UX/MX/HW），仍不做主干匹配，判 no_item 属预期，不要为它们再放宽。",
+      "_size_tokens_note": "★Best Buy 标题与 Costco 同构：'65\" Class - U7N Series'，尺寸与系列被分隔词隔开，紧贴式 (\\d{2,3})core 不命中会让尺寸守卫失效（65 吋价被记到 75 吋头上）。",
+      "core_size_tokens": [
+        "class",
+        "inch",
+        "in",
+        "\"",
+        "series"
+      ]
+    },
+    "reject": {
+      "_note": "★第二组是 Best Buy 特有：站上大量销售 Open-Box / Refurbished，同型号会有更低价的另一个 SKU。不剔除就会把「开盒价」当新品价写进价格监控——这是 Best Buy 版的 32A4NV 事故。注意不要把 'protection plan' / 'bundle' 一律 reject（Costco US 教训：延保打包进标题仍可能是真电视）。",
+      "title_contains_any": [
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "cable",
+        "adapter",
+        "screen protector",
+        "soundbar",
+        "projector",
+        "open-box",
+        "open box",
+        "refurbished",
+        "pre-owned",
+        "preowned",
+        "renewed",
+        "geek squad certified"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

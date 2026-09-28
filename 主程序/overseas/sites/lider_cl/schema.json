@@ -1,0 +1,183 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "script#__NEXT_DATA__",
+    "sku": {
+      "jsonld": "usItemId"
+    },
+    "title": {
+      "jsonld": "name",
+      "transform": "clean_text"
+    },
+    "url": {
+      "jsonld": "canonicalUrl",
+      "transform": "clean_text"
+    },
+    "wait_ms": 4000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "price",
+      "selectors": [
+        "[data-testid='price']",
+        ".price"
+      ],
+      "transform": "money",
+      "_note": "price 字段为 CLP int，priceInfo.linePrice 兜底"
+    },
+    "currency": {
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency"
+    },
+    "list_price": {
+      "jsonld": "priceInfo.listPrice",
+      "selectors": [
+        "[data-testid='list-price']"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "availabilityStatusV2",
+      "selectors": [
+        "[data-testid='stock']"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "price",
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "jsonld": "name",
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "jsonld": "brand",
+      "selectors": [
+        "[data-testid='brand']"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9._\\-]{1,39})\\b",
+      "transform": "clean_text",
+      "_note": "canonicalUrl 末段 slug 或标题正则"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(?:\\\"|inch|pulgadas|in\\b)",
+      "transform": "size_inch"
+    },
+    "sku": {
+      "jsonld": "usItemId",
+      "selectors": [
+        "[data-testid='item-id']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "next_data_inline",
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 10,
+    "fields": {
+      "review_key": {
+        "jsonld": "reviewId"
+      },
+      "rating": {
+        "jsonld": "rating",
+        "transform": "rating"
+      },
+      "title": {
+        "jsonld": "title",
+        "transform": "clean_text"
+      },
+      "body": {
+        "jsonld": "reviewText",
+        "transform": "clean_text"
+      },
+      "author": {
+        "jsonld": "userNickname",
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "jsonld": "submissionTime",
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "_note": "reviews.ratingValue{1..5}Count → star{1..5}; roundedAverageOverallRating → avg_rating; totalReviewCount → total_count（全量记录）",
+    "avg_rating": {
+      "jsonld": "roundedAverageOverallRating",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "totalReviewCount",
+      "transform": "int"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "url",
+        "sku"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ]
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "adaptador",
+        "control remoto",
+        "remote",
+        "bracket",
+        "case",
+        "cover",
+        "soundbar",
+        "barra de sonido",
+        "parlante",
+        "bocina",
+        "proyector",
+        "projector",
+        "rack",
+        "antena",
+        "cleaner",
+        "limpiador",
+        "protector",
+        "pantalla"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

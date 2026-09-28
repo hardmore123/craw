@@ -1,0 +1,53 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "price": {
+    "currency": "EUR",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-price]",
+        ".price",
+        "[class*='price']"
+      ]
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ]
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "search": {
+    "container": "a[href*='/product'], a[href*='/produkt'], a[href*='/p/'], a[class*='product']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} fernseher",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2,
+      "min_candidates": 5,
+      "retries": 3
+    }
+  }
+}

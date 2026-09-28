@@ -1,0 +1,216 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "[class*='product'], [data-testid*='product'], a[href*='/p/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-name']",
+        "[class*='title']"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[data-testid*='price']",
+        "[class*='price']",
+        "[itemprop='price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-testid*='availability']",
+        "[itemprop='availability']"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        "[data-testid*='price']"
+      ],
+      "transform": "clean_text"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "[class*='old-price']",
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='strike']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "h1",
+        "[itemprop='model']"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "container": "[class*='review'], [data-testid*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[data-testid*='rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']",
+          "h3",
+          "h4"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='review-text']",
+          "p"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='review-author']",
+          "[class*='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "[class*='review-date']",
+          "[data-testid*='date']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating']",
+        "[data-testid*='rating']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']"
+      ],
+      "attr": "content",
+      "transform": "int"
+    }
+  },
+  "specs": [],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "remote",
+        "mount",
+        "stand",
+        "bracket",
+        "cable",
+        "wall mount",
+        "cover",
+        "case",
+        "soundbar",
+        "sound bar",
+        "speaker",
+        "sound bar/speaker",
+        "subwoofer",
+        "inflator",
+        "vacuum",
+        "canister",
+        "snowblower",
+        "garage",
+        "blower",
+        "oil",
+        "engine"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

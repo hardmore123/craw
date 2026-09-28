@@ -1,0 +1,82 @@
+{
+  "lines": [
+    "japan"
+  ],
+  "current_line": "japan",
+  "db_path": "data/overseas.db",
+  "week": "2026-W40",
+  "proxy": "http://127.0.0.1:7877",
+  "spec_sites": [
+    "hisense_jp",
+    "panasonic_jp",
+    "regza_jp",
+    "sharp_jp",
+    "sony_jp",
+    "tcl_jp"
+  ],
+  "retail_sites": [
+    "kakaku_jp"
+  ],
+  "retail_sites_with_data": [
+    "kakaku_jp"
+  ],
+  "spec_results": {
+    "hisense_jp": {
+      "output": "Result: ok=10 fail=0 blocked=0 products=10 rows=0",
+      "elapsed": 205.0
+    },
+    "panasonic_jp": {
+      "output": "TIMEOUT",
+      "timeout": true,
+      "elapsed": 601.1
+    },
+    "regza_jp": {
+      "output": "Result: ok=39 fail=0 blocked=0 products=39 rows=0",
+      "elapsed": 420.6
+    },
+    "sony_jp": {
+      "output": "Result: ok=8 fail=0 blocked=0 products=8 rows=0",
+      "elapsed": 121.7
+    },
+    "sharp_jp": {
+      "output": "Result: ok=13 fail=0 blocked=0 products=13 rows=0",
+      "elapsed": 187.2
+    },
+    "tcl_jp": {
+      "output": "TIMEOUT",
+      "timeout": true,
+      "elapsed": 600.3
+    }
+  },
+  "retail_results": {
+    "kakaku_jp": {
+      "output": "TIMEOUT",
+      "timeout": true,
+      "elapsed": 90.5
+    }
+  },
+  "review_results": {
+    "kakaku_jp": {
+      "output": "      该站点无独立评价页，改用详情页评价\n[评价] K0001286426 已入库 0 条\n       该站点无独立评价页，改用详情页评价\n[评价] K0001286427 已入库 0 条\n       该站点无独立评价页，改用详情页评价\n[评价] K0001309965 已入库 0 条\n       该站点无独立评价页，改用详情页评价\nResult: ok=0 reviews_new=0"
+    }
+  },
+  "failed_sites": [],
+  "blocked_sites": [],
+  "timeout_sites": [
+    "kakaku_jp"
+  ],
+  "retry_count": {},
+  "max_retries": 2,
+  "per_site_timeout": 90,
+  "stage": "done",
+  "site_index": 0,
+  "errors": [
+    "SPEC增量=0"
+  ],
+  "spec_row_before": 146853,
+  "spec_row_after": 146853,
+  "price_before": 11817,
+  "price_after": 11824,
+  "review_before": 84095,
+  "review_after": 84095
+}

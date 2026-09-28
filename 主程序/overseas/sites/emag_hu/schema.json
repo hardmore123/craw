@@ -1,0 +1,39 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "price": {
+    "currency": "HUF",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-price]",
+        ".price",
+        "[class*='price']"
+      ]
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ]
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  },
+  "search": {
+    "container": "[class*='product'], a[href*='/product/'], a[href*='/pd/']",
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "max_candidates": 60,
+      "max_pages": 20,
+      "threshold": 10
+    }
+  }
+}

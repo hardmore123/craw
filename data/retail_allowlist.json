@@ -1,0 +1,17 @@
+{
+  "hosts": [
+    "carrefour.es",
+    "cyberport.de",
+    "darty.com",
+    "ebay.fr",
+    "fnac.com",
+    "jaher.com.ec",
+    "mercadolibre.com.pe",
+    "otto.de",
+    "pccomponentes.com",
+    "ripley.cl",
+    "simple.ripley.cl",
+    "worten.es"
+  ],
+  "_note": "无数据零售站抓取任务补充白名单(欧洲+拉美11站)。墨西哥4站(coppel/liverpool/palacio/sams)已在内置默认白名单。加入前确认各站 robots.txt 对商品页无硬禁止(搜索路径部分被禁属正常,软拒绝模式继续)。"
+}

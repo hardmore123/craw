@@ -1,0 +1,31 @@
+{
+  "search": {
+    "container": "[data-testid='search-results-products'] a, .product-card a",
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-testid='product-price']",
+        ".price",
+        ".jsx-3669149701"
+      ]
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "max_reviews": 50
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

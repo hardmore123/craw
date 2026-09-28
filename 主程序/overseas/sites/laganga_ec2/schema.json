@@ -1,0 +1,158 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "li.product-item a.product-item-link",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        ".product-item-name"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[data-price-amount]",
+        ".price-final .price",
+        ".price-box .normal-price .price"
+      ],
+      "attr": "data-price-amount",
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "[data-price-amount]"
+      ],
+      "transform": "currency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "[class*='old-price']",
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='strike']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])",
+        "button[class*='buy']:not([disabled])",
+        "[data-testid*='add-to-cart']:not([disabled])",
+        "[class*='in-stock']",
+        "[class*='disponible']"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        ".product-item-name"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "regex": "(Samsung|LG|Sony|Hisense|TCL|Sharp|Panasonic|Philips|Toshiba|Indurama|Riviera)",
+      "transform": "brand"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9-]{4,20})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "regex": "(\\d{2})\\s*(?:\"|inch|pulgadas)",
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[data-product-id]"
+      ],
+      "attr": "data-product-id",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "container": ".review-item, [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "cocina",
+        "gas"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

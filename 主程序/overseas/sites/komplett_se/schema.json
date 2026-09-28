@@ -1,0 +1,98 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "selectors": [
+      "[class*='price']",
+      "[data-testid*='price']"
+    ],
+    "transform": "money",
+    "jsonld": false
+  },
+  "reviews": {
+    "source": "jsonld",
+    "container": "[itemprop='review'], [class*='review'], [data-testid*='review']",
+    "limit": 40,
+    "jsonld": {
+      "product_type": "Product",
+      "aggregateRating": "aggregateRating",
+      "review_array": "review",
+      "field_map": {
+        "review_key": "datePublished|author.name",
+        "rating": "reviewRating.ratingValue",
+        "title": "name",
+        "body": "description",
+        "author": "author.name",
+        "review_date": "datePublished"
+      }
+    },
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[itemprop='name']",
+          "[class*='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": [
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "on_no_match": "skip",
+    "verify": {
+      "require_model_in": [
+        "title",
+        "url"
+      ],
+      "min_core_len": 3
+    }
+  }
+}

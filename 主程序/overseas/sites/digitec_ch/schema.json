@@ -1,0 +1,57 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "a[href*='/product'], [class*='product'], [data-testid*='product']",
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "max_candidates": 60,
+      "max_pages": 20,
+      "threshold": 10
+    }
+  },
+  "price": {
+    "selectors": [
+      "[class*='price']",
+      "[data-testid*='price']",
+      ".price",
+      ".product-price"
+    ],
+    "transform": "money",
+    "jsonld": true
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "on_no_match": "skip",
+    "verify": {
+      "require_model_in": [
+        "title",
+        "url",
+        "sku"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "case",
+        "cover",
+        "wall mount",
+        "stand",
+        "bracket",
+        "protector",
+        "cable",
+        "adapter",
+        "remote",
+        "control",
+        "mount",
+        "screw",
+        "charger",
+        "soundbar",
+        "speaker"
+      ]
+    }
+  }
+}

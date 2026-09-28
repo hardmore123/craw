@@ -1,0 +1,43 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "[class*='product'], a[href*='/product'], [data-product-id]",
+    "sku": {
+      "self_attr": "data-product-id"
+    },
+    "title": {
+      "selectors": [
+        ".product-name a",
+        ".product-title a",
+        "h3 a",
+        "a[href*='/product']"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "selectors": [
+      "[class*='price']",
+      "[data-testid*='price']",
+      ".price",
+      ".product-price"
+    ],
+    "transform": "money",
+    "jsonld": false
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

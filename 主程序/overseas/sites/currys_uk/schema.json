@@ -1,0 +1,143 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/product/'], a[href*='/pdp/'], a[href*='/p/'], li[class*='product'] a, article a[href]",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "h2",
+        "h3",
+        "[class*='title']",
+        "a[class*='product']"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} {model}",
+      "max_candidates": 60,
+      "min_candidates": 5,
+      "fallback_per_model": true,
+      "retries": 3
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[data-testid='price']",
+        "[class*='price']:not([class*='was']):not([class*='list']):not([class*='original'])",
+        "[itemprop='price']",
+        "meta[property='product:price:amount']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='priceCurrency']",
+        "meta[property='product:price:currency']"
+      ],
+      "transform": "currency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='list-price']",
+        "[class*='rrp']"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-testid='add-to-cart']",
+        "[class*='add-to-cart']",
+        "button[class*='cart']",
+        "[class*='in-stock']"
+      ],
+      "transform": "in_stock"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-title']",
+        "[data-testid='product-title']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-brand]",
+        "meta[itemprop='brand']",
+        "[class*='brand']"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[class*='model']",
+        "[itemprop='model']",
+        "[data-testid='model']"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        "[class*='size']"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "projector",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "remote",
+        "cable",
+        "adapter",
+        "charger",
+        "antenna",
+        "soporte",
+        "montaje",
+        "control remoto",
+        "replacement",
+        "compatible",
+        "for hisense",
+        "for samsung",
+        "for lg",
+        "for sony",
+        "for tcl"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

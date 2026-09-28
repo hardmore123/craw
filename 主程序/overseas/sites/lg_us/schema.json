@@ -1,0 +1,179 @@
+{
+  "anchor": "body",
+  "search": {
+    "container": "a[href*='/us/tvs/lg-'], a[href*='/us/lifestyle-products/lg-']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 30,
+      "fallback_per_model": true
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        ".price",
+        "[data-price]",
+        ".product-price"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        ".old-price",
+        "[data-list-price]"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        ".stock-status"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "_default": "LG"
+    },
+    "model": {
+      "regex": "\\b(oled)?(\\d{2,3})([a-z0-9]+)\\b",
+      "transform": "clean_text",
+      "_note": "可选 OLED 前缀 + 2-3 位尺寸 + 系列尾，如 OLED77C6HUP / 100QNED84BUA"
+    },
+    "size": {
+      "regex": "^(oled)?(\\d{2,3})",
+      "transform": "size_inch",
+      "_note": "从型号前缀取尺寸"
+    },
+    "sku": {
+      "jsonld": "modelCode",
+      "selectors": [
+        "[data-bv-product-id]",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "_note": "BV productId=站内 modelCode(MDxxxxxxxxxx)"
+    }
+  },
+  "reviews": {
+    "source": "bazaarvoice_bfd",
+    "bv": {
+      "client": "lg",
+      "display_code": "7676",
+      "site": "main_site",
+      "locale": "en_US",
+      "origin": "https://www.lg.com",
+      "content_locale": "en_US,en_CA,en_GB,en_AU",
+      "page_size": 100,
+      "max_pages": 20,
+      "max_reviews": 1000
+    },
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "_note": "summary 用 contentlocale=en_US（对齐 PDP 显示）的 numReviews/average；review 保留 ProductId/OriginalProductName/ContentLocale 溯源",
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        "[itemprop='ratingValue']",
+        ".bv_avgRating_component_container"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.ratingCount",
+      "selectors": [
+        "[itemprop='reviewCount']",
+        ".bv_numReviews_text"
+      ],
+      "transform": "int"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

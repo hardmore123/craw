@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "overseas-crawler"
+version = "0.3.0"
+description = "海外电商采集框架：自主搜索产品，采集价格/评价/规格入库并按标准格式导出"
+requires-python = ">=3.10"
+# 核心零第三方依赖；浏览器、Excel、翻译均为可选能力
+# 可选翻译：Argos 运行包之外，还需执行 scripts/install_argos_models.py 安装语言模型
+
+dependencies = []
+
+[project.optional-dependencies]
+browser = ["playwright>=1.49.0"]
+xlsx = ["openpyxl>=3.1"]
+translate = ["argostranslate==1.11.0"]
+translate-nllb = ["transformers>=4.40,<5", "torch>=2.0", "sentencepiece>=0.1.99"]
+# xinghai-ultra 使用 Python 标准库 urllib，无额外 Python 依赖；
+# 运行时需要通过 OVERSEAS_XINGHAI_* 环境变量注入网关配置与凭据。
+http = ["lxml>=5.3", "cssselect>=1.2"]
+
+[project.scripts]
+overseas = "overseas.cli:main"
+
+[tool.setuptools]
+packages = ["overseas", "overseas.dict", "overseas.sites",
+            "overseas.sites.amazon_ca", "overseas.sites.bestbuy_ca",
+            "overseas.sites.canadiantire_ca", "overseas.sites.costco_ca",
+            "overseas.sites.generic_jsonld", "overseas.sites.hisense_ca",
+            "overseas.sites.lg_ca", "overseas.sites.leons_ca",
+            "overseas.sites.philips_ca", "overseas.sites.samsung_ca",
+            "overseas.sites.sony_ca", "overseas.sites.tcl_ca",
+            "overseas.sites.thebrick_ca", "overseas.sites.visions_ca",
+            "overseas.sites.walmart_ca",
+            "overseas.sites.hisense_jp", "overseas.sites.sony_jp",
+            "overseas.sites.regza_jp", "overseas.sites.panasonic_jp",
+            "overseas.sites.tcl_jp", "overseas.sites.sharp_jp"]
+
+[tool.setuptools.package-data]
+overseas = ["schema.sql"]
+"overseas.dict" = ["spec_ja_zh.json"]
+"overseas.sites.amazon_ca" = ["schema.json"]
+"overseas.sites.generic_jsonld" = ["schema.json"]

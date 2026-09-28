@@ -1,0 +1,47 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "div[data-item-id], div[data-testid='list-view'] > div",
+    "sku": {
+      "self_attr": "data-item-id"
+    },
+    "title": {
+      "selectors": [
+        "a span[data-automation-id='product-title']",
+        "span.lh-title",
+        "h3 a",
+        ".product-name a"
+      ]
+    },
+    "url_template": "https://www.walmart.ca/en/ip/{sku}",
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "currency": "CAD",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-price]",
+        ".price",
+        "[class*='price']"
+      ]
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ]
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

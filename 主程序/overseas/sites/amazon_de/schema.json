@@ -1,0 +1,307 @@
+{
+  "anchor": "#productTitle",
+  "search": {
+    "container": "div[data-asin]:not([data-asin=''])",
+    "sku": {
+      "self_attr": "data-asin"
+    },
+    "title": {
+      "selectors": [
+        "h2 span:not([class])",
+        "a[class*='s-line-clamp']",
+        "span.a-size-medium",
+        "h2 span",
+        "[data-cy='title-recipe'] span"
+      ],
+      "transform": "clean_text"
+    },
+    "url_template": "https://www.amazon.de/dp/{sku}",
+    "batch": {
+      "prefer_pool": true,
+      "search_pages": 1,
+      "max_candidates": 60,
+      "threshold": 20,
+      "fallback_per_model": true,
+      "retries": 1,
+      "_note": "P1: 池优先（省逐型号搜索）+ 池内未命中回退逐型号搜索（保覆盖率）。Amazon 品牌搜索受相关性排序限制，扩页收益极低，逐型号精确搜索不可省。",
+      "_measurement_2026_09_20": {
+        "US 1页": "池 17 候选，命中 12/179 = 6.7%",
+        "US 8页": "池 140 候选，命中 34/179 = 19.0%",
+        "CA 8页": "池 304 候选，命中 31/140 = 22.1%",
+        "结论": "Amazon 品牌搜索扩页收益极低（8页也只覆盖~20%型号）。逐型号精确搜索不可省。故 search_pages=1，其余走回退。"
+      }
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "#corePriceDisplay_desktop_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen",
+        "#priceblock_ourprice",
+        "#priceblock_dealprice",
+        "[data-a-color='price'] span.a-offscreen"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen",
+        "#priceblock_ourprice"
+      ],
+      "transform": "currency"
+    },
+    "list_price": {
+      "selectors": [
+        "span.a-price.a-text-price span.a-offscreen",
+        "#listPrice",
+        "#priceblock_listprice"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "#availability span",
+        "#availability",
+        "#add-to-cart-button"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "#corePrice_feature_div span.a-price span.a-offscreen",
+        "span.a-price span.a-offscreen"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "#productTitle",
+        "#title span"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "#bylineInfo",
+        "a#bylineInfo",
+        "#brand",
+        "#detailBullets_feature_div li:has-text('Marke')"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "kv": {
+        "container": "#detailBullets_feature_div li, #productDetails_techSpec_section_1 tr, #productDetails_detailBullets_sections1 tr",
+        "key_contains": "Modellnummer",
+        "value": "td"
+      },
+      "transform": "clean_text"
+    },
+    "category": {
+      "selectors": [
+        "#wayfinding-breadcrumbs_feature_div ul li:last-child a",
+        "#nav-subnav a.nav-b"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "_note": "尺寸：优先变体选择项，其次规格表里的 Screen Size（本地化键名）",
+      "kv": {
+        "container": "#productDetails_techSpec_section_1 tr, #detailBullets_feature_div li",
+        "key_contains": "Bildschirmgröße",
+        "value": "td"
+      },
+      "selectors": [
+        "#inline-twister-expanded-dimension-text-size_name",
+        "#variation_size_name .selection"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "reviews": {
+    "container": "[data-hook='review'], div[id][data-hook='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[data-hook='review-star-rating'] .a-icon-alt",
+          "[data-hook='cmps-review-star-rating'] .a-icon-alt",
+          "i[data-hook='review-star-rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "_note": "2026-09 实测：新模板用驼峰 reviewTitle，旧模板用 review-title，两者都留",
+        "selectors": [
+          "[data-hook='reviewTitle']",
+          "[data-hook='review-title'] span:not([class])",
+          "[data-hook='review-title'] span",
+          "[data-hook='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[data-hook='reviewText'] span",
+          "[data-hook='reviewText']",
+          "[data-hook='reviewTextContainer'] span",
+          "[data-hook='review-body'] span",
+          "[data-hook='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          ".a-profile-name"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[data-hook='review-date']"
+        ],
+        "transform": "clean_text"
+      },
+      "verified": {
+        "selectors": [
+          "[data-hook='avp-badge']"
+        ],
+        "transform": "bool_present"
+      },
+      "helpful_count": {
+        "selectors": [
+          "[data-hook='helpful-vote-statement']"
+        ],
+        "transform": "int"
+      },
+      "review_url": {
+        "_note": "新模板 reviewTitle 是 <a><h5 data-hook=reviewTitle>，链接在外层 a；老模板 a[data-hook=review-title]",
+        "selectors": [
+          "a:has(h5[data-hook='reviewTitle'])",
+          "a[data-hook='review-title']",
+          "h5[data-hook='reviewTitle'] a",
+          "a.a-link-normal.review-title-content"
+        ],
+        "attr": "href"
+      }
+    },
+    "media": {
+      "_note": "图片实测选择器 img[data-hook='review-image-tile']，真实图 URL 含 /images/I/，头像 avatars-global 要排除；缩略图 _SY88_ 换 _SL1600_ 拿高清",
+      "images": {
+        "selector": "img[data-hook='review-image-tile'], .review-image-tile img, [data-hook='review-image-tile-section'] img",
+        "attr": "src",
+        "include": [
+          "media-amazon.com/images/I/"
+        ],
+        "exclude": [
+          "avatars-global",
+          "grey-pixel"
+        ],
+        "hires": [
+          "\\._[A-Z]{2}[0-9]+_",
+          "._SL1600_"
+        ],
+        "limit": 30
+      },
+      "videos": {
+        "selector": "video[data-hook='review-video'] source, [data-hook='review-video'] video, video.review-video source",
+        "attr": "src",
+        "exclude": [],
+        "limit": 10
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "#acrPopover",
+        "span[data-hook='rating-out-of-text']",
+        "#averageCustomerReviews .a-icon-alt"
+      ],
+      "attr": "title",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "#acrCustomerReviewText",
+        "[data-hook='total-review-count']"
+      ],
+      "transform": "int"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "#productDetails_techSpec_section_1 tr, #productDetails_techSpec_section_2 tr, #productDetails_detailBullets_sections1 tr",
+      "key": "th",
+      "value": "td",
+      "limit": 120
+    },
+    {
+      "type": "kvlist",
+      "container": "#detailBullets_feature_div li",
+      "limit": 120,
+      "skip_keys": [
+        "Kundenrezensionen",
+        "Bestseller-Rang",
+        "Im Angebot seit"
+      ]
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "case",
+        "cover",
+        "wall mount",
+        "stand",
+        "screen",
+        "bracket",
+        "protector",
+        "cable",
+        "adapter",
+        "remote",
+        "control",
+        " controller",
+        "mount",
+        "screw",
+        "charger",
+        "antenna",
+        "cleaner",
+        "replacement",
+        "compatible",
+        "for hisense",
+        "fit for",
+        "soporte",
+        "base para"
+      ],
+      "url_contains_any": [],
+      "_expanded_2026_09_20": "实测：逐型号回退路径原先未做 reject 校验，导致 Remote Control / Wall Mount Bracket / Screws 等配件作为电视入库；已补 reject + 扩充词表。"
+    },
+    "on_no_match": "skip"
+  }
+}

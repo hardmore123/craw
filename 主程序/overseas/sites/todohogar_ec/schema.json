@@ -1,0 +1,197 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/productos/'], .product-card",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 6000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 40,
+      "fallback_per_model": true
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        ".product-price",
+        "[data-price]"
+      ],
+      "transform": "money",
+      "_note": "价格是 $min - $max 区间(变体价)，取最低价"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "selectors": [
+        ".old-price",
+        "[data-list-price]"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        ".stock"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-testid='brand']",
+        ".brand-name"
+      ],
+      "transform": "brand",
+      "_note": "Sylvox 本地品牌不在词表→留空"
+    },
+    "model": {
+      "regex": "\\b([A-Z0-9][A-Z0-9._\\-]{1,39})\\b",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "regex": "(\\d{2,3})\\s*(\\\"|inch|pulgadas)",
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[data-testid='sku']",
+        "[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "_note": "url 末段 UUID"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "container": "[class*='review'], [itemprop='review']",
+    "limit": 0,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ]
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "mount",
+        "stand",
+        "cable",
+        "adaptador",
+        "control remoto",
+        "remote",
+        "bracket",
+        "case",
+        "cover",
+        "soundbar",
+        "barra de sonido",
+        "parlante",
+        "bocina",
+        "proyector",
+        "projector",
+        "rack",
+        "antena",
+        "cleaner",
+        "limpiador",
+        "protector",
+        "pantalla"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

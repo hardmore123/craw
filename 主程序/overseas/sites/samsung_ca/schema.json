@@ -1,0 +1,63 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/ca/tvs/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "input[name='resourceModelCode']",
+        "[data-sku]",
+        "[itemprop='model']"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "input[name='resourceModelCode']",
+        "[data-sku]",
+        "[itemprop='sku']"
+      ],
+      "attr": "value",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "none"
+  }
+}

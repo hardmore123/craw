@@ -1,0 +1,209 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/products/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "[class*='product-title']",
+        "[class*='product-name']",
+        "h3",
+        "a[href*='/products/']"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='product-price']",
+        "[class*='price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='compare']",
+        "[class*='was-price']",
+        "s",
+        "del"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[class*='add-to-cart']:not([disabled])",
+        "button:has-text('Add to Cart')"
+      ],
+      "transform": "bool_present"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='product-price']",
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1.product-header-section",
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']"
+      ],
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "selectors": [
+        "h1",
+        "[class*='sku']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "sku"
+    },
+    "size": {
+      "selectors": [
+        "h1",
+        "[class*='product-title']"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "reviews": {
+    "source": "lflgroup_api",
+    "lfl": {
+      "endpoint": "POST https://ecom.api.lflgroup.ca/ecom/item/reviews/get",
+      "required_header": "x-shopify-shop-domain: www.leons.ca",
+      "sku_source": "jsonld_sku",
+      "page_size": 100,
+      "max_pages": 30,
+      "max_reviews": 2000,
+      "sort": "dateDesc"
+    },
+    "container": "[class*='review']",
+    "limit": 100,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[class*='rating']",
+          "[aria-label*='star']"
+        ],
+        "attr": "aria-label",
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "h3",
+          "[class*='review-title']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[class*='review-body']",
+          "p"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[class*='author']",
+          "[class*='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "time",
+          "[class*='date']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_url": {
+        "selectors": []
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[class*='rating']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "[class*='review-count']"
+      ],
+      "transform": "int"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "table tr, [class*='spec'] tr",
+      "key": "th",
+      "value": "td",
+      "limit": 120
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "wall mount",
+        "stand",
+        "screen protector",
+        "cable",
+        "bracket",
+        "adapter",
+        "cover"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

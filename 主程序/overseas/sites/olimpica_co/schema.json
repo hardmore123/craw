@@ -1,0 +1,237 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "[class*='product'], a[href*='/product'], [data-product-id]",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true,
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[class*='price'][class*='selling']",
+        "[class*='selling-price']",
+        ".precio-producto"
+      ],
+      "transform": "money",
+      "jsonld": "offers.price"
+    },
+    "currency": {
+      "selectors": [
+        "[itemprop='priceCurrency']",
+        "meta[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency",
+      "jsonld": "offers.priceCurrency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "s",
+        "del",
+        "[class*='old-price']"
+      ],
+      "transform": "money",
+      "jsonld": "offers.highPrice"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])"
+      ],
+      "attr": "content",
+      "transform": "in_stock",
+      "jsonld": "offers.availability"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-name']",
+        "[data-testid*='name']"
+      ],
+      "transform": "clean_text",
+      "jsonld": "name"
+    },
+    "brand": {
+      "selectors": [
+        "[class*='brand']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand",
+      "jsonld": "brand.name"
+    },
+    "model": {
+      "kv": {
+        "container": "table tr, .product-specification tr, [class*='specification'] tr",
+        "key_contains": "modelo",
+        "value": "td:nth-child(2)"
+      },
+      "transform": "clean_text",
+      "jsonld": "mpn"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']",
+        "[data-sku]"
+      ],
+      "attr": "content",
+      "transform": "clean_text",
+      "jsonld": "sku"
+    }
+  },
+  "reviews": {
+    "source": "none",
+    "container": "[class*='review'], [data-testid*='review'], [itemprop='review'], [class*='comentario']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='rating']",
+          "[class*='star']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[class*='titulo']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']",
+          "[class*='comentario']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='author']",
+          "[class*='reviewer']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "[class*='date']",
+          "[class*='fecha']"
+        ],
+        "transform": "clean_text"
+      },
+      "verified": {
+        "selectors": [
+          "[class*='verified']",
+          "[class*='verificado']"
+        ],
+        "transform": "bool_present"
+      }
+    },
+    "_vtex_reviews": {
+      "endpoint": "https://www.olimpica.com/_v/public/graphql/v1?workspace=master&maxAge=short&appsEtag=remove&domain=store&locale=es-CO",
+      "app_version": "vtex.reviews-and-ratings@3.x",
+      "query_mode": "totalReviewsByProductId 直连 query 200 (app 已装); AverageRatingByProductId/reviewsByProductId 直连返 400 GraphQL validation failed 需 persistedQuery hash",
+      "rest_endpoint": "https://www.olimpica.com/reviews-and-ratings/api/reviews?product_id=<pid>&from=0&to=N&order_by=createdAt:desc&status=true",
+      "note": "双路径皆通(app已装): GraphQL totalReviewsByProductId 直连200+data; REST /reviews-and-ratings/api/reviews 200; 实测全197产品 total=0, REST total=0 → 全站零评价。avg/reviews明细需persistedQuery hash(直连字段名不存在)。source=none因确认无评价数据;app仍装着,未来若有评价可走此双路径恢复source=vtex_reviews_graphql。"
+    },
+    "reason": "已探测全站零评价（reviews-and-ratings app 已装: totalReviewsByProductId 全197产品=0; REST total=0; PDP 'no hay comentarios'; JSON-LD 无 aggregateRating）。复探(probe2)5 TV 产品样本: REST total=0 + GraphQL totalReviewsByProductId=0(5/5,app已装200) + JSON-LD 无 aggregateRating(0/5) + 无 BV 挂件/网络(0/5) → 复确认全站零评价。capabilities 移除 reviews(无评价数据)。"
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[itemprop='ratingValue']",
+        "[class*='rating-value']",
+        "[class*='average-rating']"
+      ],
+      "transform": "rating",
+      "jsonld": "aggregateRating.ratingValue"
+    },
+    "total_count": {
+      "selectors": [
+        "[itemprop='reviewCount']",
+        "[class*='review-count']",
+        "[class*='total-review']"
+      ],
+      "transform": "int",
+      "jsonld": "aggregateRating.reviewCount"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "rack",
+        "stand",
+        "mount",
+        "bracket",
+        "control remoto",
+        "cable",
+        "adaptador",
+        "accesorio",
+        "funda",
+        "base",
+        "soporte para tv",
+        "barra de sonido",
+        "soundbar",
+        "proyector",
+        "parlante",
+        "bocina"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

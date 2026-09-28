@@ -1,0 +1,22 @@
+# 核心零第三方依赖；抓取/翻译等功能按需安装。
+#
+# 可选：抓取需要 JS 渲染或有反爬的站点（Amazon 等）时才装 Playwright。
+# 本机 Windows 直接用已装的 Edge，无需下载 chromium：
+#   python -m pip install playwright
+#
+# Linux 服务器（访问不了 Playwright CDN）用离线 Chrome：
+#   pip install playwright          # 只装 Python 包
+#   解压 chrome-linux64.zip 后设 OVERSEAS_BROWSER_EXECUTABLE 指向 chrome
+#   缺系统库时：sudo python -m playwright install-deps chromium
+playwright>=1.49.0
+
+# 可选：离线日译中（ja→en→zh），安装包之外还需运行
+# python scripts/install_argos_models.py 下载两个本地语言模型
+argostranslate==1.11.0
+
+# 可选：NLLB 本地直连日→中（使用 `--engine nllb`）；首次使用前需下载模型。
+# pip install "transformers>=4.40,<5" "torch>=2.0" "sentencepiece>=0.1.99"
+# 可选：xinghai-ultra 使用 Python 标准库 urllib，无额外依赖；凭据只通过
+# OVERSEAS_XINGHAI_API_KEY / OVERSEAS_XINGHAI_USER_KEY 环境变量注入。
+# 可选：导出 Excel 报表时才需要（CLI export --format xlsx）
+openpyxl==3.1.5

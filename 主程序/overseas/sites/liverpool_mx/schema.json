@@ -1,0 +1,205 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[data-testid$='-card-card-link']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        "section[data-testid$='-card']",
+        "section"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        "[data-testid$='-configurator-price']"
+      ],
+      "transform": "liverpool_money"
+    },
+    "currency": {
+      "selectors": [
+        "[data-testid$='-configurator-price']"
+      ],
+      "transform": "currency_mx"
+    },
+    "list_price": {
+      "selectors": [
+        "[data-testid$='-configurator-price'] [data-testid='original']",
+        "[data-testid$='-configurator-price'] s"
+      ],
+      "transform": "liverpool_money"
+    },
+    "in_stock": {
+      "selectors": [
+        "button[data-testid='add-to-bag-button']:not([disabled])",
+        "button[data-testid='buy-now-button']:not([disabled])"
+      ],
+      "transform": "bool_present"
+    },
+    "raw_text": {
+      "selectors": [
+        "[data-testid$='-configurator-price']"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-testid$='-brand-link']"
+      ],
+      "transform": "brand"
+    },
+    "model": {
+      "kv": {
+        "container": "table[data-testid^='table-test-'] tr",
+        "key_contains": "modelo comercial",
+        "value": "td"
+      },
+      "transform": "clean_text"
+    },
+    "size": {
+      "kv": {
+        "container": "table[data-testid^='table-test-'] tr",
+        "key_contains": "tc-normalizedsize",
+        "value": "td"
+      },
+      "transform": "size_inch"
+    }
+  },
+  "reviews": {
+    "container": "[data-testid='review-comment']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "p.pl-1.font-semibold"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "h3"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "p.text-body-sm.font-regular.leading-2"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "p.label-sm.text-carbon-200.font-regular"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "p.body-base.text-carbon-200"
+        ],
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          "[data-testid='ml-review-like-button'] span"
+        ],
+        "transform": "int"
+      },
+      "review_url": {
+        "selectors": []
+      }
+    },
+    "media": {
+      "images": {
+        "selector": "img",
+        "attr": "src",
+        "exclude": [
+          "avatar",
+          "icon"
+        ],
+        "limit": 30
+      },
+      "videos": {
+        "selector": "video source",
+        "attr": "src",
+        "limit": 10
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[data-testid$='-review-desktop'] [aria-label*='stars']"
+      ],
+      "attr": "aria-label",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "[data-testid$='-review-desktop'] span"
+      ],
+      "transform": "int"
+    }
+  },
+  "specs": [
+    {
+      "type": "table",
+      "container": "table[data-testid^='table-test-'] tr",
+      "key": "th",
+      "value": "td",
+      "limit": 160
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "soporte",
+        "control remoto",
+        "funda",
+        "cable",
+        "adaptador",
+        "accesorio"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

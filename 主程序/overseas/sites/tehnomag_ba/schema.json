@@ -1,0 +1,34 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "currency": "BAM",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-price]",
+        ".price",
+        "[class*='price']"
+      ]
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ]
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

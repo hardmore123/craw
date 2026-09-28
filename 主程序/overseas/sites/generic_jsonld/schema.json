@@ -1,0 +1,100 @@
+{
+  "_comment": "通用适配器：优先用 schema.org JSON-LD，CSS 选择器仅作兜底。适用于发布结构化数据的品牌/零售站。",
+  "anchor": "h1",
+
+  "product": {
+    "title": {
+      "jsonld": "name",
+      "selectors": ["h1", "[itemprop='name']"],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "jsonld": "brand.name",
+      "selectors": ["[itemprop='brand']"],
+      "transform": "clean_text"
+    },
+    "model": {
+      "jsonld": "mpn",
+      "selectors": ["[itemprop='model']", "[itemprop='mpn']"],
+      "transform": "clean_text"
+    },
+    "category": {
+      "jsonld": "category",
+      "selectors": ["nav.breadcrumb li:last-child"],
+      "transform": "clean_text"
+    }
+  },
+
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": ["[itemprop='price']", ".price", "[data-price]"],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": ["[itemprop='priceCurrency']"],
+      "transform": "clean_text"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": ["[itemprop='availability']"],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": ["[itemprop='price']", ".price"],
+      "transform": "clean_text"
+    }
+  },
+
+  "specs": [
+    {
+      "type": "table",
+      "container": "table.specs tr, table.specifications tr, .spec-table tr",
+      "key": "th",
+      "value": "td",
+      "limit": 120
+    }
+  ],
+
+  "summary": {
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": ["[itemprop='ratingValue']"],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.reviewCount",
+      "selectors": ["[itemprop='reviewCount']", "[itemprop='ratingCount']"],
+      "transform": "int"
+    }
+  },
+
+  "reviews": {
+    "container": "[itemprop='review'], .review-item, [data-review-id]",
+    "limit": 40,
+    "fields": {
+      "review_key": { "self_attr": "data-review-id" },
+      "rating": {
+        "selectors": ["[itemprop='ratingValue']", ".rating"],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": ["[itemprop='name']", ".review-title"],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": ["[itemprop='reviewBody']", ".review-body", ".review-text"],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": ["[itemprop='author']", ".review-author"],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": ["[itemprop='datePublished']", ".review-date"],
+        "transform": "clean_text"
+      }
+    }
+  }
+}

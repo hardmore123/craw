@@ -1,0 +1,49 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "li.product, .product-item, .type-product",
+    "sku": {
+      "selectors": ["a[href*='/producto/']", "a.product-item-link"],
+      "attr": "href"
+    },
+    "url": {
+      "selectors": ["a[href*='/producto/']", "a.product-item-link"],
+      "attr": "href"
+    },
+    "title": {
+      "selectors": [".woocommerce-loop-product__title", "h2.woocommerce-loop-product__title", ".product-title"],
+      "text": true,
+      "transform": "clean_text"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "currency": "USD",
+    "price": {
+      "selectors": [
+        ".woocommerce-Price-amount",
+        "[class*='price']",
+        ".price",
+        ".product-price"
+      ],
+      "transform": "money",
+      "jsonld": false
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": ["title"]
+    },
+    "on_no_match": "skip"
+  }
+}

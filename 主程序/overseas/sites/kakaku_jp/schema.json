@@ -1,0 +1,95 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": ".p-resultItem, a[href*='item'], .p-product_name a",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "selectors": [
+        ".p-product_name"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "search_pages": 1,
+      "max_candidates": 60,
+      "retries": 1,
+      "_note": "安全机制：search_pages 为搜索页翻页上限（max_search_pages 等价），防搜索死循环。"
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        ".p-lowestPrice"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        ".p-lowestPrice"
+      ],
+      "transform": "currency"
+    },
+    "list_price": {
+      "selectors": [
+        "[class*='list-price']",
+        "[class*='old-price']",
+        "[class*='was-price']",
+        "[class*='original-price']",
+        "[class*='strike']",
+        "s",
+        "del"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[itemprop='availability']",
+        "button[class*='add-to-cart']:not([disabled])",
+        "button[class*='buy']:not([disabled])",
+        "[data-testid*='add-to-cart']:not([disabled])",
+        "[class*='in-stock']",
+        "[class*='disponible']"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "model": {
+      "kv": {
+        "container": "#spec tr",
+        "key_contains": "型番",
+        "value": "td"
+      },
+      "transform": "clean_text"
+    }
+  },
+  "match": {
+    "strategy": "url_template",
+    "on_no_match": "skip",
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ]
+    }
+  }
+}

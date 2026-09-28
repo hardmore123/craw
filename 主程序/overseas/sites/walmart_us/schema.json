@@ -1,0 +1,186 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "div[data-item-id], div[data-testid='list-view'] > div",
+    "sku": {
+      "self_attr": "data-item-id"
+    },
+    "title": {
+      "selectors": [
+        "a span[data-automation-id='product-title']",
+        "span.lh-title"
+      ]
+    },
+    "url_template": "https://www.walmart.com/ip/{sku}",
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "transform": "currency"
+    },
+    "list_price": {
+      "selectors": [
+        "span.strike-through",
+        ".was-price"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "button[data-automation-id='atc']",
+        "[data-testid='add-to-cart']"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[class*='price']",
+        "[itemprop='price']",
+        "[data-price]"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1[itemprop='name']",
+        "h1.prod-ProductTitle",
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "a[data-seo-id='brand-name']",
+        ".prod-brandName"
+      ],
+      "jsonld": "brand.name",
+      "transform": "brand"
+    },
+    "model": {
+      "jsonld": "model",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "[data-testid='screen-size']"
+      ],
+      "transform": "size_inch"
+    }
+  },
+  "reviews": {
+    "container": "div[data-testid='reviews-section'] li, div.review-card, [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          ".review-rating"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "h3.review-title",
+          ".review-title"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "span.review-text",
+          ".review-body"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          ".review-footer-userNickname",
+          ".author"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "div.review-date",
+          "time"
+        ],
+        "transform": "clean_text"
+      },
+      "helpful_count": {
+        "selectors": [
+          ".like-button-count",
+          ".helpful-count"
+        ],
+        "transform": "int"
+      },
+      "review_key": {
+        "self_attr": "id"
+      }
+    }
+  },
+  "summary": {
+    "_summary_note": "汇总只认 JSON-LD aggregateRating（权威）与结构明确的 CSS。原先的 [itemprop='ratingValue']/[itemprop='reviewCount'] 已移除：评价卡内部也用这两个属性，而 Extractor 取的是**文档顺序第一个**匹配，可能把某条评价的星级当成整机均分。",
+    "avg_rating": {
+      "selectors": [
+        "span.rating-number"
+      ],
+      "jsonld": "aggregateRating.ratingValue",
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "a[data-testid='reviews-count']"
+      ],
+      "jsonld": "aggregateRating.reviewCount",
+      "transform": "int"
+    }
+  },
+  "specs": [
+    {
+      "type": "kvlist",
+      "container": "div.specification-table tr, [data-testid='product-specs'] div",
+      "limit": 150
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 40,
+    "verify": {
+      "require_model_in": [
+        "sku",
+        "title"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 4
+    },
+    "reject": {
+      "title_contains_any": [
+        "wall mount",
+        "stand",
+        "screen protector",
+        "case",
+        "bracket",
+        "adapter"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

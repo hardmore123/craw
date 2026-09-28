@@ -1,0 +1,129 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "a[href*='/product/'], .product-card, [data-product-id]",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} {model}",
+      "threshold": 10,
+      "max_candidates": 60,
+      "max_pages": 20,
+      "max_search_failures": 2,
+      "min_candidates": 5,
+      "retries": 3
+    }
+  },
+  "price": {
+    "jsonld": "offers.price",
+    "selectors": [
+      "[class*='price']",
+      "[data-testid*='price']",
+      "[data-price]",
+      ".price",
+      ".product-price",
+      "[itemprop='price']",
+      "meta[itemprop='price']"
+    ],
+    "currency": "EUR"
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "meta[itemprop='brand']",
+        "[data-testid*='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[itemprop='model']",
+        "[data-testid*='model']"
+      ],
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "specs": [],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "sound bar",
+        "projektor",
+        "projector",
+        "wandhalterung",
+        "halterung",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "standfuß",
+        "stativ",
+        "kabel",
+        "cable",
+        "adapter",
+        "charger",
+        "lader",
+        "fernbedienung",
+        "remote",
+        "control",
+        "case",
+        "cover",
+        "protector",
+        "screen protector",
+        "zubehör",
+        "accessory",
+        "accessories",
+        "screw",
+        "schraube",
+        "speaker",
+        "lautsprecher"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

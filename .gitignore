@@ -1,0 +1,48 @@
+﻿# 大文件/二进制
+*.db
+*.db.bak*
+*.zip
+*.tar.gz
+*.7z
+*.rar
+
+# 浏览器profile(841MB)
+data/browser_profile/
+**/browser_profile/
+
+# Python缓存
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# 日志
+*.log
+logs/
+
+# 临时文件
+_*.py
+_*.json
+_*.txt
+_*.md
+*.tmp
+*.bak
+*.swp
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# 但保留这些DB(用git LFS或强制添加)
+# 如果需要上传DB，用 git add -f 强制添加
+
+# GitHub 100MB限制 — DB文件不追踪

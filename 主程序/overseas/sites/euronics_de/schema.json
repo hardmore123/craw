@@ -1,0 +1,52 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "a[href*='/product'], a[href*='/pd/'], a[href*='/pdp/'], a[href*='/p/'], [class*='product'], [data-testid*='product']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} {model}",
+      "threshold": 10,
+      "max_candidates": 60,
+      "max_pages": 20,
+      "max_search_failures": 2,
+      "min_candidates": 5,
+      "retries": 3
+    }
+  },
+  "price": {
+    "currency": "EUR",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-price]",
+        ".price",
+        "[class*='price']"
+      ]
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ]
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

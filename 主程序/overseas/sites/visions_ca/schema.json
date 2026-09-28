@@ -1,0 +1,50 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "li.product-item, .product-item, li.item, .product-item-info",
+    "sku": {
+      "self_attr": "data-product-id"
+    },
+    "title": {
+      "selectors": [
+        ".product-item-name a",
+        ".product-name a",
+        "a.product-item-link",
+        "strong.product.name a"
+      ],
+      "transform": "clean_text"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "currency": "CAD",
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "[data-price]",
+        ".price",
+        "[class*='price']"
+      ]
+    },
+    "raw_text": {
+      "selectors": [
+        "[class*='price']",
+        ".price"
+      ]
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

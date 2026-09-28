@@ -1,0 +1,230 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/p/'], [data-testid*='product'], [class*='product']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_text": true
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 8000,
+    "scroll_passes": 8,
+    "batch": {
+      "_note": "★慢站关键开关：force=true 让型号多的品牌也只搜一次；fallback_per_model=false 让批量候选里没有的型号直接判 no_item、不再逐型号发起搜索，避免 621 个型号把搜索页刷爆（既防封也防空转）。",
+      "keyword_template": "{brand} tv",
+      "threshold": 40,
+      "force": true,
+      "fallback_per_model": false,
+      "max_candidates": 60,
+      "max_search_failures": 2,
+      "_min_candidates_note": "★搜索页是客户端渲染的，偶发只出部分候选。低于下限一律判为搜索失败（记 failed 并跳过品牌），不写 no_item——避免把'没抓到'伪装成'站上没有'。CA 实测 Hisense tv 稳定 22~24 个候选。",
+      "min_candidates": 15,
+      "retries": 3,
+      "_resolve_models_note": "★列表页只写系列名（Samsung 55\" Class - M70H Series），而型号清单是厂商全码（UN55M70HAFXZC）——候选级匹配必然全 miss。开启后先把候选 PDP 各打开一次解出权威型号，匹配退化为精确相等。预算=候选数(24)，与该品牌型号数(224)无关。",
+      "resolve_models": true,
+      "resolve_limit": 40
+    }
+  },
+  "price": {
+    "price": {
+      "jsonld": "offers.price",
+      "selectors": [
+        "span[automation-id='productPriceOutput']",
+        "[data-testid*='price']"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "jsonld": "offers.priceCurrency",
+      "selectors": [
+        "[itemprop='priceCurrency']"
+      ],
+      "attr": "content",
+      "transform": "currency"
+    },
+    "list_price": {
+      "jsonld": "offers.highPrice",
+      "transform": "money"
+    },
+    "in_stock": {
+      "jsonld": "offers.availability",
+      "selectors": [
+        "[itemprop='availability']",
+        "input[value='Add to Cart']"
+      ],
+      "attr": "content",
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "jsonld": "offers.price",
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "_note": "型号由 sites/costco_common.py 在 adapter.parse_product 里补（页头 + 规格表），下面的选择器只是给 spec 驱动路径（retail-health / mx_line）用的等价描述。",
+    "title": {
+      "selectors": [
+        "h1",
+        "h1[data-testid='Text_brand-name']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-testid='Text_brand-name']",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "div[data-testid='Text_item-number']"
+      ],
+      "regex": "Model\\s+([A-Za-z0-9][A-Za-z0-9._\\-+]{1,39})",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[itemprop='sku']",
+        "meta[itemprop='sku']"
+      ],
+      "attr": "content",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "bazaarvoice_bfd",
+    "bv": {
+      "client": "Costco-EN_CA",
+      "display_code": "20040_1_0",
+      "site": "native_review_form",
+      "locale": "en_CA",
+      "origin": "https://www.costco.ca",
+      "content_locale": "en_CA,en_US,fr_CA",
+      "page_size": 100,
+      "max_pages": 20,
+      "max_reviews": 1000
+    },
+    "container": "[class*='review'], [data-testid*='review'], [itemprop='review']",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='review-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='review-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "_note": "JSON-LD 的 reviewCount 为 null，条数在 ratingCount —— jsonld_product_payload 已做 ratingCount 兜底。BV 接口的汇总更全（带星级分布），命中时覆盖它。",
+    "avg_rating": {
+      "jsonld": "aggregateRating.ratingValue",
+      "selectors": [
+        ".bv_avgRating_component_container",
+        "[itemprop='ratingValue']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "jsonld": "aggregateRating.ratingCount",
+      "selectors": [
+        ".bv_numReviews_text",
+        "[itemprop='reviewCount']"
+      ],
+      "transform": "int"
+    }
+  },
+  "specs": [
+    {
+      "type": "kvlist",
+      "container": "#ProductSpecifications tr",
+      "limit": 150
+    }
+  ],
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "core_strip_suffix": [
+        "pro",
+        "max"
+      ],
+      "min_core_len": 3,
+      "_size_tokens_note": "★Costco 标题是 '65\" Class - U7SG Series'，尺寸与系列之间有分隔词。不加这组 token，尺寸守卫失效，65 吋会命中 75 吋的同系列商品。",
+      "core_size_tokens": [
+        "class",
+        "inch",
+        "in",
+        "\"",
+        "series"
+      ]
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "projector",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "cable",
+        "adapter",
+        "screen protector"
+      ],
+      "url_contains_any": []
+    },
+    "on_no_match": "skip"
+  }
+}

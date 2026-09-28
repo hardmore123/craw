@@ -1,0 +1,32 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "[class*='product'], a[href*='/product/'], a[href*='/pd/']",
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "max_candidates": 60,
+      "max_pages": 20,
+      "threshold": 10
+    }
+  },
+  "price": {
+    "selectors": [
+      "[class*='price']",
+      "[data-testid*='price']",
+      ".price",
+      ".product-price"
+    ],
+    "transform": "money",
+    "jsonld": true
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

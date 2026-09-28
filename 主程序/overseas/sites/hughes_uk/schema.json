@@ -1,0 +1,201 @@
+{
+  "anchor": "h1",
+  "search": {
+    "container": "a[href*='/product/']",
+    "sku": {
+      "self_attr": "href"
+    },
+    "title": {
+      "self_attr": "title"
+    },
+    "url": {
+      "self_attr": "href"
+    },
+    "wait_ms": 5000,
+    "scroll_passes": 3,
+    "batch": {
+      "keyword_template": "{brand} tv",
+      "max_candidates": 60,
+      "fallback_per_model": true
+    }
+  },
+  "price": {
+    "price": {
+      "selectors": [
+        ".product-price",
+        "[class*='product-price']:not([class*='list'])"
+      ],
+      "transform": "money"
+    },
+    "currency": {
+      "selectors": [
+        "[class*='currency']",
+        ".product-price"
+      ],
+      "transform": "currency"
+    },
+    "list_price": {
+      "selectors": [
+        ".product-price .with-list-price .was-price",
+        "[class*='original-price']"
+      ],
+      "transform": "money"
+    },
+    "in_stock": {
+      "selectors": [
+        "[data-testid='add-to-cart']",
+        ".in-stock"
+      ],
+      "transform": "in_stock"
+    },
+    "raw_text": {
+      "selectors": [
+        ".product-price"
+      ],
+      "transform": "clean_text"
+    }
+  },
+  "product": {
+    "title": {
+      "selectors": [
+        "h1",
+        "[class*='product-name']"
+      ],
+      "transform": "clean_text"
+    },
+    "brand": {
+      "selectors": [
+        "[data-brand]",
+        "meta[itemprop='brand']"
+      ],
+      "attr": "content",
+      "transform": "brand"
+    },
+    "model": {
+      "selectors": [
+        "[product-sku]"
+      ],
+      "attr": "product-sku",
+      "regex": "([A-Z]+)-(.+)",
+      "transform": "clean_text"
+    },
+    "size": {
+      "selectors": [
+        "h1"
+      ],
+      "transform": "size_inch"
+    },
+    "sku": {
+      "selectors": [
+        "[product-sku]"
+      ],
+      "attr": "product-sku",
+      "transform": "clean_text"
+    }
+  },
+  "reviews": {
+    "source": "feefo",
+    "feefo": {
+      "merchant_identifier": "hughes",
+      "origin": "www.hughes.co.uk",
+      "locale": "en_GB",
+      "since_period": "ALL",
+      "summary_api": "https://api.feefo.com/api/10/reviews/summary/product?product_sku={product_sku}&origin=www.hughes.co.uk&merchant_identifier=hughes&since_period=ALL",
+      "reviews_api": "https://api.feefo.com/api/10/reviews/product?product_sku={product_sku}&origin=www.hughes.co.uk&merchant_identifier=hughes&since_period=ALL&page_size=100&page={page}",
+      "product_sku_from": "DB product.sku（BRANCH-MODEL 格式，直接用）",
+      "page_size": 100,
+      "max_pages": 20,
+      "max_reviews": 2000
+    },
+    "container": "[class*='feefo'], [data-feefo]",
+    "limit": 40,
+    "fields": {
+      "review_key": {
+        "self_attr": "data-review-id"
+      },
+      "rating": {
+        "selectors": [
+          "[itemprop='ratingValue']",
+          "[class*='feefo-rating']"
+        ],
+        "transform": "rating"
+      },
+      "title": {
+        "selectors": [
+          "[class*='feefo-title']",
+          "[itemprop='name']"
+        ],
+        "transform": "clean_text"
+      },
+      "body": {
+        "selectors": [
+          "[itemprop='reviewBody']",
+          "[class*='feefo-body']"
+        ],
+        "transform": "clean_text"
+      },
+      "author": {
+        "selectors": [
+          "[itemprop='author']",
+          "[class*='feefo-author']"
+        ],
+        "transform": "clean_text"
+      },
+      "review_date": {
+        "selectors": [
+          "[itemprop='datePublished']",
+          "[class*='feefo-date']"
+        ],
+        "transform": "clean_text"
+      }
+    }
+  },
+  "summary": {
+    "avg_rating": {
+      "selectors": [
+        "[class*='feefo'] .rating",
+        "[data-testid='rating']"
+      ],
+      "transform": "rating"
+    },
+    "total_count": {
+      "selectors": [
+        "[class*='feefo'] .count",
+        "[data-testid='review-count']"
+      ],
+      "transform": "int"
+    }
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "search_keyword_template": "{brand} {model}",
+    "candidate_limit": 60,
+    "verify": {
+      "require_model_in": [
+        "title",
+        "sku",
+        "url"
+      ],
+      "normalize": "upper_alnum",
+      "allow_core_match": true,
+      "core_strip_leading_size": true,
+      "min_core_len": 3
+    },
+    "reject": {
+      "title_contains_any": [
+        "soundbar",
+        "projector",
+        "wall mount",
+        "mount",
+        "bracket",
+        "stand",
+        "case",
+        "cover",
+        "remote",
+        "cable",
+        "adapter"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}

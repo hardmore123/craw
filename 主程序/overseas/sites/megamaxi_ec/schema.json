@@ -1,0 +1,31 @@
+{
+  "anchor": "h1, script[type='application/ld+json']",
+  "search": {
+    "container": "li.product",
+    "sku": {"selectors": ["a[href*='/producto/']"], "attr": "href"},
+    "url": {"selectors": ["a[href*='/producto/']"], "attr": "href"},
+    "title": {"selectors": [".woocommerce-loop-product__title"], "text": true},
+    "batch": {
+      "max_candidates": 60
+    }
+  },
+  "price": {
+    "selectors": [
+      "[class*='price']",
+      "[data-testid*='price']",
+      ".price",
+      ".product-price"
+    ],
+    "transform": "money",
+    "jsonld": false
+  },
+  "match": {
+    "strategy": "search_then_verify",
+    "verify": {
+      "require_model_in": [
+        "title"
+      ]
+    },
+    "on_no_match": "skip"
+  }
+}
