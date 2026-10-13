@@ -1,0 +1,187 @@
+# 证书核对工具 · 交接包总索引
+
+> **本文件夹是接手「证书核对工具」项目的唯一入口。** 里面归集了项目全部文档、源码清单、运行逻辑、设计、部署（本地+服务器分开）、日志、配置和数据信息。按下文顺序阅读即可完整理解并上手本项目。
+>
+> **项目根目录**：`C:\Users\likunyuan\Desktop\爬取项目\crawl4ai-main`
+> **最后更新**：2026-08-26（v2.7）
+
+---
+
+## 📋 这个项目是什么
+
+把「安全件报备清单」Excel 里的**证书号**逐条到 **VDE / UL / TÜV Rheinland** 三家认证机构官网查询，把官网真实信息与表格内容（制造商、生产厂、型号、标准、证书状态）逐项比对，结论写回 Excel，**不一致字段标红**。已做成本地网页前后端 + 命令行两种用法。另含 CQC 数字开放平台 OAuth2 接入（Java 参考代码 + Python 实现）。
+
+---
+
+## 📁 本交接包目录结构
+
+```
+证书核对工具_交接包/
+├── 00_README_总索引.md              ← 你正在读（先读这个）
+├── 01_交接总文档/
+│   └── 项目交接文档_证书核对工具.md  ← ★★ 主交接文档（16章，功能/架构/接手指南全在这）
+├── 02_设计文档/
+│   ├── 网页前后端设计文档_design.md       ← 网页版架构设计（250行，含正确性属性）
+│   ├── 网页前后端需求文档_requirements.md  ← 10条需求 + 验收标准
+│   ├── 网页前后端任务清单_tasks.md         ← 开发任务拆解
+│   ├── 技术文档_README.md                 ← 技术细节（接口/字段映射/抓取路径考证）
+│   ├── 功能介绍与操作手册_介绍文档.Rmd      ← 面向用户的功能介绍
+│   └── 项目整理总说明.md                   ← 整理原则与结构
+├── 03_使用说明/
+│   ├── 使用说明.md                  ← ★ 用户主文档（网页版+命令行全流程）
+│   ├── 迁移到新电脑说明.md           ← ★ 换电脑测试看这个
+│   ├── 开发说明.md                   ← 开发向（接口细节/字段映射）
+│   └── 交付包文件清单.md             ← 交付包内每个文件干什么
+├── 04_部署文档/                      ← ★ 本地和服务器分开
+│   ├── 04a_本地Windows部署/
+│   │   ├── 本地Windows部署指南.md     ← ★★ 本地部署专用指南（环境/bat/检查清单/坑）
+│   │   ├── 一键启动.bat / 启动网页.bat / _py.bat
+│   │   ├── 1_安装依赖.bat ~ 9_自测.bat (全套 bat 脚本)
+│   │   └── 本地Windows_README.md
+│   └── 04b_服务器Linux部署/
+│       ├── 服务器Linux部署指南.md     ← ★★ 服务器部署专用指南（逐条/断电/运维/坑）
+│       ├── Linux服务器部署清单.md     ← 逐条执行清单（原文档）
+│       ├── Linux部署分析.md          ← 部署可行性/风险/方案分析
+│       ├── certverify.service        ← systemd 服务文件（生产配置）
+│       ├── cert_verify_ready.sh      ← 启动前依赖探测脚本（断电保护）
+│       ├── nginx-certverify.conf     ← Nginx 配置（做法B备用）
+│       ├── setup_check.sh            ← 环境检查脚本
+│       ├── 服务器部署与验证摘要.md     ← 2026-08-26 部署验证结果
+│       ├── 参考_CertAgent部署与使用指南.md  ← 借鉴的已上线项目经验
+│       ├── 参考_CertAgent部署问题排查日志.md ← 借鉴的踩坑记录（42KB）
+│       └── 平台上报部署说明_暂不部署.md
+├── 05_运行日志与测试报告/
+│   ├── 前序HANDOFF交接文档.md        ← 前一次交接的文档
+│   ├── 半月报.md / 周报.md           ← 进度报告
+│   ├── VDE解析与比对测试报告.txt      ← VDE 解析 20 项断言全通过
+│   ├── 导出两表测试日志.txt / 自测报告.txt
+│   └── 网络自检报告_netcheck.txt / 网络诊断报告_netdiag.txt
+├── 06_核心源码清单/
+│   └── 源码清单与运行逻辑.md         ← ★★ 全部源码文件清单 + 端到端运行逻辑串联
+├── 07_客户端参考代码/                ← CQC Java 参考实现
+│   ├── client-demo_README.md / pom.xml / application.yaml
+├── 08_配置与脚本/                     ← ★ 本地和服务器分开
+│   ├── 08a_本地Windows配置与脚本/
+│   │   ├── requirements.txt / env配置示例.txt
+│   │   └── 一键启动.bat / 启动网页.bat / _py.bat / 导出两表.py
+│   └── 08b_服务器Linux配置/
+│       ├── requirements.txt / env配置示例.txt
+│       ├── certverify.service_平台上报版
+│       ├── 部署前信息清单_平台上报.md / 回滚说明_平台上报.md
+└── 09_历史版本归档说明/
+    └── CHANGELOG.md                  ← v2.0~v2.7 版本变更记录
+```
+
+---
+
+## 🚀 接手者按这个顺序读
+
+### 第一步：了解全貌（30分钟）
+1. **读本文件**（`00_README_总索引.md`）
+2. 读 `01_交接总文档/项目交接文档_证书核对工具.md` — 16 章主交接文档
+3. 读 `06_核心源码清单/源码清单与运行逻辑.md` — 源码清单 + 运行逻辑
+
+### 第二步：理解设计与用法（30分钟）
+4. 读 `02_设计文档/网页前后端设计文档_design.md` — 网页版架构
+5. 读 `03_使用说明/使用说明.md` — 用户视角操作手册
+
+### 第三步：部署（按需二选一）
+6. **本地开发/使用** → 读 `04_部署文档/04a_本地Windows部署/本地Windows部署指南.md`
+7. **服务器部署** → 读 `04_部署文档/04b_服务器Linux部署/服务器Linux部署指南.md`
+
+### 第四步：环境确认与跑通（30分钟）
+8. 按对应部署指南执行：
+   - 确认 Python 3.12（本地）或 venv（服务器）
+   - 装依赖、跑离线测试（5 套全绿 = 代码完好）
+   - 开 VPN + 确认代理端口（本地）/ 确认 Nginx+systemd（服务器）
+   - 单条验证 TÜV/VDE/UL
+
+### 第五步：深入细节（按需）
+9. 要改比对逻辑 → `02_设计文档/技术文档_README.md` + 源码 `compare.py`
+10. 要加新机构 → 主交接文档第 14.5 节 + 源码 `providers/`
+11. 要接入 CQC → `07_客户端参考代码/` + 源码 `cqc_oauth.py`
+
+---
+
+## ⚡ 快速验证命令
+
+### 本地 Windows
+```powershell
+$PY = "C:\Users\likunyuan\AppData\Local\Programs\Python\Python312\python.exe"
+cd "C:\Users\likunyuan\Desktop\爬取项目\crawl4ai-main"
+
+# 离线测试（全绿=代码完好）
+& $PY cert_verify\tests\test_routing.py
+& $PY cert_verify\tests\test_vde_parse.py
+& $PY cert_verify\tests\test_compare_fields.py
+& $PY cert_verify\tests\test_excel_writer.py
+& $PY cert_verify\tests\test_web_flow.py
+
+# 启动网页
+& $PY -m cert_verify.web --port 8756
+```
+
+### 服务器 Linux
+```bash
+cd /home/hisense/pro/Gitlab/DataGather
+sudo systemctl status certverify --no-pager
+curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8758/   # 期望 200
+# 从其他电脑访问
+curl -s -o /dev/null -w '%{http_code}\n' http://10.18.87.51/craw/  # 期望 200
+```
+
+---
+
+## 🔑 必须知道的 5 件事
+
+1. **Python 版本坑**：本地 PATH 的 `python` 可能指向 3.14（没装库）。本地用 **3.12**；服务器用 venv（Python 3.11）。
+2. **网络**：VDE/UL/TÜV 是境外站，公司网关直连被拦。本地必须开 VPN/加速器（代理 `http://127.0.0.1:7877`，三家共用）；服务器需配置代理出口。
+3. **UL 需要登录态**：`.ul_profile/`（Playwright 持久化浏览器）。每台电脑/服务器各登一次，**不可跨平台复制**，不打包不提交。
+4. **查询间隔**：15 秒 + 0~5 秒随机抖动。全量很慢：250 行 ≈ 1 小时。小样用 limit。
+5. **Excel 被打开时无法覆盖**（`~$xxx.xlsx` 锁文件）。生成前先关 Excel。
+
+---
+
+## 📊 三家官网当前状态
+
+| 机构 | 站点 | 状态 | 抓取方式 | 需代理 | 需登录 |
+|---|---|---|---|---|---|
+| **TÜV Rheinland** | certipedia.com | ✅ 已验证 | 纯 HTTP | 否 | 否 |
+| **VDE** | vde.com (restSearch JSON) | ✅ 已跑通 | HTTP JSON | 是 | 否 |
+| **UL Prospector** | iq.ulprospector.com | ✅ 已打通 | Playwright+浏览器 | 是 | 是 |
+| CQC | open.cqccms.com.cn | ⚠️ 框架就绪 | OAuth2+API | 否 | 是 |
+| IECEE / TÜV SÜD / Intertek / SGS / CNCA | - | ❌ 未接入 | - | - | - |
+
+---
+
+## 📂 源码实际位置
+
+> 交接包内**不含源码本体**（避免与主目录脱节），源码在原位：
+>
+> | 内容 | 位置 |
+> |---|---|
+> | Python 主体 | `crawl4ai-main/cert_verify/`（约30个.py） |
+> | Java 参考代码 | `client-demo/client-demo-origin/`（Spring Boot） |
+> | Windows 交付包 | `crawl4ai-main/本地Windows/交付/证书核对工具/` |
+> | Linux 部署文件 | `crawl4ai-main/Linux/deploy/` |
+> | 测试 | `crawl4ai-main/cert_verify/tests/`（5套离线） |
+> | 设计规格 | `crawl4ai-main/.kiro/specs/cert-verify-web/` |
+> | 文档与日志 | `crawl4ai-main/项目文档与日志/` |
+
+`06_核心源码清单/源码清单与运行逻辑.md` 有每个文件的行数、职责、关键函数和运行逻辑串联。
+
+---
+
+## 🌐 本地 vs 服务器对照
+
+| 维度 | 本地 Windows | 服务器 Linux |
+|---|---|---|
+| Python | 3.12（`py -3.12`） | venv（Python 3.11） |
+| 浏览器 | 本机 Edge（`channel=msedge`） | 离线 Chrome（`.browser/chrome-linux64/chrome`） |
+| 启动方式 | `python -m cert_verify.web --port 8756` | systemd `certverify.service`（127.0.0.1:8758） |
+| 访问方式 | `http://127.0.0.1:8756`（本机） | `http://10.18.87.51/craw/`（Nginx 反代） |
+| 代理 | VPN/加速器系统代理 `127.0.0.1:7877` | 服务器配置代理出口 |
+| UL 登录 | 弹 Edge 有头登录 | Xvfb 有头登录，之后无头 |
+| 解密服务 | 不需要（本机上传已解密） | `10.18.87.51:8500/parse_file` |
+| 断电恢复 | 手动重启 | systemd 自动拉起 |
+| 部署指南 | `04a_本地Windows部署/本地Windows部署指南.md` | `04b_服务器Linux部署/服务器Linux部署指南.md` |

@@ -1,0 +1,41 @@
+[Unit]
+Description=Cert Verify Web
+# 断电重启保护：等网络就绪 + 弱依赖 decryptor（解密服务，同机 8500）。
+# 用 Requires+After 会因依赖顺序问题导致本服务反复 failed，故用弱依赖：
+# 解密服务没起来只是"上传加密文件报错"，网页本体仍可服务。
+After=network-online.target
+Wants=network-online.target
+After=decryptor.service
+Wants=decryptor.service
+# 断电重启场景：关闭默认「10s 内失败 5 次即永久 failed」的限制，
+# 只要下次尝试就能拉起。StartLimit* 必须写在 [Unit] 段，写在 [Service] 会被忽略。
+StartLimitIntervalSec=0
+StartLimitBurst=0
+
+[Service]
+Type=simple
+User=hisense
+WorkingDirectory=/home/hisense/pro/Gitlab/DataGather
+Environment="HOME=/home/hisense"
+Environment="CERT_BROWSER_EXECUTABLE=/home/hisense/pro/Gitlab/DataGather/.browser/chrome-linux64/chrome"
+# 中文文件名/表头避免乱码（借鉴 CertAgent：systemd 下 LANG 默认空）
+Environment="LANG=C.UTF-8"
+Environment="LC_ALL=C.UTF-8"
+# PAP_ENABLED、PAP_COLLECTOR_URL、PAP_API_KEY 等平台配置只从 .env 读取，
+# API Key 不写入 service 文件、代码或 Git。
+EnvironmentFile=-/home/hisense/pro/Gitlab/DataGather/.env
+Environment="DECRYPT_URL=http://10.18.87.51:8500/parse_file"
+Environment="DECRYPT_ENABLED=true"
+Environment="DECRYPT_TIMEOUT=60"
+# 后端只监听本机；对外由 Nginx 80 端口的 /craw/ 反代到此端口。
+# 内部使用固定 8758，避免 Nginx 与 Python 抢占同一个端口。
+ExecStart=/home/hisense/pro/Gitlab/DataGather/venv/bin/python -m cert_verify.web --host 127.0.0.1 --port 8758 --strict-port --no-browser
+# 启动前做依赖就绪探测（路由、解密服务 8500、代理），有上限、超时不阻塞启动。
+ExecStartPre=/home/hisense/pro/Gitlab/DataGather/Linux/deploy/cert_verify_ready.sh
+Restart=on-failure
+RestartSec=5
+# ExecStartPre 可能等待依赖（路由 60 + 解密 60 + 代理 60 + 缓冲），默认 90s 会误杀，放宽。
+TimeoutStartSec=240
+
+[Install]
+WantedBy=multi-user.target

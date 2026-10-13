@@ -1,0 +1,8 @@
+--- 逐条结果 ---
+[UL-CB r2] 50679826 -> ✓ 一致：制造商、型号、标准、证书状态；（生产厂表格未填）
+[UL-CB r3] 50679826 -> ✗ 不一致：型号不一致[表格=A24-999XXX | 网站=A24-065N3A (Chicony POWER TECHNOLOGY)]；（生产厂表格未填）
+[UL-CB r4] 50543817 -> ✗ 不一致：制造商不一致[表格=Some Other Vendor Inc. | 网站=Chicony Electronics Co., Ltd. No. 69, Sec. 2, Guangfu Rd., Sanchong Dist., 241 New Taipei City Taiwan]；（生产厂表格未填、型号表格未填）
+[UL-CB r5] 50679826 -> ✓ 一致：制造商、型号、标准(版本/年份不同: 表格=['en62368-1:2014'] 网站=['en62368-1:2020+a11'])、证书状态；（生产厂表格未填）
+[UL-CB r6] 99999999 -> ✗ 不一致：制造商不一致[表格=Nobody Ltd. | 网站=OWIM GmbH & Co. KG NF-QS Stiftsbergstr. 1 74172 Neckarsulm Germany]；型号不一致[表格=X-1 | 网站=Katzenkratzbaum]；证书状态不一致[表格=有效 | 网站=Invalid Certificate]；（生产厂表格未填、标准网站无此项）
+
+共 5 条 | 查到 5 | 官网无 0 | 被拦截 0 | 字段全一致 2 | 需人工复核 3

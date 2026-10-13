@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能列表</title>
+    <STYLE>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 2.2rem;
+        }
+
+        .description {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li {
+            margin-bottom: 0.5rem; /* 默认行间距 */
+            padding: 1rem;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        a {
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: 500;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 2.2rem;
+        }
+
+        .description {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </STYLE>
+</head>
+<body>
+<header>
+    <h1>功能列表</h1>
+    <p class="description">此页面用于演示“检测机构的业务应用系统”调用Restful Api接口功能</p>
+</header>
+<div class="container">
+    <ul>
+        <li><a href="/oauth2/authorize">鉴权</a>
+        <li><a href="/api/token/status">查看令牌状态</a>
+    </ul>
+</div>
+<div class="container">
+    <ul>
+        <li><a href="/cqc/api/cmslab.labtask.listAppLabTaskFee/1.0/2020-1-1/2021-1-1/2">统收费用结算单第2页</a>
+        </li>
+        <li><a href="/cqc/api/cmslab.labtask.listFailedReport/1.0/2020-1-1/2025-8-1/9">审核未通过任务第9页</a>
+        </li>
+        <li><a href="/cqc/api/cmslab.labtask.listAppTest/1.0/2020-1-1/2021-1-1/2">2020年型式试验第2页</a>
+        </li>
+        <li>
+            <a href="/cqc/api/cmslab.labtask.listTraceTest/1.0/2020-1-1/2021-1-1/2">2020年监督抽样任务第2页</a>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <ul>
+        <li><a href="/oauth2/logout">鉴权登出</a></li>
+    </ul>
+</div>
+</body>
+</html>

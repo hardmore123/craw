@@ -1,0 +1,25 @@
+server:
+  port: 8086
+
+logging:
+  level:
+    org.springframework.web: trace
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          client_local: # 由开发者自定义在CQC开放平台的客户端名称，可修改，需与本示例代码java类的@Value注解保持一致
+            client-id: # CQC开放平台分配的客户端ID
+            client-secret: # 开发者设置的客户端密钥，可修改
+            redirect-uri: # 由开发者在应用系统一侧自定义的回调URL，并配置在CQC开放平台的客户端重定向URI中，两者需保持一致
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_basic
+        provider:
+          client_local: # 由开发者自定义在CQC开放平台的客户端名称，可修改，需与本示例代码java类的@Value注解保持一致
+            issuer-uri: https://open.cqccms.com.cn/open-auth
+
+env:
+  gateway: https://open.cqccms.com.cn/open-gateway  # CQC API网关地址
+  logout: https://open.cqccms.com.cn/open-auth/logout?callback_type=json  # 登出URL

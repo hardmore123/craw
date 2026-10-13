@@ -1,0 +1,15 @@
+网络可达性自检  2026-08-06 09:44
+  可达             TUV-Rheinland Certipedia 首页 https://www.certipedia.com/
+  可达             TUV-Rheinland 证书详情页      https://www.certipedia.com/certificates/50679826?locale=en
+  可达             TUV-Rheinland 证书搜索       https://www.certipedia.com/search/matching_product_certificates?locale=en&q=50679826
+  可达             VDE 证书查询接口(JSON)         https://www.vde.com/www8/servlet/restSearch/2289904/zertreg-certificates?wt=json&fq=id%3Azertre
+  可达             VDE 证书检索页                https://www.vde.com/tic-en/marks-and-certificates/vde-approved-products/search?search_t=name&pa
+  可达             VDE 入口(http)             http://www.vde.com/certificate
+  可达             UL 官网                    https://www.ul.com/
+  403 反爬         UL Product iQ            https://productiq.ul.com/
+                  → 需 Playwright 真实浏览器（可能还要登录）
+  403 反爬         UL Prospector            https://productiq.ulprospector.com/
+                  → 需 Playwright 真实浏览器（可能还要登录）
+  可达             IECEE CB 证书库             https://certificates.iecee.org/
+  403 反爬         TUV SUD                  https://www.tuvsud.com/en
+                  → 需 Playwright 真实浏览器（可能还要登录）
